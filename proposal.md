@@ -8,13 +8,13 @@
 * 47868 - Silva, Alejo Lautaro
 
 ### Repositorios
-* [frontend app](http://hyperlinkToGihubOrGitlab)
-* [backend app](http://hyperlinkToGihubOrGitlab)
-*Nota*: si utiliza un monorepo indicar un solo link con fullstack app.
+* [frontend app](https://github.com/alejosilvalau/olivenders-frontend)
+* [backend app](https://github.com/alejosilvalau/olivenders-backend)
+
 
 ## Tema
 ### Descripción
-*2 a 6 líneas describiendo el negocio (menos es más)*
+*Olivenders es una plataforma web donde magos y brujas pueden comprar, vender y alquilar varitas mágicas de forma sencilla y segura. Cada transacción permite a los usuarios valorarse entre sí, creando un sistema de reputación confiable. Disponible en la web y en aplicaciones móviles, Olivenders te ayuda a encontrar la varita ideal estés donde estés.*
 
 ### Modelo
 ![imagen del modelo]()
