@@ -31,7 +31,7 @@ https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEmREH56euT88r/view?usp=shari
 |Req|Detalle|
 |:-|:-|
 |CRUD simple|1. CRUD Tipo Varita<br>2. CRUD Fabricante<br>3. CRUD Ubicacion|
-|CRUD dependiente|1. CRUD Varita {depende de} CRUD Tipo Varita<br>2. CRUD Inventario {depende de} CRUD Fabricante| 3. CRUD Cliente {depende de} CRUD Ubicacion|
+|CRUD dependiente|1. CRUD Varita {depende de} CRUD Tipo Varita<br>2. CRUD Inventario {depende de} CRUD Fabricante<br> 3. CRUD Cliente {depende de} CRUD Ubicacion|
 |Listado<br>+<br>detalle| 1. Listado de varitas filtrado por tipo de varita, madera, nucleo y demas propiedades generales=> detalle CRUD Varita<br> 2. Listado de fabricantes, muestra datos del facbricante y los tipos de varitas que ha fabricado => detalle CRUD Fabricante
 |CUU/Epic|1. Vender una varita<br>2. Alquilar una varita<br>3. Consultar disponibilidad
 
