@@ -2,7 +2,10 @@
 
 ## Grupo
 ### Integrantes
-* legajo - Apellido(s), Nombre(s)
+* 46155 - Avila, Marisol
+* 39749 - Egea, Lucas
+* 52889 - Cisneros, Juan Pablo
+* 47868 - Silva, Alejo Lautaro
 
 ### Repositorios
 * [frontend app](http://hyperlinkToGihubOrGitlab)
@@ -49,4 +52,3 @@ Adicionales para Aprobación
 |Listados |1. Estadía del día filtrado por fecha muestra, cliente, habitaciones y estado <br>2. Reservas filtradas por cliente muestra datos del cliente y de cada reserve fechas, estado cantidad de habitaciones y huespedes|
 |CUU/Epic|1. Consumir servicios<br>2. Cancelación de reserva|
 |Otros|1. Envío de recordatorio de reserva por email|
-
