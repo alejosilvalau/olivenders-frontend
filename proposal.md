@@ -17,9 +17,12 @@
 *Olivenders es una plataforma web donde magos pueden comprar, vender y alquilar varitas mágicas de forma sencilla y segura. Cada transacción permite a los usuarios valorarse entre sí, creando un sistema de reputación confiable. Disponible en la web y en aplicaciones móviles, Olivenders te ayuda a encontrar la varita ideal estés donde estés.*
 
 ### Modelo
-![imagen del modelo]()
-
 *Nota*: incluir un link con la imagen de un modelo, puede ser modelo de dominio, diagrama de clases, DER. Si lo prefieren pueden utilizar diagramas con [Mermaid](https://mermaid.js.org) en lugar de imágenes.
+
+**Faltan cosas, link para modificar -->**
+https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEmREH56euT88r/view?usp=sharing
+
+![imagen del modelo](./DER%20Inicial.png)
 
 ## Alcance Funcional 
 
