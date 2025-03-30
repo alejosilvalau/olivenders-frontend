@@ -42,8 +42,8 @@ https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEmREH56euT88r/view?usp=shari
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD Tipo Habitacion<br>2. CRUD Servicio<br>3. CRUD Localidad<br>4. CRUD Provincia<br>5. CRUD Habitación<br>6. CRUD Empleado<br>7. CRUD Cliente|
-|CUU/Epic|1. Reservar una habitación para la estadía<br>2. Realizar el check-in de una reserva<br>3. Realizar el check-out y facturación de estadía y servicios|
+|CRUD |1. CRUD Tipo Varita<br>2. CRUD Fabricante<br>3. CRUD Ubicacion<br>4. CRUD Cliente<br>5. CRUD Transacción|
+|CUU/Epic|1. Alquilar una varita<br>2.Realizar la Transacción de Compra o Alquiler<br>3. Devolver una Varita Alquilada|
 
 
 ### Alcance Adicional Voluntario
