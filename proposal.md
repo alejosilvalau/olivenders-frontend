@@ -31,10 +31,10 @@ https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEmREH56euT88r/view?usp=shari
 
 |Req|Detalle|
 |:-|:-|
-|CRUD simple|1. CRUD Tipo Varita<br>2. CRUD Fabricante<br>3. CRUD Ubicacion|
-|CRUD dependiente|1. CRUD Varita {depende de} CRUD Tipo Varita<br>2. CRUD Calificacion de Fabricante {depende de} CRUD Fabricante<br> 3. CRUD Cliente {depende de} CRUD Ubicacion|
-|Listado<br>+<br>detalle| 1. Listado de varitas filtrado por tipo de varita, madera, nucleo y demas propiedades generales=> detalle CRUD Varita<br> 2. Listado de fabricantes, muestra datos del facbricante y los tipos de varitas que ha fabricado => detalle CRUD Fabricante
-|CUU/Epic|1. Vender una varita<br>2. Alquilar una varita<br>3. Consultar disponibilidad
+|CRUD simple (nec. todas las clases)|1. CRUD Tipo Varita<br>2. CRUD Fabricante<br>3. CRUD Ubicacion|
+|CRUD dependiente (nec. 2)|1. CRUD Varita {depende de} CRUD Tipo Varita<br>2. CRUD Calificacion de Fabricante {depende de} CRUD Fabricante<br> 3. CRUD Cliente {depende de} CRUD Ubicacion|
+|Listado<br>+<br>detalle (nec. 2)| 1. Listado de varitas filtrado por tipo de varita, madera, nucleo y demas propiedades generales=> detalle CRUD Varita<br> 2. Listado de fabricantes, muestra datos del facbricante y los tipos de varitas que ha fabricado => detalle CRUD Fabricante
+|CUU/Epic (nec. 4)|1. Vender una varita<br>2. Alquilar una varita<br>3. Consultar disponibilidad
 
 
 Adicionales para Aprobación
@@ -43,13 +43,11 @@ Adicionales para Aprobación
 |CRUD |1. CRUD Tipo Varita<br>2. CRUD Fabricante<br>3. CRUD Ubicacion<br>4. CRUD Cliente<br>5. CRUD Transacción|
 |CUU/Epic|1. Alquilar una varita<br>2.Realizar la Transacción de Compra o Alquiler<br>3. Devolver una Varita Alquilada|
 
-
-### Alcance Adicional Voluntario
-
-*Nota*: El Alcance Adicional Voluntario es opcional, pero ayuda a que la funcionalidad del sistema esté completa y será considerado en la nota en función de su complejidad y esfuerzo.
+<!-- NO BORRAR!  -->
+<!-- ### Alcance Adicional Voluntario
 
 |Req|Detalle|
 |:-|:-|
 |Listados |1. Estadía del día filtrado por fecha muestra, cliente, habitaciones y estado <br>2. Reservas filtradas por cliente muestra datos del cliente y de cada reserve fechas, estado cantidad de habitaciones y huespedes|
 |CUU/Epic|1. Consumir servicios<br>2. Cancelación de reserva|
-|Otros|1. Envío de recordatorio de reserva por email|
+|Otros|1. Envío de recordatorio de reserva por email| -->
