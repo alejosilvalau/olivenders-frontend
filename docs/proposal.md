@@ -33,7 +33,7 @@ Regularidad
 |:-|:-|
 |CRUD simple|1. CRUD Mago<br>2. CRUD Varita<br>3. CRUD Compra<br>4. CRUD Calificación|
 |CRUD dependiente |1. CRUD Calificación {depende de} CRUD Compra<br>2. CRUD Compra {depende de} CRUD Varita|
-|Listado<br>+<br>detalle (nec. 2)| 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra madera, núcleo, descripción y precio => detalle muestra longitud y flexibilidadcripción<br> 2. Listado de respuesta de cuestionario donde se muestra fecha de respuesta y nombre, longitud y flexibilidad, madera y nucleo de varita, que redirige a la varita al clickear|
+|Listado<br>+<br>detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra madera, núcleo, descripción y precio => detalle muestra longitud y flexibilidadcripción<br> 2. Listado de respuesta de cuestionario donde se muestra fecha de respuesta y nombre, longitud y flexibilidad, madera y nucleo de varita, que redirige a la varita al clickear|
 |CUU/Epic|1. Comprar una varita<br>2. Calificar varita en base a compra|
 
 
