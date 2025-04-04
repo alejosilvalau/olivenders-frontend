@@ -29,13 +29,13 @@ Ver diagrama en [Draw.io](https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEm
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple|1. CRUD Mago<br>2. CRUD Varita<br>3. CRUD Compra<br>4. CRUD Calificación|
-|CRUD dependiente |1. CRUD Compra {depende de} CRUD Mago<br>2. CRUD Calificación {depende de} CRUD Compra|
-|Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra madera, núcleo, descripción y precio => detalle muestra longitud y flexibilidadcripción<br> 2. Listado de respuesta de cuestionario donde se muestra fecha de respuesta y nombre, longitud y flexibilidad, madera y nucleo de varita, que redirige a la varita al clickear|
-|CUU/Epic|1. Comprar una varita<br>2. Calificar varita en base a compra|
+|CRUD simple|1. CRUD Mago<br>2. CRUD Varita<br>3. CRUD Compra<br>4. CRUD Pregunta Cuestionario|
+|CRUD dependiente |1. CRUD Compra {depende de} CRUD Mago<br>2. CRUD Varita {depende de} CRUD Madera y CRUD Nucleo|
+|Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra nombre y precio => Detalle muestra madera, núcleo, longitud, flexibilidad y descripción.<br> 2. Listado de respuestas de cuestionario donde se muestra fecha de respuesta del cuestionario y nombre, descripción e disponibilidad de la varita. Al seleccionar la fila, se muestra longitud y flexibilidad, madera y núcleo de la varita. En caso de estar disponible, se agrega un botón para redirigir a la página de la varita.|
+|CUU/Epic|1. Comprar una varita<br>2. Fabricar una nueva varita|
 
 Adicionales para Aprobación Directa:
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD Pregunta Cuestionario<br> 2. CRUD Clave Token<br> 3. CRUD Madera<br> 4. CRUD Núcleo|
+|CRUD |1. CRUD Clave Token<br> 2. CRUD Madera<br> 3. CRUD Núcleo|
 |CUU/Epic |1. Contestar cuestionario<br>2. Comprar varita en base a resultado de cuestionario|
