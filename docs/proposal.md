@@ -36,14 +36,14 @@ Regularidad
 |CRUD simple|1. CRUD Mago<br>2. CRUD Varita<br>3. CRUD Compra<br>4. CRUD Calificacion|
 |CRUD dependiente (nec. 2)|1. CRUD Varita {depende de} CRUD Tipo Varita<br>2. CRUD Calificacion de Fabricante {depende de} CRUD Fabricante<br> 3. CRUD Cliente {depende de} CRUD Ubicacion|
 |Listado<br>+<br>detalle (nec. 2)| 1. Listado de varitas filtrado por tipo de varita, madera, nucleo y demas propiedades generales=> detalle CRUD Varita<br> 2. Listado de fabricantes, muestra datos del facbricante y los tipos de varitas que ha fabricado => detalle CRUD Fabricante
-|CUU/Epic (nec. 4)|1. Vender una varita<br>2. Alquilar una varita<br>3. Consultar disponibilidad
+|CUU/Epic (nec. 2)|1. Vender una varita<br>2. Alquilar una varita<br>3. Consultar disponibilidad
 
 
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD Alquiler<br> 2. CRUD FAQ<br> 3. CRUD ClaveToken<br> 4. CRUD Madera<br> 5. CRUD Núcleo|
-|CUU/Epic|1. Alquilar una varita<br>2.Realizar la Transacción de Compra o Alquiler<br>3. Devolver una Varita Alquilada|
+|CRUD |1. CRUD <br> 2. CRUD FAQ<br> 3. CRUD ClaveToken<br> 4. CRUD Madera<br> 5. CRUD Núcleo|
+|CUU/Epic (nec 2 +)|1. Alquilar una varita<br>2.Realizar la Transacción de Compra o Alquiler<br>3. Devolver una Varita Alquilada|
 
 <!-- NO BORRAR!  -->
 <!-- ### Alcance Adicional Voluntario
