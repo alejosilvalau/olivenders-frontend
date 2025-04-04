@@ -31,7 +31,7 @@ Regularidad:
 |:-|:-|
 |CRUD simple|1. CRUD Mago<br>2. CRUD Varita<br>3. CRUD Compra<br>4. CRUD Pregunta Cuestionario|
 |CRUD dependiente |1. CRUD Compra {depende de} CRUD Mago<br>2. CRUD Varita {depende de} CRUD Madera y CRUD Nucleo|
-|Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra nombre y precio => Detalle muestra madera, núcleo, longitud, flexibilidad y descripción.<br> 2. Listado de respuestas de cuestionario donde se muestra fecha de respuesta del cuestionario y nombre, descripción e disponibilidad de la varita. Al seleccionar la fila, se muestra longitud, flexibilidad, madera y núcleo de la varita. En caso de estar disponible, se agrega un botón para redirigir a la página de la varita.|
+|Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra imagen, nombre y precio => Detalle muestra madera, núcleo, longitud, flexibilidad y descripción.<br> 2. Listado de respuestas de cuestionario donde se muestra fecha de respuesta del cuestionario y nombre, descripción e disponibilidad de la varita. Al seleccionar la fila, se muestra imagen, longitud, flexibilidad, madera y núcleo de la varita. En caso de estar disponible, se agrega un botón para redirigir a la página de la varita.|
 |CUU/Epic|1. Comprar una varita<br>2. Fabricar una nueva varita|
 
 Adicionales para Aprobación Directa:
