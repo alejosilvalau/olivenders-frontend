@@ -8,36 +8,33 @@
 * 47868 - Silva, Alejo Lautaro
 
 ### Repositorios
-* [frontend app](https://github.com/alejosilvalau/olivenders-frontend)
-* [backend app](https://github.com/alejosilvalau/olivenders-backend)
+* [Frontend App Repo](https://github.com/alejosilvalau/olivenders-frontend)
+* [Backend App Repo](https://github.com/alejosilvalau/olivenders-backend)
 
 
 ## Tema
 ### Descripción
-*Olivenders es una plataforma web donde los magos pueden comprar, vender y alquilar varitas mágicas de manera fácil y segura. Cada transacción permite valoraciones entre los usuarios, ayudando a construir una comunidad de confianza. Ya sea en la web o a través de nuestra app móvil, Olivenders te ayuda a encontrar la varita perfecta, sin importar en qué rincón del mundo mágico te encuentres.*
+*Olivenders es una plataforma web donde los magos pueden comprar varitas mágicas de manera fácil y segura. Cada transacción permite valoración a las varitas compradas, ayudando a construir una comunidad de confianza. Además, les permite a los magos encontrar su varita perfecta mediante un breve cuestionario. Ya sea desde la versión de escritorio o a través del portal móvil, Olivenders te ayuda a encontrar la varita perfecta, sin importar en qué rincón del mundo mágico te encuentres.*
+
 
 ### Modelo
-*Nota*: incluir un link con la imagen de un modelo, puede ser modelo de dominio, diagrama de clases, DER. Si lo prefieren pueden utilizar diagramas con [Mermaid](https://mermaid.js.org) en lugar de imágenes.
-
-**Faltan cosas, link para modificar -->**
+[Mermaid](https://mermaid.js.org)
 https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEmREH56euT88r/view?usp=sharing
 
-![imagen del modelo](./DER%20Inicial.png)
+**Nota:** la division de las varitas entre *madera* y *núcleo* es dada por la [wiki de Harry Potter](https://harrypotter.fandom.com/es/wiki/Varita)
 
 ## Alcance Funcional 
-
 ### Alcance Mínimo
 
-Regularidad
+Regularidad:
 |Req|Detalle|
 |:-|:-|
 |CRUD simple|1. CRUD Mago<br>2. CRUD Varita<br>3. CRUD Compra<br>4. CRUD Calificación|
 |CRUD dependiente |1. CRUD Calificación {depende de} CRUD Compra<br>2. CRUD Compra {depende de} CRUD Varita|
-|Listado<br>+<br>detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra madera, núcleo, descripción y precio => detalle muestra longitud y flexibilidadcripción<br> 2. Listado de respuesta de cuestionario donde se muestra fecha de respuesta y nombre, longitud y flexibilidad, madera y nucleo de varita, que redirige a la varita al clickear|
+|Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra madera, núcleo, descripción y precio => detalle muestra longitud y flexibilidadcripción<br> 2. Listado de respuesta de cuestionario donde se muestra fecha de respuesta y nombre, longitud y flexibilidad, madera y nucleo de varita, que redirige a la varita al clickear|
 |CUU/Epic|1. Comprar una varita<br>2. Calificar varita en base a compra|
 
-
-Adicionales para Aprobación
+Adicionales para Aprobación Directa:
 |Req|Detalle|
 |:-|:-|
 |CRUD |1. CRUD Pregunta Cuestionario<br> 2. CRUD Clave Token<br> 3. CRUD Madera<br> 4. CRUD Núcleo|
