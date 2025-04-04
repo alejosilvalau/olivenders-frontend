@@ -8,8 +8,8 @@
 * 47868 - Silva, Alejo Lautaro
 
 ### Repositorios
-* [Frontend App Repo](https://github.com/alejosilvalau/olivenders-frontend)
-* [Backend App Repo](https://github.com/alejosilvalau/olivenders-backend)
+* [Frontend App](https://github.com/alejosilvalau/olivenders-frontend)
+* [Backend App](https://github.com/alejosilvalau/olivenders-backend)
 
 
 ## Tema
