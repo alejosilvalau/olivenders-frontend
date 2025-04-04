@@ -18,8 +18,8 @@
 
 
 ### Modelo
-[Mermaid](https://mermaid.js.org)
-https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEmREH56euT88r/view?usp=sharing
+![Diagrama DER](./DER%20Inicial.png)
+Ver diagrama en [Draw.io](https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEmREH56euT88r/view?usp=sharing)
 
 **Nota:** la division de las varitas entre *madera* y *núcleo* es dada por la [wiki de Harry Potter](https://harrypotter.fandom.com/es/wiki/Varita)
 
@@ -30,7 +30,7 @@ Regularidad:
 |Req|Detalle|
 |:-|:-|
 |CRUD simple|1. CRUD Mago<br>2. CRUD Varita<br>3. CRUD Compra<br>4. CRUD Calificación|
-|CRUD dependiente |1. CRUD Compra {depende de} CRUD Mago<br>2. CRUD Calificación {depende de} CRUD Varita|
+|CRUD dependiente |1. CRUD Compra {depende de} CRUD Mago<br>2. CRUD Calificación {depende de} CRUD Compra|
 |Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra madera, núcleo, descripción y precio => detalle muestra longitud y flexibilidadcripción<br> 2. Listado de respuesta de cuestionario donde se muestra fecha de respuesta y nombre, longitud y flexibilidad, madera y nucleo de varita, que redirige a la varita al clickear|
 |CUU/Epic|1. Comprar una varita<br>2. Calificar varita en base a compra|
 
