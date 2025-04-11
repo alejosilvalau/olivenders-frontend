@@ -30,8 +30,8 @@ Regularidad:
 |Req|Detalle|
 |:-|:-|
 |CRUD simple|1. CRUD Escuela<br>2. CRUD Núcleo<br>3. CRUD Madera<br>4. CRUD Pregunta|
-|CRUD dependiente |1. CRUD Mago {depende de} CRUD Escuela<br>2. CRUD Varita {depende de} CRUD Madera y CRUD Nucleo|
-|Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra imagen, nombre y precio => Detalle muestra madera, núcleo, longitud, flexibilidad y descripción.<br> 2. Listado de respuestas de cuestionario donde se muestra fecha de respuesta del cuestionario y nombre, descripción e disponibilidad de la varita. Al seleccionar la fila se muestra imagen, longitud, flexibilidad, madera y núcleo de la varita. En caso de estar disponible, se agrega un botón para redirigir a la página de la varita.|
+|CRUD dependiente |1. CRUD Mago {depende de} CRUD Escuela<br>2. CRUD Varita {depende de} CRUD Madera y CRUD Núcleo|
+|Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra imagen, nombre y precio => Detalle muestra madera, núcleo, longitud, flexibilidad y descripción.<br> 2. Listado de reseñas donde se muestra fecha y comentario de la reseña. Además nombre y descripción de la varita vendida. Al seleccionar la fila se muestra imagen, longitud, flexibilidad, madera y núcleo de la varita.|
 |CUU/Epic|1. Vender una varita<br>2. Responder cuestionario|
 
 Adicionales para Aprobación Directa:
