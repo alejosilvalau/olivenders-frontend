@@ -32,10 +32,10 @@ Regularidad:
 |CRUD simple|1. CRUD Escuela<br>2. CRUD Núcleo<br>3. CRUD Madera<br>4. CRUD Pregunta|
 |CRUD dependiente |1. CRUD Mago {depende de} CRUD Escuela<br>2. CRUD Varita {depende de} CRUD Madera y CRUD Nucleo|
 |Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra imagen, nombre y precio => Detalle muestra madera, núcleo, longitud, flexibilidad y descripción.<br> 2. Listado de respuestas de cuestionario donde se muestra fecha de respuesta del cuestionario y nombre, descripción e disponibilidad de la varita. Al seleccionar la fila se muestra imagen, longitud, flexibilidad, madera y núcleo de la varita. En caso de estar disponible, se agrega un botón para redirigir a la página de la varita.|
-|CUU/Epic|1. Comprar una varita<br>2. Fabricar una nueva varita|
+|CUU/Epic|1. Vender una varita<br>2. Responder cuestionario|
 
 Adicionales para Aprobación Directa:
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD Clave Token<br> 2. CRUD Madera<br> 3. CRUD Núcleo|
-|CUU/Epic |1. Contestar cuestionario<br>2. Comprar varita en base a resultado de cuestionario|
+|CRUD |1. CRUD Clave Token<br> 2. CRUD Cuestionario<br> 3. CRUD Venta|
+|CUU/Epic |1. Reseñar compra<br>2. Cobrar con MercadoPago|
