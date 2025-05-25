@@ -1,3 +1,15 @@
 {
-  "editor.defaultFormatter": "bradlc.vscode-tailwindcss"
+  "editor.defaultFormatter": "bradlc.vscode-tailwindcss",
+  "css.lint.unknownAtRules": "ignore",
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.includeLanguages": {
+    "html": "html",
+    "javascript": "javascript",
+    "typescript": "typescript"
+  },
+  "tailwindCSS.experimental.configFile": "./tailwind.config.js",
+  "tailwindCSS.emmetCompletions": true,
+  "editor.inlineSuggest.enabled": true
 }
