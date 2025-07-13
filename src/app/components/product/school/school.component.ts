@@ -6,9 +6,9 @@ import { School } from '../../../core/models/school.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { SearcherComponent } from '../../../shared/searcher/searcher.component';
-import { UniversalAlertComponent } from '../../../shared/alerts/universal-alert/universal-alert.component';
-import { alertMethod } from '../../../shared/alerts/alert-function/alert.function';
+import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
+import { UniversalAlertComponent } from '../../../shared/components/alerts/universal-alert/universal-alert.component';
+import { alertMethod } from '../../../shared/components/alerts/alert-function/alert.function';
 
 @Component({
   selector: 'app-school',

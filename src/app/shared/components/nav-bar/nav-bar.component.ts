@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-// import { AuthService } from '../../../core/services/auth.service';
-// import { User } from '../../../core/models/user.interface';
+import { AuthService } from '../../../core/services/auth.service';
+import { Wizard } from '../../../core/models/wizard.interface';
 
 
 @Component({
@@ -14,30 +14,30 @@ import { RouterLink } from '@angular/router';
 })
 export class NavBarComponent {
   isLoggedIn: boolean = false;
-  // currentUser: User|null = null;
-  userRole: string|null = null;
-  isDropdownOpen= false;
+  currentWizard: Wizard | null = null;
+  wizardRole: string | null = null;
+  isDropdownOpen = false;
 
-//   constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
-//   ngOnInit(): void {
-//     this.authService.isAuthenticated$.subscribe((authStatus) => {
-//       this.isLoggedIn = authStatus;
-//     });
+  ngOnInit(): void {
+    this.authService.isAuthenticated$.subscribe((authStatus) => {
+      this.isLoggedIn = authStatus;
+    });
 
-//     this.authService.currentUser$.subscribe((user) => {
-//       this.currentUser = user;
-//       this.userRole = user?.rol || null;
-//     });
-// }
+    this.authService.currentUser$.subscribe((user) => {
+      this.currentWizard = user;
+      this.wizardRole = user?.rol || null;
+    });
+  }
 
-//   logout(): void {
-//     this.authService.logout();
-//     this.isDropdownOpen = false;
-//     this.userRole = null;
-//   }
+  logout(): void {
+    this.authService.logout();
+    this.isDropdownOpen = false;
+    this.wizardRole = null;
+  }
 
-//   toggleDropdown(): void {
-//     this.isDropdownOpen = !this.isDropdownOpen;
-//   }
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
 }
