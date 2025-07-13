@@ -11,5 +11,8 @@
   },
   "tailwindCSS.experimental.configFile": "./tailwind.config.js",
   "tailwindCSS.emmetCompletions": true,
-  "editor.inlineSuggest.enabled": true
+  "editor.inlineSuggest.enabled": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }
