@@ -7,7 +7,7 @@ import { Wizard } from '../../../core/models/wizard.interface.js';
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
