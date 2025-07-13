@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  public apiUrl = 'http://localhost:3000/api/usuarios';
+  public apiUrl = 'http://localhost:3000/api/wizards';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  private currentUserSubject = new BehaviorSubject<any>(this.getCurrentUser());
+  private currentUserSubject = new BehaviorSubject<any>(this.getCurrentWizard());
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
@@ -24,13 +24,13 @@ export class AuthService {
     return this.http.post<{ user: Wizard, token: string }>(`${ this.apiUrl }/login`, { user, password }).pipe(
       map((response) => {
         const { user, token } = response;
-        this.setUserSession(user, token);
+        this.setWizardSession(user, token);
         return user;
       })
     );
   }
 
-  setUserSession(wizard: Wizard, token: string): void {
+  setWizardSession(wizard: Wizard, token: string): void {
     localStorage.setItem('user', JSON.stringify(wizard));
     localStorage.setItem('token', token);
     this.isAuthenticatedSubject.next(true);
@@ -49,7 +49,7 @@ export class AuthService {
     return localStorage.getItem('user') !== null;
   }
 
-  getCurrentUser(): Wizard | null {
+  getCurrentWizard(): Wizard | null {
     const wizardString = localStorage.getItem('wizard');
     return wizardString ? JSON.parse(wizardString) : null;
   }
