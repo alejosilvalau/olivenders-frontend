@@ -24,9 +24,9 @@ export class NavBarComponent {
       this.isLoggedIn = authStatus;
     });
 
-    this.authService.currentUser$.subscribe((user) => {
-      this.currentWizard = user;
-      this.wizardRole = user?.rol || null;
+    this.authService.currentWizard$.subscribe((wizard) => {
+      this.currentWizard = wizard;
+      this.wizardRole = wizard?.rol || null;
     });
   }
 

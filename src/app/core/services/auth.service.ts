@@ -14,39 +14,39 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  private currentUserSubject = new BehaviorSubject<any>(this.getCurrentWizard());
-  public currentUser$ = this.currentUserSubject.asObservable();
+  private currentWizardSubject = new BehaviorSubject<any>(this.getCurrentWizard());
+  public currentWizard$ = this.currentWizardSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  login(user: string, password: string): Observable<Wizard> {
-    return this.http.post<{ user: Wizard, token: string }>(`${ this.apiUrl }/login`, { user, password }).pipe(
+  login(wizard: string, password: string): Observable<Wizard> {
+    return this.http.post<{ wizard: Wizard, token: string }>(`${ this.apiUrl }/login`, { wizard, password }).pipe(
       map((response) => {
-        const { user, token } = response;
-        this.setWizardSession(user, token);
-        return user;
+        const { wizard, token } = response;
+        this.setWizardSession(wizard, token);
+        return wizard;
       })
     );
   }
 
   setWizardSession(wizard: Wizard, token: string): void {
-    localStorage.setItem('user', JSON.stringify(wizard));
+    localStorage.setItem('wizard', JSON.stringify(wizard));
     localStorage.setItem('token', token);
     this.isAuthenticatedSubject.next(true);
-    this.currentUserSubject.next(wizard);
+    this.currentWizardSubject.next(wizard);
   }
 
   logout(): void {
-    localStorage.removeItem('user');
+    localStorage.removeItem('wizard');
     localStorage.removeItem('token');
     this.isAuthenticatedSubject.next(false);
-    this.currentUserSubject.next(null);
+    this.currentWizardSubject.next(null);
     this.router.navigate(['/auth/login']);
   }
 
   isAuthenticated(): boolean {
-    return localStorage.getItem('user') !== null;
+    return localStorage.getItem('wizard') !== null;
   }
 
   getCurrentWizard(): Wizard | null {
