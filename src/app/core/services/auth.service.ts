@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { User } from '../models/user.interface';
+import { Wizard } from '../models/wizard.interface.js';
 import { Router } from '@angular/router';
 
 
@@ -20,8 +20,8 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  login(user: string, password: string): Observable<User> {
-    return this.http.post<{ user: User, token: string }>(`${ this.apiUrl }/login`, { user, password }).pipe(
+  login(user: string, password: string): Observable<Wizard> {
+    return this.http.post<{ user: Wizard, token: string }>(`${ this.apiUrl }/login`, { user, password }).pipe(
       map((response) => {
         const { user, token } = response;
         this.setUserSession(user, token);
@@ -30,11 +30,11 @@ export class AuthService {
     );
   }
 
-  setUserSession(usuario: User, token: string): void {
-    localStorage.setItem('user', JSON.stringify(usuario));
+  setUserSession(wizard: Wizard, token: string): void {
+    localStorage.setItem('user', JSON.stringify(wizard));
     localStorage.setItem('token', token);
     this.isAuthenticatedSubject.next(true);
-    this.currentUserSubject.next(usuario);
+    this.currentUserSubject.next(wizard);
   }
 
   logout(): void {
@@ -49,9 +49,9 @@ export class AuthService {
     return localStorage.getItem('user') !== null;
   }
 
-  getCurrentUser(): User | null {
-    const userString = localStorage.getItem('user');
-    return userString ? JSON.parse(userString) : null;
+  getCurrentUser(): Wizard | null {
+    const wizardString = localStorage.getItem('wizard');
+    return wizardString ? JSON.parse(wizardString) : null;
   }
 
   getCurrentToken(): string {

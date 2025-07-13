@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
-import { Wizard } from '../../../core/models/wizard.interface';
-
+import { AuthService } from '../../../core/services/auth.service.js';
+import { Wizard } from '../../../core/models/wizard.interface.js';
 
 @Component({
   selector: 'app-nav-bar',
