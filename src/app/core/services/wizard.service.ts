@@ -3,18 +3,20 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Wizard } from '../models/wizard.interface.js';
 import { AuthToken } from '../../functions/authToken.function';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WizardService {
-  private apiUrl = 'http://localhost:3000/api/wizards';
+  private apiUrl = `${ environment.apiUrl }/wizards`;
 
   constructor(private http: HttpClient) { }
 
   addWizard(data: FormData): Observable<Wizard> {
     return this.http.post<Wizard>(this.apiUrl, data);
   }
+
   deleteWizard(wizard: Wizard): Observable<Wizard> {
     const authToken = new AuthToken();
     return this.http.delete<Wizard>(`${ this.apiUrl }/${ wizard.id }`, { headers: authToken.getAuthHeaders() });
