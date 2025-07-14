@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,17 +11,18 @@ import { environment } from '../../../environments/environment';
 })
 export class WizardService {
   private apiUrl = `${ environment.apiUrl }/wizards`;
+  private authToken: AuthToken;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.authToken = new AuthToken();
+  }
 
   findAll(): Observable<Wizard[]> {
-    const authToken = new AuthToken();
-    return this.http.get<Wizard[]>(this.apiUrl, { headers: authToken.getAuthHeaders() });
+    return this.http.get<Wizard[]>(this.apiUrl, { headers: this.authToken.getAuthHeaders() });
   }
 
   findOne(id: string): Observable<Wizard> {
-    const authToken = new AuthToken();
-    return this.http.get<Wizard>(`${ this.apiUrl }/${ id }`, { headers: authToken.getAuthHeaders() });
+    return this.http.get<Wizard>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   findOneByEmail(email: string): Observable<Wizard> {
@@ -52,8 +54,7 @@ export class WizardService {
   }
 
   update(id: string, formData: FormData): Observable<Wizard> {
-    const authToken = new AuthToken();
-    return this.http.put<Wizard>(`${ this.apiUrl }/${ id }`, formData, { headers: authToken.getAuthHeaders() });
+    return this.http.put<Wizard>(`${ this.apiUrl }/${ id }`, formData, { headers: this.authToken.getAuthHeaders() });
   }
 
   changePasswordWithoutToken(id: string, formData: FormData): Observable<Wizard> {
@@ -61,18 +62,15 @@ export class WizardService {
   }
 
   makeAdmin(id: string): Observable<Wizard> {
-    const authToken = new AuthToken();
-    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/admin`, {}, { headers: authToken.getAuthHeaders() });
+    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/admin`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
   makeUser(id: string): Observable<Wizard> {
-    const authToken = new AuthToken();
-    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/user`, {}, { headers: authToken.getAuthHeaders() });
+    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/user`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
   deactivate(id: string): Observable<Wizard> {
-    const authToken = new AuthToken();
-    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/deactivate`, {}, { headers: authToken.getAuthHeaders() });
+    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/deactivate`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
   activate(id: string): Observable<Wizard> {
@@ -80,7 +78,6 @@ export class WizardService {
   }
 
   remove(id: string): Observable<Wizard> {
-    const authToken = new AuthToken();
-    return this.http.delete<Wizard>(`${ this.apiUrl }/${ id }`, { headers: authToken.getAuthHeaders() });
+    return this.http.delete<Wizard>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 }
