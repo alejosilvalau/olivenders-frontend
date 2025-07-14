@@ -13,58 +13,74 @@ export class WizardService {
 
   constructor(private http: HttpClient) { }
 
-  addWizard(data: FormData): Observable<Wizard> {
-    return this.http.post<Wizard>(this.apiUrl, data);
-  }
-
-  deleteWizard(wizard: Wizard): Observable<Wizard> {
-    const authToken = new AuthToken();
-    return this.http.delete<Wizard>(`${ this.apiUrl }/${ wizard.id }`, { headers: authToken.getAuthHeaders() });
-  }
-  editWizard(wizard: Wizard): Observable<Wizard> {
-    const { password, ...wizardWithoutPassword } = wizard;
-    const authToken = new AuthToken();
-    return this.http.put<Wizard>(`${ this.apiUrl }/${ wizard.id }`, wizardWithoutPassword, { headers: authToken.getAuthHeaders() });
-  }
-
-  getAllWizards(): Observable<Wizard[]> {
+  findAll(): Observable<Wizard[]> {
     const authToken = new AuthToken();
     return this.http.get<Wizard[]>(this.apiUrl, { headers: authToken.getAuthHeaders() });
   }
 
-  getOneWizardByEmailOrUsername(usuario: string, mail: string, excludeWizardId?: string): Observable<Wizard | null> {
-    const params = new HttpParams().set('excludeWizardId', excludeWizardId || '');
-    return this.http.get<Wizard>(`${ this.apiUrl }/${ usuario }/${ mail }`, { params });
-  }
-
-  getOneWizardById(id: string): Observable<Wizard> {
+  findOne(id: string): Observable<Wizard> {
     const authToken = new AuthToken();
     return this.http.get<Wizard>(`${ this.apiUrl }/${ id }`, { headers: authToken.getAuthHeaders() });
   }
 
-  changePassword(id: string, data: any): Observable<Wizard> {
-    const authToken = new AuthToken();
-    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }`, data, { headers: authToken.getAuthHeaders() });
+  findOneByEmail(email: string): Observable<Wizard> {
+    return this.http.get<Wizard>(`${ this.apiUrl }/email/${ email }`);
   }
 
-  validatePassword(id: string, password: string): Observable<boolean> {
-    const authToken = new AuthToken();
-    return this.http.post<boolean>(`${ this.apiUrl }/validate/${ id }`, {
-      password,
-    }, { headers: authToken.getAuthHeaders() });
+  findOneByUsername(username: string): Observable<Wizard> {
+    return this.http.get<Wizard>(`${ this.apiUrl }/username/${ username }`);
   }
 
-  checkUsername(username: string): Observable<boolean> {
-    const authToken = new AuthToken();
-    return this.http.get<boolean>(`${ this.apiUrl }/checkusername/${ username }`, { headers: authToken.getAuthHeaders() });
+  isUsernameAvailable(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${ this.apiUrl }/available/username/${ username }`);
   }
 
-  checkEmail(email: string): Observable<boolean> {
-    const authToken = new AuthToken();
-    return this.http.get<boolean>(`${ this.apiUrl }/checkemail/${ email }`, { headers: authToken.getAuthHeaders() });
+  isEmailAvailable(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${ this.apiUrl }/available/email/${ email }`);
   }
 
-  resetPassword(token: string, newPassword: string): Observable<any> {
-    return this.http.post<any>(`${ this.apiUrl }/reset`, { token, newPassword });
+  add(formData: FormData): Observable<Wizard> {
+    return this.http.post<Wizard>(this.apiUrl, formData);
+  }
+
+  login(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${ this.apiUrl }/login`, formData);
+  }
+
+  validatePassword(id: string, formData: FormData): Observable<boolean> {
+    return this.http.post<boolean>(`${ this.apiUrl }/validate/${ id }`, formData);
+  }
+
+  update(id: string, formData: FormData): Observable<Wizard> {
+    const authToken = new AuthToken();
+    return this.http.put<Wizard>(`${ this.apiUrl }/${ id }`, formData, { headers: authToken.getAuthHeaders() });
+  }
+
+  changePasswordWithoutToken(id: string, formData: FormData): Observable<Wizard> {
+    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }`, formData);
+  }
+
+  makeAdmin(id: string): Observable<Wizard> {
+    const authToken = new AuthToken();
+    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/admin`, {}, { headers: authToken.getAuthHeaders() });
+  }
+
+  makeUser(id: string): Observable<Wizard> {
+    const authToken = new AuthToken();
+    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/user`, {}, { headers: authToken.getAuthHeaders() });
+  }
+
+  deactivate(id: string): Observable<Wizard> {
+    const authToken = new AuthToken();
+    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/deactivate`, {}, { headers: authToken.getAuthHeaders() });
+  }
+
+  activate(id: string): Observable<Wizard> {
+    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/activate`, {});
+  }
+
+  remove(id: string): Observable<Wizard> {
+    const authToken = new AuthToken();
+    return this.http.delete<Wizard>(`${ this.apiUrl }/${ id }`, { headers: authToken.getAuthHeaders() });
   }
 }
