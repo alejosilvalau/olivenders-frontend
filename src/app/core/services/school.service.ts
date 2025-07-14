@@ -1,39 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { School } from '../models/school.interface';
 import { AuthToken } from '../../functions/authToken.function';
+import { environment } from '../../../environments/environment';
+import { School } from '../models/school.interface.js';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SchoolService {
-  private apiUrl = 'http://localhost:3000/api/schools';
+  private apiUrl = `${ environment.apiUrl }/schools`;
+  private authToken: AuthToken;
 
-  constructor(private http:HttpClient) { }
-  addSchool(school: School): Observable<School> {
-    const authToken = new AuthToken();
-    return this.http.post<School>(this.apiUrl, school, { headers: authToken.getAuthHeaders()});
+  constructor(private http: HttpClient) {
+    this.authToken = new AuthToken();
   }
-  deleteSchool(school: School): Observable<School> {
-    const authToken = new AuthToken();
-    return this.http.delete<School>(`${this.apiUrl}/${school.id}`, { headers: authToken.getAuthHeaders()});
+
+  findAll(): Observable<School[]> {
+    const params = new HttpParams().set('page', '1').set('pageSize', '5');
+    return this.http.get<School[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
-  editSchool(school: School): Observable<School> {
-    const authToken = new AuthToken();
-    return this.http.put<School>(`${this.apiUrl}/${school.id}`, school, { headers: authToken.getAuthHeaders()});
+
+  findOne(id: string): Observable<School> {
+    return this.http.get<School>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
-  getAllSchools(): Observable<School[]> {
-    const authToken = new AuthToken();
-    return this.http.get<School[]>(this.apiUrl, { headers: authToken.getAuthHeaders()});
+
+  findOneByName(name: string): Observable<School> {
+    return this.http.get<School>(`${ this.apiUrl }/name/${ name }`);
   }
-  getOneSchool(id:string): Observable<School> {
-    const authToken = new AuthToken();
-    return this.http.get<School>(`${this.apiUrl}/${id}`, { headers: authToken.getAuthHeaders()});
+
+  add(formData: FormData): Observable<School> {
+    return this.http.post<School>(this.apiUrl, formData, { headers: this.authToken.getAuthHeaders() });
   }
-  getOneSchoolByName(name: string, excludeSchoolId?: string): Observable<School> {
-    const authToken = new AuthToken();
-    const params = new HttpParams().set('excludeSchoolId', excludeSchoolId || '');
-    return this.http.get<School>(`${this.apiUrl}/find-by-name/${name}`, { params, headers: authToken.getAuthHeaders() } );
+
+  update(id: string, formData: FormData): Observable<School> {
+    return this.http.put<School>(`${ this.apiUrl }/${ id }`, formData, { headers: this.authToken.getAuthHeaders() });
   }
+
+  remove(id: string): Observable<School> {
+    return this.http.delete<School>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+  }
+
 }

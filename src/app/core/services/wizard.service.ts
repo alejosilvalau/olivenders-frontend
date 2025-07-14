@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -18,7 +17,8 @@ export class WizardService {
   }
 
   findAll(): Observable<Wizard[]> {
-    return this.http.get<Wizard[]>(this.apiUrl, { headers: this.authToken.getAuthHeaders() });
+    const params = new HttpParams().set('page', '1').set('pageSize', '5');
+    return this.http.get<Wizard[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
   findOne(id: string): Observable<Wizard> {
