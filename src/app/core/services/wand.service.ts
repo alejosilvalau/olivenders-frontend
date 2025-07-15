@@ -17,17 +17,17 @@ export class WandService {
   }
 
   findAll(page: number = 1, pageSize: number = 5): Observable<Wand[]> {
-    const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<Wand[]>(this.apiUrl, { params });
   }
 
   findAllByCore(coreId: string, page: number = 1, pageSize: number = 5): Observable<Wand[]> {
-    const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<Wand[]>(`${ this.apiUrl }/core/${ coreId }`, { params });
   }
 
   findAllByWood(woodId: string, page: number = 1, pageSize: number = 5): Observable<Wand[]> {
-    const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<Wand[]>(`${ this.apiUrl }/wood/${ woodId }`, { params });
   }
 

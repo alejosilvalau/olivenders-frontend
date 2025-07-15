@@ -16,8 +16,8 @@ export class QuestionService {
     this.authToken = new AuthToken();
   }
 
-  findAll(): Observable<Question[]> {
-    const params = new HttpParams().set('page', '1').set('pageSize', '5');
+  findAll(page: number = 1, pageSize: number = 5): Observable<Question[]> {
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<Question[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
