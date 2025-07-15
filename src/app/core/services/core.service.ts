@@ -16,8 +16,8 @@ export class CoreService {
     this.authToken = new AuthToken();
   }
 
-  findAll(): Observable<Core[]> {
-    const params = new HttpParams().set('page', '1').set('pageSize', '5');
+  findAll(page: number = 1, pageSize: number = 5): Observable<Core[]> {
+    const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
     return this.http.get<Core[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
@@ -26,7 +26,7 @@ export class CoreService {
   }
 
   findOneByName(name: string): Observable<Core> {
-    return this.http.get<Core>(`${ this.apiUrl }/name/${ name }`);
+    return this.http.get<Core>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   add(formData: FormData): Observable<Core> {
