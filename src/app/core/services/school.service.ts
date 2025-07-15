@@ -16,9 +16,9 @@ export class SchoolService {
     this.authToken = new AuthToken();
   }
 
-  findAll(): Observable<School[]> {
-    const params = new HttpParams().set('page', '1').set('pageSize', '5');
-    return this.http.get<School[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
+  findAll(page: number = 1, pageSize: number = 5): Observable<School[]> {
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
+    return this.http.get<School[]>(this.apiUrl, { params });
   }
 
   findOne(id: string): Observable<School> {
@@ -26,7 +26,7 @@ export class SchoolService {
   }
 
   findOneByName(name: string): Observable<School> {
-    return this.http.get<School>(`${ this.apiUrl }/name/${ name }`);
+    return this.http.get<School>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   add(formData: FormData): Observable<School> {
