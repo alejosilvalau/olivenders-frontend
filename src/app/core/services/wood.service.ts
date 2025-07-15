@@ -16,8 +16,8 @@ export class WoodService {
     this.authToken = new AuthToken();
   }
 
-  findAll(): Observable<Wood[]> {
-    const params = new HttpParams().set('page', '1').set('pageSize', '5');
+  findAll(page: number = 1, pageSize: number = 5): Observable<Wood[]> {
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<Wood[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
@@ -26,7 +26,7 @@ export class WoodService {
   }
 
   findOneByName(name: string): Observable<Wood> {
-    return this.http.get<Wood>(`${ this.apiUrl }/name/${ name }`);
+    return this.http.get<Wood>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   add(formData: FormData): Observable<Wood> {
