@@ -16,9 +16,9 @@ export class WizardService {
     this.authToken = new AuthToken();
   }
 
-  findAll(): Observable<Wizard[]> {
-    const params = new HttpParams().set('page', '1').set('pageSize', '5');
-    return this.http.get<Wizard[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
+  findAll(page: number = 1, pageSize: number = 5): Observable<Wizard[]> {
+    const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
+    return this.http.get<Wizard[]>(this.apiUrl, { params });
   }
 
   findOne(id: string): Observable<Wizard> {
@@ -74,7 +74,7 @@ export class WizardService {
   }
 
   activate(id: string): Observable<Wizard> {
-    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/activate`, {});
+    return this.http.patch<Wizard>(`${ this.apiUrl }/${ id }/activate`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
   remove(id: string): Observable<Wizard> {
