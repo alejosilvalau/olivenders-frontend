@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Answer } from '../models/answer.interface.js';
-import { AuthToken } from '../../functions/authToken.function';
+import { AuthToken } from '../../functions/auth-token.function.js';
 import { environment } from '../../../environments/environment';
 
 @Injectable({

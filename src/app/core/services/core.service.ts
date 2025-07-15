@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthToken } from '../../functions/authToken.function';
+import { AuthToken } from '../../functions/auth-token.function';
 import { environment } from '../../../environments/environment';
 import { Core } from '../models/core.interface.js';
 
