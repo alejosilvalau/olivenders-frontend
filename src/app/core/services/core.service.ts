@@ -17,7 +17,7 @@ export class CoreService {
   }
 
   findAll(page: number = 1, pageSize: number = 5): Observable<Core[]> {
-    const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<Core[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
