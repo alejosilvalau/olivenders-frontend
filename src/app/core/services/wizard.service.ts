@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Wizard } from '../models/wizard.interface.js';
+import { LoginResponse, Wizard } from '../models/wizard.interface.js';
 import { AuthToken } from '../../functions/authToken.function';
 import { environment } from '../../../environments/environment';
 
@@ -45,8 +45,8 @@ export class WizardService {
     return this.http.post<Wizard>(this.apiUrl, formData);
   }
 
-  login(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${ this.apiUrl }/login`, formData);
+  login(formData: FormData): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${ this.apiUrl }/login`, formData);
   }
 
   validatePassword(id: string, formData: FormData): Observable<boolean> {

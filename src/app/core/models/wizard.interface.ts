@@ -16,3 +16,11 @@ export interface Wizard {
   deactivated: boolean;
   school: string;
 }
+
+export interface LoginResponse {
+  message: string;
+  data: {
+    wizard: Wizard;
+    token: string;
+  };
+}

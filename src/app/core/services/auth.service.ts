@@ -1,29 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Wizard } from '../models/wizard.interface.js';
 import { Router } from '@angular/router';
-
+import { environment } from '../../../environments/environment';
+import { WizardService } from './wizard.service.js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public apiUrl = 'http://localhost:3000/api/wizards';
+  public apiUrl = `${ environment.apiUrl }`;
+
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   private currentWizardSubject = new BehaviorSubject<any>(this.getCurrentWizard());
   public currentWizard$ = this.currentWizardSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private router: Router, private wizardService: WizardService) {
   }
 
-  login(wizard: string, password: string): Observable<Wizard> {
-    return this.http.post<{ wizard: Wizard, token: string }>(`${ this.apiUrl }/login`, { wizard, password }).pipe(
+  login(formData: FormData): Observable<Wizard> {
+    return this.wizardService.login(formData).pipe(
       map((response) => {
-        const { wizard, token } = response;
+        const { wizard, token } = response.data;
         this.setWizardSession(wizard, token);
         return wizard;
       })
