@@ -26,4 +26,8 @@ export interface WizardResponse<T = Wizard> {
   message: string;
   data?: T;
   token?: string;
+  total?: number;
+  page?: number;
+  pageSize?: number;
+  errors?: { field: string; message: string }[];
 }
