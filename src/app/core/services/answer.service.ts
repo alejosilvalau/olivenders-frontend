@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Answer } from '../models/answer.interface.js';
+import { Answer, AnswerRequest, AnswerResponse } from '../models/answer.interface.js';
 import { AuthToken } from '../../functions/auth-token.function.js';
 import { environment } from '../../../environments/environment';
 
@@ -16,24 +16,24 @@ export class AnswerService {
     this.authToken = new AuthToken();
   }
 
-  findAll(page: number = 1, pageSize: number = 5): Observable<Answer[]> {
+  findAll(page: number = 1, pageSize: number = 5): Observable<AnswerResponse<Answer[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
-    return this.http.get<Answer[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
+    return this.http.get<AnswerResponse<Answer[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
-  findOne(id: string): Observable<Answer> {
-    return this.http.get<Answer>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+  findOne(id: string): Observable<AnswerResponse> {
+    return this.http.get<AnswerResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 
-  add(formData: FormData): Observable<Answer> {
-    return this.http.post<Answer>(this.apiUrl, formData, { headers: this.authToken.getAuthHeaders() });
+  add(answerData: AnswerRequest): Observable<AnswerResponse> {
+    return this.http.post<AnswerResponse>(this.apiUrl, answerData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  update(id: string, formData: FormData): Observable<Answer> {
-    return this.http.put<Answer>(`${ this.apiUrl }/${ id }`, formData, { headers: this.authToken.getAuthHeaders() });
+  update(id: string, answerData: AnswerRequest): Observable<AnswerResponse> {
+    return this.http.put<AnswerResponse>(`${ this.apiUrl }/${ id }`, answerData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  remove(id: string): Observable<Answer> {
-    return this.http.delete<Answer>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+  remove(id: string): Observable<AnswerResponse> {
+    return this.http.delete<AnswerResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 }
