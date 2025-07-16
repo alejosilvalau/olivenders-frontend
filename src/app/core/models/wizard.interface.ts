@@ -1,12 +1,12 @@
+import { School } from "./school.interface.js";
+
 export enum WizardRole {
   Admin = 'admin',
   User = 'user',
 }
 
 export interface Wizard {
-  id: string;
   username: string;
-  password: string;
   name: string;
   last_name: string;
   email: string;
@@ -14,13 +14,15 @@ export interface Wizard {
   phone: string;
   role: WizardRole;
   deactivated: boolean;
-  school: string;
+  school: School;
 }
 
-export interface LoginResponse {
+export interface WizardRequest extends Partial<Wizard> {
+  password: string;
+}
+
+export interface WizardResponse<T = Wizard> {
   message: string;
-  data: {
-    wizard: Wizard;
-    token: string;
-  };
+  data?: T;
+  token?: string;
 }
