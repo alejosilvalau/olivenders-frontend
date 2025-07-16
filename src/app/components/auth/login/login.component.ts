@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
 import { RouterModule, Router } from '@angular/router';
-import { UniversalAlertComponent } from '../../../shared/components/alerts/universal-alert/universal-alert.component';
+import { UniversalAlertComponent } from '../../../shared/components/alert/alert.component';
 import { ViewChild } from '@angular/core';
 
 @Component({

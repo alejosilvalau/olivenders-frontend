@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-universal-alert',
+  selector: 'app-alert',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './universal-alert.component.html',
-  styleUrl: './universal-alert.component.css'
+  templateUrl: './alert.component.html',
+  styleUrl: './alert.component.css'
 })
-export class UniversalAlertComponent {
+export class AlertComponent {
 
   @Input() message: string = '';
   @Input() type: 'success' | 'error' | 'info' = 'info';
@@ -20,7 +20,7 @@ export class UniversalAlertComponent {
     this.message = message;
     this.type = type;
     this.show = true;
-    setTimeout(() => (this.show = false), 3000); 
+    setTimeout(() => (this.show = false), 3000);
   }
 
   closeAlert() {

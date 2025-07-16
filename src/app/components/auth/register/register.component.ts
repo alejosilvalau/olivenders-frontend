@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Wizard } from '../../../core/models/wizard.interface';
 // import { alertMethod } from '../../../shared/components/alerts/alert-function/alerts.functions';
-import { UniversalAlertComponent } from '../../../shared/components/alerts/universal-alert/universal-alert.component';
+import { UniversalAlertComponent } from '../../../shared/components/alert/alert.component';
 import { WizardService } from '../../../core/services/wizard.service.js';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
