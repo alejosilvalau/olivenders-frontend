@@ -18,7 +18,6 @@ export class AlertComponent {
 
   @Input() message: string = '';
   @Input() type: AlertType = AlertType.Info;
-  @Input() alertId: string = '';
 
   show: boolean = false;
 
