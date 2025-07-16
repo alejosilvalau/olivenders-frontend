@@ -1,3 +1,5 @@
+import { ApiResponse } from "./api-response.interface.js";
+
 export interface School {
   id: number;
   name: string;
@@ -8,11 +10,4 @@ export interface School {
 
 export interface SchoolRequest extends Omit<School, 'id'> { }
 
-export interface SchoolResponse<T = School> {
-  message: string;
-  data?: T;
-  total?: number;
-  page?: number;
-  pageSize?: number;
-  errors?: { field: string; message: string }[];
-}
+export interface SchoolResponse<T = School> extends ApiResponse<T> { }

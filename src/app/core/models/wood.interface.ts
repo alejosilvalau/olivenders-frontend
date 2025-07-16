@@ -1,3 +1,5 @@
+import { ApiResponse } from "./api-response.interface.js";
+
 export interface Wood {
   id: string;
   name: string;
@@ -8,11 +10,4 @@ export interface Wood {
 
 export interface WoodRequest extends Omit<Wood, 'id'> { }
 
-export interface WoodResponse<T = Wood> {
-  message: string;
-  data?: T;
-  total?: number;
-  page?: number;
-  pageSize?: number;
-  errors?: { field: string; message: string }[];
-}
+export interface WoodResponse<T = Wood> extends ApiResponse<T> { }

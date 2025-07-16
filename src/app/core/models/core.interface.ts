@@ -1,3 +1,5 @@
+import { ApiResponse } from "./api-response.interface.js";
+
 export interface Core {
   id: number;
   name: string;
@@ -7,11 +9,4 @@ export interface Core {
 
 export interface CoreRequest extends Omit<Core, 'id'> { }
 
-export interface CoreResponse<T = Core> {
-  message: string;
-  data?: T;
-  total?: number;
-  page?: number;
-  pageSize?: number;
-  errors?: { field: string; message: string }[];
-}
+export interface CoreResponse<T = Core> extends ApiResponse<T> { }

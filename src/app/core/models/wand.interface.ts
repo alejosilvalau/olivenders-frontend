@@ -1,3 +1,4 @@
+import { ApiResponse } from "./api-response.interface.js";
 import { Core } from "./core.interface.js";
 import { Wood } from "./wood.interface.js";
 
@@ -22,11 +23,4 @@ export interface Wand {
 
 export interface WandRequest extends Omit<Wand, 'id'> { }
 
-export interface WandResponse<T = Wand> {
-  message: string;
-  data?: T;
-  total?: number;
-  page?: number;
-  pageSize?: number;
-  errors?: { field: string; message: string }[];
-}
+export interface WandResponse<T = Wand> extends ApiResponse<T> { }

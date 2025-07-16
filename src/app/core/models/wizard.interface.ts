@@ -1,3 +1,4 @@
+import { ApiResponse } from "./api-response.interface.js";
 import { School } from "./school.interface.js";
 
 export enum WizardRole {
@@ -22,12 +23,4 @@ export interface WizardRequest extends Partial<Wizard> {
   password: string;
 }
 
-export interface WizardResponse<T = Wizard> {
-  message: string;
-  data?: T;
-  token?: string;
-  total?: number;
-  page?: number;
-  pageSize?: number;
-  errors?: { field: string; message: string }[];
-}
+export interface WizardResponse<T = Wizard> extends ApiResponse<T> { }

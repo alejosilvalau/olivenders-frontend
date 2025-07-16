@@ -1,3 +1,5 @@
+import { ApiResponse } from "./api-response.interface.js";
+
 export interface Question {
   id: string;
   question: string;
@@ -7,11 +9,4 @@ export interface Question {
 
 export interface QuestionRequest extends Omit<Question, 'id' | 'created_at'> { }
 
-export interface QuestionResponse<T = Question> {
-  message: string;
-  data?: T;
-  total?: number;
-  page?: number;
-  pageSize?: number;
-  errors?: { field: string; message: string }[];
-}
+export interface QuestionResponse<T = Question> extends ApiResponse<T> { }
