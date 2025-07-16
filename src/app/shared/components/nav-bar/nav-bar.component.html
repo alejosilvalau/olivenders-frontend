@@ -52,28 +52,22 @@
       <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
         <ng-container *ngIf="wizardRole === 'user'">
           <li>
-            <a routerLink="/product/purchases" class="text-gray-900 dark:text-white hover:underline">My Orders</a>
+            <a routerLink="/product/orders" class="text-gray-900 dark:text-white hover:underline">My Orders</a>
           </li>
           <li>
-            <a routerLink="/product/quizzes" class="text-gray-900 dark:text-white hover:underline">My Quizzes</a>
+            <a routerLink="/product/answers" class="text-gray-900 dark:text-white hover:underline">My Quizzes</a>
           </li>
         </ng-container>
         <ng-container *ngIf="wizardRole === 'admin'">
           <li>
             <a routerLink="/product/wands" class="text-gray-900 dark:text-white hover:underline">Wands</a>
           </li>
-          <!-- <li>
-            <a routerLink="/product/categories" class="text-gray-900 dark:text-white hover:underline">Categorias</a>
-          </li> -->
           <li>
             <a routerLink="/auth/wizards" class="text-gray-900 dark:text-white hover:underline">Wizards</a>
           </li>
           <li>
             <a routerLink="/auth/dashboard" class="text-gray-900 dark:text-white hover:underline">Dashboard</a>
           </li>
-          <!-- <li>
-            <a routerLink="/faq-list" class="text-gray-900 dark:text-white hover:underline">FAQs</a>
-          </li> -->
         </ng-container>
       </ul>
     </div>
