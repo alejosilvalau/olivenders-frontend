@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthToken } from '../../functions/auth-token.function';
 import { environment } from '../../../environments/environment';
-import { School } from '../models/school.interface.js';
+import { School, SchoolRequest, SchoolResponse } from '../models/school.interface.js';
 
 @Injectable({
   providedIn: 'root',
@@ -16,21 +16,21 @@ export class SchoolService {
     this.authToken = new AuthToken();
   }
 
-  findAll(page: number = 1, pageSize: number = 5): Observable<School[]> {
+  findAll(page: number = 1, pageSize: number = 5): Observable<SchoolResponse<School[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
-    return this.http.get<School[]>(this.apiUrl, { params });
+    return this.http.get<SchoolResponse<School[]>>(this.apiUrl, { params });
   }
 
-  findOne(id: string): Observable<School> {
-    return this.http.get<School>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+  findOne(id: string): Observable<SchoolResponse> {
+    return this.http.get<SchoolResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 
-  findOneByName(name: string): Observable<School> {
-    return this.http.get<School>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
+  findOneByName(name: string): Observable<SchoolResponse> {
+    return this.http.get<SchoolResponse>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
   }
 
-  add(formData: FormData): Observable<School> {
-    return this.http.post<School>(this.apiUrl, formData, { headers: this.authToken.getAuthHeaders() });
+  add(questionData: SchoolRequest): Observable<SchoolResponse> {
+    return this.http.post<SchoolResponse>(this.apiUrl, questionData, { headers: this.authToken.getAuthHeaders() });
   }
 
   update(id: string, formData: FormData): Observable<School> {

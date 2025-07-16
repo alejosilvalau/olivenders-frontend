@@ -5,3 +5,10 @@ export interface School {
   address: string;
   phone: string;
 }
+
+export interface SchoolRequest extends Omit<School, 'id'> { }
+
+export interface SchoolResponse<T = School> {
+  message: string;
+  data?: T;
+}
