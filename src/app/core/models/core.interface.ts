@@ -4,3 +4,10 @@ export interface Core {
   description: string;
   price: string;
 }
+
+export interface CoreRequest extends Omit<Core, 'id'> { }
+
+export interface CoreResponse<T = Core> {
+  message: string;
+  data?: T;
+}

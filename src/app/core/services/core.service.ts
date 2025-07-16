@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthToken } from '../../functions/auth-token.function';
 import { environment } from '../../../environments/environment';
-import { Core } from '../models/core.interface.js';
+import { Core, CoreRequest, CoreResponse } from '../models/core.interface.js';
 
 @Injectable({
   providedIn: 'root',
@@ -16,29 +16,29 @@ export class CoreService {
     this.authToken = new AuthToken();
   }
 
-  findAll(page: number = 1, pageSize: number = 5): Observable<Core[]> {
+  findAll(page: number = 1, pageSize: number = 5): Observable<CoreResponse<Core[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
-    return this.http.get<Core[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
+    return this.http.get<CoreResponse<Core[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
-  findOne(id: string): Observable<Core> {
-    return this.http.get<Core>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+  findOne(id: string): Observable<CoreResponse> {
+    return this.http.get<CoreResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 
-  findOneByName(name: string): Observable<Core> {
-    return this.http.get<Core>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
+  findOneByName(name: string): Observable<CoreResponse> {
+    return this.http.get<CoreResponse>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
   }
 
-  add(formData: FormData): Observable<Core> {
-    return this.http.post<Core>(this.apiUrl, formData, { headers: this.authToken.getAuthHeaders() });
+  add(coreData: CoreRequest): Observable<CoreResponse> {
+    return this.http.post<CoreResponse>(this.apiUrl, coreData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  update(id: string, formData: FormData): Observable<Core> {
-    return this.http.put<Core>(`${ this.apiUrl }/${ id }`, formData, { headers: this.authToken.getAuthHeaders() });
+  update(id: string, coreData: CoreRequest): Observable<CoreResponse> {
+    return this.http.put<CoreResponse>(`${ this.apiUrl }/${ id }`, coreData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  remove(id: string): Observable<Core> {
-    return this.http.delete<Core>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+  remove(id: string): Observable<CoreResponse> {
+    return this.http.delete<CoreResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 
 }
