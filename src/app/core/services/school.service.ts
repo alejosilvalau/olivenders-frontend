@@ -29,16 +29,16 @@ export class SchoolService {
     return this.http.get<SchoolResponse>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
   }
 
-  add(questionData: SchoolRequest): Observable<SchoolResponse> {
-    return this.http.post<SchoolResponse>(this.apiUrl, questionData, { headers: this.authToken.getAuthHeaders() });
+  add(schoolData: SchoolRequest): Observable<SchoolResponse> {
+    return this.http.post<SchoolResponse>(this.apiUrl, schoolData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  update(id: string, formData: FormData): Observable<School> {
-    return this.http.put<School>(`${ this.apiUrl }/${ id }`, formData, { headers: this.authToken.getAuthHeaders() });
+  update(id: string, schoolData: SchoolRequest): Observable<SchoolResponse> {
+    return this.http.put<SchoolResponse>(`${ this.apiUrl }/${ id }`, schoolData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  remove(id: string): Observable<School> {
-    return this.http.delete<School>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+  remove(id: string): Observable<SchoolResponse> {
+    return this.http.delete<SchoolResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 
 }
