@@ -14,7 +14,7 @@ export interface Wizard {
   phone: string;
   role: WizardRole;
   deactivated: boolean;
-  school: School;
+  school: School | string;
 }
 
 export interface WizardRequest extends Partial<Wizard> {
