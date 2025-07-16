@@ -1,3 +1,7 @@
+import { ApiResponse } from "./api-response.interface.js";
+import { Wand } from "./wand.interface.js";
+import { Wizard } from "./wizard.interface.js";
+
 export enum OrderStatus {
   Pending = 'pending',
   Paid = 'paid',
@@ -26,6 +30,10 @@ export interface Order {
   status: OrderStatus;
   completed: boolean;
   review?: string;
-  wizard: string;
-  wand: string;
+  wizard: Wizard | string;
+  wand: Wand | string;
 }
+
+export interface OrderRequest extends Partial<Order> { }
+
+export interface OrderResponse<T = Order> extends ApiResponse<T> { }

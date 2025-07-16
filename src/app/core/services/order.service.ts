@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Order } from '../models/order.interface.js';
+import { Order, OrderRequest, OrderResponse } from '../models/order.interface.js';
 import { AuthToken } from '../../functions/auth-token.function.js';
 import { environment } from '../../../environments/environment';
 
@@ -16,48 +16,48 @@ export class OrderService {
     this.authToken = new AuthToken();
   }
 
-  findAll(page: number = 1, pageSize: number = 5): Observable<Order[]> {
+  findAll(page: number = 1, pageSize: number = 5): Observable<OrderResponse<Order[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
-    return this.http.get<Order[]>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
+    return this.http.get<OrderResponse<Order[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
-  findOne(id: string): Observable<Order> {
-    return this.http.get<Order>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+  findOne(id: string): Observable<OrderResponse> {
+    return this.http.get<OrderResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 
-  add(formData: FormData): Observable<Order> {
-    return this.http.post<Order>(this.apiUrl, formData, { headers: this.authToken.getAuthHeaders() });
+  add(orderData: OrderRequest): Observable<OrderResponse> {
+    return this.http.post<OrderResponse>(this.apiUrl, orderData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  update(id: string, formData: FormData): Observable<Order> {
-    return this.http.put<Order>(`${ this.apiUrl }/${ id }`, formData, { headers: this.authToken.getAuthHeaders() });
+  update(id: string, orderData: OrderRequest): Observable<OrderResponse> {
+    return this.http.put<OrderResponse>(`${ this.apiUrl }/${ id }`, orderData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  pay(id: string): Observable<Order> {
-    return this.http.patch<Order>(`${ this.apiUrl }/${ id }/pay`, {}, { headers: this.authToken.getAuthHeaders() });
+  pay(id: string): Observable<OrderResponse> {
+    return this.http.patch<OrderResponse>(`${ this.apiUrl }/${ id }/pay`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
-  dispatch(id: string): Observable<Order> {
-    return this.http.patch<Order>(`${ this.apiUrl }/${ id }/dispatch`, {}, { headers: this.authToken.getAuthHeaders() });
+  dispatch(id: string): Observable<OrderResponse> {
+    return this.http.patch<OrderResponse>(`${ this.apiUrl }/${ id }/dispatch`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
-  complete(id: string): Observable<Order> {
-    return this.http.patch<Order>(`${ this.apiUrl }/${ id }/complete`, {}, { headers: this.authToken.getAuthHeaders() });
+  complete(id: string): Observable<OrderResponse> {
+    return this.http.patch<OrderResponse>(`${ this.apiUrl }/${ id }/complete`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
-  cancel(id: string): Observable<Order> {
-    return this.http.patch<Order>(`${ this.apiUrl }/${ id }/cancel`, {}, { headers: this.authToken.getAuthHeaders() });
+  cancel(id: string): Observable<OrderResponse> {
+    return this.http.patch<OrderResponse>(`${ this.apiUrl }/${ id }/cancel`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
-  refund(id: string): Observable<Order> {
-    return this.http.patch<Order>(`${ this.apiUrl }/${ id }/refund`, {}, { headers: this.authToken.getAuthHeaders() });
+  refund(id: string): Observable<OrderResponse> {
+    return this.http.patch<OrderResponse>(`${ this.apiUrl }/${ id }/refund`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
-  review(id: string, formData: FormData): Observable<Order> {
-    return this.http.put<Order>(`${ this.apiUrl }/${ id }`, formData, { headers: this.authToken.getAuthHeaders() });
+  review(id: string, orderData: OrderRequest): Observable<OrderResponse> {
+    return this.http.put<OrderResponse>(`${ this.apiUrl }/${ id }`, orderData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  remove(id: string): Observable<Order> {
-    return this.http.delete<Order>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+  remove(id: string): Observable<OrderResponse> {
+    return this.http.delete<OrderResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 }
