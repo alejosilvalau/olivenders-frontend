@@ -5,3 +5,10 @@ export interface Wood {
   description: string;
   price: number;
 }
+
+export interface WoodRequest extends Omit<Wood, 'id'> { }
+
+export interface WoodResponse<T = Wood> {
+  message: string;
+  data?: T;
+}

@@ -6,6 +6,7 @@ export enum WizardRole {
 }
 
 export interface Wizard {
+  id: string;
   username: string;
   name: string;
   last_name: string;
