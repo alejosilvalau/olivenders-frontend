@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './bottom-sheet.component.html',
-  styleUrls: ['./bottom-sheet.component.css']
+  styleUrl: './bottom-sheet.component.css'
 })
 export class BottomSheetComponent {
   constructor(
