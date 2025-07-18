@@ -1,62 +1,49 @@
 <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="filter-form">
   <div class="grid-container">
-
     <div class="form-group">
-      <label for="kilometersDesde">Km Desde:</label>
-      <input type="number" id="kilometersDesde" formControlName="kilometersDesde" placeholder="Ej: 50000" />
-    </div>
-
-    <div class="form-group">
-      <label for="kilometersHasta">Km Hasta:</label>
-      <input type="number" id="kilometersHasta" formControlName="kilometersHasta" placeholder="Ej: 150000" />
-    </div>
-
-    <div class="form-group">
-      <label for="brand">Marca:</label>
-      <select id="brand" formControlName="brand">
-        <option value="">Selecciona Marca</option>
-        <option *ngFor="let brand of brands" [value]="brand.nombreMarca">
-          {{ brand.nombreMarca }}
+      <label for="wood">Wood Type:</label>
+      <select id="wood" formControlName="wood">
+        <option value="">Select a Type of Wood</option>
+        <option *ngFor="let wood of woods.data" [value]="wood.name">
+          {{ wood.name }}
         </option>
       </select>
     </div>
 
     <div class="form-group">
-      <label for="category">Categoría:</label>
-      <select id="category" formControlName="category">
-        <option value="">Selecciona Categoría</option>
-        <option *ngFor="let category of categories" [value]="category.nombreCategoria">
-          {{ category.nombreCategoria }}
+      <label for="minlengthInches">Min Length in Inches:</label>
+      <input type="number" id="minlengthInches" formControlName="minlengthInches" placeholder="2" />
+    </div>
+
+    <div class="form-group">
+      <label for="maxLengthInches">Max Length in Inches:</label>
+      <input type="number" id="maxLengthInches" formControlName="maxLengthInches" placeholder="15" />
+    </div>
+
+    <div class="form-group">
+      <label for="core">Core Type:</label>
+      <select id="core" formControlName="core">
+        <option value="">Select a Type of Wood</option>
+        <option *ngFor="let core of cores.data" [value]="core.name">
+          {{ core.name }}
         </option>
       </select>
     </div>
 
 
     <div class="form-group">
-      <label for="priceDesde">Precio Desde:</label>
-      <input type="number" id="priceDesde" formControlName="priceDesde" placeholder="Ej: 20000" />
+      <label for="minPrice">Min Price:</label>
+      <input type="number" id="minPrice" formControlName="minPrice" placeholder="1000" />
     </div>
     <div class="form-group">
-      <label for="priceHasta">Precio Hasta:</label>
-      <input type="number" id="priceHasta" formControlName="priceHasta" placeholder="Ej: 50000" />
-    </div>
-
-    <div class="form-group checkbox-group mt-4 justify-center">
-      <input type="checkbox" id="isRentable" formControlName="isRentable" />
-      <label for="isRentable">Solo Alquilar</label>
-    </div>
-
-    <div class="form-group checkbox-group mt-4 justify-center">
-      <input type="checkbox" id="isBuyable" formControlName="isBuyable" />
-      <label for="isBuyable">Solo Comprar</label>
+      <label for="maxPrice">Max Price:</label>
+      <input type="number" id="maxPrice" formControlName="maxPrice" placeholder="5000" />
     </div>
   </div>
-
-
   <div class="button-group">
-    <button type="submit" class="btn-filter">Filtrar</button>
+    <button type="submit" class="btn-filter">Filter</button>
     <button type="button" class="btn-reset" (click)="resetFilter()">
-      Limpiar
+      Clear
     </button>
   </div>
 </form>
