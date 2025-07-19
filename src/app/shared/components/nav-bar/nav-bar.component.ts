@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service.js';
-import { Wizard } from '../../../core/models/wizard.interface.js';
+import { Wizard, WizardRole } from '../../../core/models/wizard.interface.js';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,7 +14,7 @@ import { Wizard } from '../../../core/models/wizard.interface.js';
 export class NavBarComponent {
   isLoggedIn: boolean = false;
   currentWizard: Wizard | null = null;
-  wizardRole: string | null = null;
+  wizardRole: WizardRole | null = null;
   isDropdownOpen = false;
 
   constructor(private authService: AuthService) { }
@@ -26,7 +26,7 @@ export class NavBarComponent {
 
     this.authService.currentWizard$.subscribe((wizard) => {
       this.currentWizard = wizard;
-      this.wizardRole = wizard?.rol || null;
+      this.wizardRole = wizard?.role || null;
     });
   }
 
