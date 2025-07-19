@@ -1,11 +1,11 @@
 <div class="container my-4">
-  <app-universal-alert></app-universal-alert>
+  <app-alert></app-alert>
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
-    <h2 class="mb-3 mb-md-0"><strong class="text-primary">GESTION DE MARCAS </strong></h2>
-    <app-searcher [data]="brands" [filterAttributes]="['nombreMarca']" (filteredData)="onSearch($event)"
-      style="display: block; width: 70%;"></app-searcher>
+    <h2 class="mb-3 mb-md-0"><strong class="text-primary">CORES MANAGEMENT </strong></h2>
+    <app-searcher [data]="cores" [filterAttributes]="['coreName']" (filteredData)="onSearch($event)"
+      class="searcher"></app-searcher>
     <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addBrand">
-      <i class="bi bi-person-plus me-2"></i>Añadir Marca
+      <i class="bi bi-person-plus me-2"></i>Add Core
     </button>
   </div>
 
@@ -14,30 +14,30 @@
     <table class="table table-hover table-striped mb-0">
       <thead class="table-primary">
         <tr>
-          <th>Nombre</th>
-          <th>Acciones</th>
+          <th>Name</th>
+          <th>Actions</th>
         </tr>
       </thead>
-      <tbody *ngIf="brands.length > 0">
-        <tr *ngFor="let brand of filteredBrands">
-          <td data-label="Nombre">{{ brand.nombreMarca }}</td>
-          <td data-label="Acciones">
-            <button (click)="openModal('editBrand', brand)" class="btn btn-lg btn-outline-primary"
+      <tbody *ngIf="cores.length > 0">
+        <tr *ngFor="let core of filteredCores">
+          <td data-label="Name">{{ core.name }}</td>
+          <td data-label="Actions">
+            <button (click)="openModal('editCore', core)" class="btn btn-lg btn-outline-primary"
               data-bs-toggle="modal">
               <img src="edit.logo.png" alt="">
             </button>
-            <button (click)="openModal('removeBrand', brand)" class="btn btn-lg btn-outline-danger"
+            <button (click)="openModal('removeCore', core)" class="btn btn-lg btn-outline-danger"
               data-bs-toggle="modal">
               <img src="cancel.logo.png" alt="">
             </button>
           </td>
         </tr>
       </tbody>
-      <tfoot *ngIf="filteredBrands.length === 0">
+      <tfoot *ngIf="filteredCores.length === 0">
         <tr>
           <td colspan="8" class="text-center py-5 text-muted">
             <i class="bi bi-people display-6 d-block mb-2"></i>
-            No hay marcas registradas
+            There are no cores available.
           </td>
         </tr>
       </tfoot>
@@ -45,23 +45,23 @@
   </div>
 
 
-  <div class="modal fade" id="addBrand" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="addCore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Marca</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">New Core</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="brandForm" (ngSubmit)="addBrand()">
+          <form [formGroup]="coreForm" (ngSubmit)="addCore()">
             <div class="col-md-12">
-              <label for="name">Nombre Marca</label>
-              <input type="text" formControlName="nombreMarca" id="name" name="name" class="form-control" required>
+              <label for="name">Core Name</label>
+              <input type="text" formControlName="coreName" id="name" name="name" class="form-control" required>
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-primary">Guardar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save</button>
             </div>
           </form>
         </div>
@@ -69,31 +69,31 @@
     </div>
   </div>
 
-  <div id="removeBrand" class="modalChanged">
+  <div id="removeCore" class="modalChanged">
     <div class="modal-contentChanged">
-      <span class="close" (click)="closeModal('removeBrand')">&times;</span>
-      <h2>Eliminar Marca</h2>
-      <p><strong>¿Estás seguro de que deseas eliminar la siguiente marca?</strong></p>
-      <p><strong>Nombre:</strong> {{ selectedBrand?.nombreMarca }}</p>
+      <span class="close" (click)="closeModal('removeCore')">&times;</span>
+      <h2>Remove Core</h2>
+      <p><strong>Do you want to delete the core below?</strong></p>
+      <p><strong>Name:</strong> {{ selectedCore?.name }}</p>
       <div class="modal-footer">
-        <button class="btn btn-secondary" (click)="closeModal('removeBrand')">Cancelar</button>
-        <button class="btn btn-danger" (click)="deleteBrand(selectedBrand, 'removeBrand')">Eliminar</button>
+        <button class="btn btn-secondary" (click)="closeModal('removeCore')">Cancel</button>
+        <button class="btn btn-danger" (click)="deleteCore(selectedCore, 'removeCore')">Remove</button>
       </div>
     </div>
   </div>
 
-  <div id="editBrand" class="modalChanged">
+  <div id="editCore" class="modalChanged">
     <div class="modal-contentChanged">
-      <span class="close" (click)="closeModal('editBrand')">&times;</span>
-      <h2>Editar Marca</h2>
-      <form [formGroup]="brandForm" (ngSubmit)="editBrand()">
+      <span class="close" (click)="closeModal('editCore')">&times;</span>
+      <h2>Edit Core</h2>
+      <form [formGroup]="coreForm" (ngSubmit)="editCore()">
         <div class="form-group">
-          <label for="nombreMarca">Nombre Marca</label>
-          <input type="text" id="nombreMarca" formControlName="nombreMarca" class="form-control" required>
+          <label for="coreName">Core Name</label>
+          <input type="text" id="coreName" formControlName="coreName" class="form-control" required>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal('editBrand')">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          <button type="button" class="btn btn-secondary" (click)="closeModal('editCore')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
         </div>
       </form>
     </div>

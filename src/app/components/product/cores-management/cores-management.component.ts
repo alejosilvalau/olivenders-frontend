@@ -7,7 +7,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
-import { AlertComponent } from '../../../shared/components/alert/alert.component';
+import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { alertMethod } from '../../../functions/alert.function.js';
 @Component({
   selector: 'app-cores-management',
@@ -75,87 +75,87 @@ export class CoresManagementComponent implements OnInit {
     this.filteredCores = filteredCores.length > 0 ? filteredCores : [];
   }
 
-  checkBrandExists(coreName: string): Observable<boolean> {
+  checkCoreExists(coreName: string): Observable<boolean> {
     return this.coreService.findOneByName(coreName).pipe(
       map((coreResponse: CoreResponse) => !!coreResponse.data),
     );
   }
 
-  addBrand() {
-    if (this.brandForm.valid) {
-      const brandData = this.brandForm.value;
-      this.checkBrandExists(brandData.nombreMarca).pipe(switchMap((exists: boolean) => {
+  addCore() {
+    if (this.coreForm.valid) {
+      const coreData = this.coreForm.value;
+      this.checkCoreExists(coreData.name).pipe(switchMap((exists: boolean) => {
         if (!exists) {
-          return this.brandService.addBrand(brandData);
+          return this.coreService.add(coreData);
         }
         return throwError(() => new Error('La marca ya existe'));
       })).subscribe({
         next: () => {
           alertMethod('Alta de marcas', 'Marca creada exitosamente', 'success');
-          this.loadBrand();
-          this.closeModal('addBrand');
-          this.brandForm.reset();
+          this.loadCores();
+          this.closeModal('addCore');
+          this.coreForm.reset();
         },
         error: (err: any) => {
           if (err.message === 'La marca ya existe') {
-            this.closeModal('addBrand');
-            this.alertComponent.showAlert(err.message, 'error');
+            this.closeModal('addCore');
+            this.alertComponent.showAlert(err.message, AlertType.Error);
           } else if (err.status === 500) {
-            this.alertComponent.showAlert('Error interno del servidor', 'error');
+            this.alertComponent.showAlert('Error interno del servidor', AlertType.Error);
           } else {
-            this.closeModal('addBrand');
-            this.alertComponent.showAlert('Ocurrió un error al agregar la marca', 'error');
+            this.closeModal('addCore');
+            this.alertComponent.showAlert('Ocurrió un error al agregar la marca', AlertType.Error);
           }
-          this.brandForm.reset();
+          this.coreForm.reset();
         }
       });
     } else {
-      this.alertComponent.showAlert('Por favor, complete todos los campos requeridos.', 'error');
+      this.alertComponent.showAlert('Por favor, complete todos los campos requeridos.', AlertType.Error);
       return
     }
   }
 
-  editBrand(): void {
-    if (this.selectedBrand) {
-      const updatedBrand: Brand = {
-        ...this.selectedBrand,
-        ...this.brandForm.value
+  editCore(): void {
+    if (this.selectedCore) {
+      const updatedCore: Core = {
+        ...this.selectedCore,
+        ...this.coreForm.value
       };
-      this.checkBrandExists(updatedBrand.nombreMarca, this.selectedBrand.id).pipe(
+      this.checkCoreExists(updatedCore.name).pipe(
         switchMap((exists: boolean) => {
           if (exists) {
             return throwError(() => new Error('La marca ya existe'));
           }
-          return this.brandService.editBrand(updatedBrand);
+          return this.coreService.update(updatedCore.id, updatedCore);
         })
       ).subscribe({
         next: () => {
           alertMethod('Actualización de marcas', 'Marca actualizada exitosamente', 'success');
-          this.loadBrand();
-          this.closeModal('editBrand');
-          this.brandForm.reset();
+          this.loadCores();
+          this.closeModal('editCore');
+          this.coreForm.reset();
         },
         error: (err: any) => {
-          this.closeModal('editBrand');
+          this.closeModal('editCore');
           if (err.message === 'La marca ya existe') {
-            this.alertComponent.showAlert(err.message, 'error');
+            this.alertComponent.showAlert(err.message, AlertType.Error);
           } else if (err.status === 500) {
-            this.alertComponent.showAlert('Error interno del servidor', 'error');
+            this.alertComponent.showAlert('Error interno del servidor', AlertType.Error);
           } else {
-            this.alertComponent.showAlert('Ocurrió un error al actualizar la marca', 'error');
+            this.alertComponent.showAlert('Ocurrió un error al actualizar la marca', AlertType.Error);
           }
         }
       })
     }
   }
 
-  deleteBrand(brand: Brand | null, modalId: string) {
-    if (brand) {
-      this.brandService.deleteBrand(brand).subscribe(() => {
+  deleteCore(core: Core | null, modalId: string) {
+    if (core) {
+      this.coreService.remove(core.id).subscribe(() => {
         alertMethod('Baja de marcas', 'Marca eliminada exitosamente', 'success');
-        this.loadBrand();
+        this.loadCores();
         this.closeModal(modalId);
-        this.brandForm.reset();
+        this.coreForm.reset();
       });
     }
   }

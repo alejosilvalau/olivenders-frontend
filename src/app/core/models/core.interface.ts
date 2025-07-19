@@ -1,7 +1,7 @@
 import { ApiResponse } from "./api-response.interface.js";
 
 export interface Core {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: string;

@@ -1,7 +1,7 @@
 import { ApiResponse } from "./api-response.interface.js";
 
 export interface School {
-  id: number;
+  id: string;
   name: string;
   email: string;
   address: string;
