@@ -1,0 +1,10 @@
+.searcher-input {
+  display: block;
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  font-size: 0.875rem;
+  color: #111827;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+}

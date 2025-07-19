@@ -9,23 +9,17 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './searcher.component.css'
 })
 export class SearcherComponent {
-
   @Input() data: any[] = [];
-
   @Input() filterAttributes: string[] = [];
-
   @Output() filteredData = new EventEmitter<any[]>();
 
   searchTerm: string = '';
 
-  
   onSearchChange(): void {
-    
     if (!this.searchTerm) {
       this.filteredData.emit(this.data);
-      return; 
+      return;
     }
-  
 
     const filtered = this.data.filter(item =>
       this.filterAttributes.some(attr =>
