@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Wizard } from '../models/wizard.interface.js';
+import { Wizard, WizardRequest, WizardResponse } from '../models/wizard.interface.js';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { WizardService } from './wizard.service.js';
@@ -21,11 +21,12 @@ export class AuthService {
   constructor(private router: Router, private wizardService: WizardService) {
   }
 
-  login(formData: FormData): Observable<Wizard> {
-    return this.wizardService.login(formData).pipe(
+  login(wizardData: WizardRequest): Observable<Wizard | undefined> {
+    return this.wizardService.login(wizardData).pipe(
       map((response) => {
-        const { wizard, token } = response.data;
-        this.setWizardSession(wizard, token);
+        const wizard = response.data;
+        const token = response.token;
+        this.setWizardSession(wizard!, token!);
         return wizard;
       })
     );

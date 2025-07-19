@@ -23,4 +23,6 @@ export interface WizardRequest extends Partial<Wizard> {
   password: string;
 }
 
-export interface WizardResponse<T = Wizard> extends ApiResponse<T> { }
+export interface WizardResponse<T = Wizard> extends ApiResponse<T> {
+  token?: string;
+}
