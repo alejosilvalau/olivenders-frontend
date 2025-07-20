@@ -1,6 +1,8 @@
 import {Routes} from '@angular/router';
-import { SchoolComponent } from './school/school.component.js';
+import { SchoolsManagementComponent } from './schools-management/schools-management.component.js';
+import { CoresManagementComponent } from './cores-management/cores-management.component.js';
 
 export const productRoutes: Routes = [
-  {path: 'schools', component: SchoolComponent}
+  { path: 'schools', component: SchoolsManagementComponent },
+  { path: 'cores', component: CoresManagementComponent },
 ]
