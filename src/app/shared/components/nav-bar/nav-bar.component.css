@@ -16,8 +16,9 @@
 }
 
 .logo{
-  height: 90px;
-  width: 90px;
+  width: 205px;
+  height: 100px;
+
 }
 
 .title{
@@ -31,7 +32,7 @@
 }
 
 .custom-navbar {
-  background-color: #007bff;
+  background-color: #061422;
 }
 
 .custom-secondary-navbar {
