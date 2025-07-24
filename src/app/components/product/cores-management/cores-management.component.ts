@@ -81,27 +81,19 @@ export class CoresManagementComponent implements OnInit {
     }
 
     const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
-    if (isObjectId) {
-      this.coreService.findOne(trimmedTerm).subscribe({
-        next: res => {
-          this.filteredCores = res.data ? [res.data] : [];
-        },
-        error: err => {
-          this.filteredCores = [];
-          this.alertComponent.showAlert(err.message || 'Core not found', AlertType.Error);
-        }
-      });
-    } else {
-      this.coreService.findOneByName(trimmedTerm).subscribe({
-        next: res => {
-          this.filteredCores = res.data ? [res.data] : [];
-        },
-        error: err => {
-          this.filteredCores = [];
-          this.alertComponent.showAlert(err.message || 'Core not found', AlertType.Error);
-        }
-      });
-    }
+    const search$: Observable<CoreResponse<Core>> = isObjectId
+      ? this.coreService.findOne(trimmedTerm)
+      : this.coreService.findOneByName(trimmedTerm);
+
+    search$.subscribe({
+      next: res => {
+        this.filteredCores = res.data ? [res.data] : [];
+      },
+      error: err => {
+        this.filteredCores = [];
+        this.alertComponent.showAlert(err.message || 'Core not found', AlertType.Error);
+      }
+    });
   }
 
   onSearch(filteredCores: Core[]): void {
