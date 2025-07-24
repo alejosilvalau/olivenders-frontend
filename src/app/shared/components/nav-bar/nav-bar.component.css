@@ -29,3 +29,35 @@
   padding-bottom: 0.5rem;
   margin: 1.5rem 0;
 }
+
+.custom-navbar {
+  background-color: #007bff;
+}
+
+.custom-secondary-navbar {
+  background-color: #f9fafb;
+}
+
+.custom-dropdown {
+  width: 11rem;
+  z-index: 10;
+  background-color: white;
+  border: none;
+}
+
+.custom-dropdown-item {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.custom-dropdown-item:hover {
+  background-color: #e9ecef;
+}
+
+.custom-nav-link {
+  color: #111827;
+}
+
+.custom-nav-link:hover {
+  text-decoration: underline;
+}

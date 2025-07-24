@@ -1,3 +1,4 @@
+// TODO: This component was not checked yet
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Answer } from '../../../core/models/answer.interface.js';
 import { Wand } from '../../../core/models/wand.interface.js';

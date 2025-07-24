@@ -1,42 +1,37 @@
-<nav class="bg-blue border-gray-200 border-b dark:bg-gray-900">
-  <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-    <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="logo.png" class="h-8 logo" alt="logo" />
-      <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white title">Olivenders</span>
+<nav class="navbar navbar-light custom-navbar border-bottom">
+  <div class="container-xxl py-2">
+    <a href="/" class="navbar-brand d-flex align-items-center">
+      <img src="logo.png" class="logo me-3" alt="logo" />
+      <span class="title fs-3 fw-semibold">Olivenders</span>
     </a>
-    <div class="flex items-center space-x-6 rtl:space-x-reverse">
+    <div class="d-flex align-items-center gap-4">
 
       <ng-container *ngIf="!isLoggedIn">
-
-        <a routerLink="/auth/register"
-          class="text-m text-blue-600 dark:text-blue-500 hover:underline md:dark:hover:text-green-400 dark:hover:bg-transparent">Register</a>
-        <a routerLink="/auth/login"
-          class="text-lg text-blue-600 dark:text-blue-500 hover:underline md:dark:hover:text-green-400 dark:hover:bg-transparent">Log In</a>
+        <a routerLink="/auth/register" class="nav-link nav-register text-light fs-4">Register</a>
+        <a routerLink="/auth/login" class="nav-link nav-login text-light fs-4">Log In</a>
       </ng-container>
 
       <ng-container *ngIf="isLoggedIn">
-        <div class="relative inline-block text-left">
+        <div class="dropdown position-relative">
           <button id="dropdownDefaultButton" (click)="toggleDropdown()"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            type="button">
+            class="btn btn-primary rounded-3 px-4 py-2 d-inline-flex align-items-center" type="button">
             {{ currentWizard?.name + ' ' + currentWizard?.last_name }}
-            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            <svg class="ms-3" style="width: 10px; height: 6px;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="m1 1 4 4 4-4" />
             </svg>
           </button>
 
-          <div id="dropdown" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-            [ngClass]="{'hidden': !isDropdownOpen, 'block': isDropdownOpen}">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+          <div id="dropdown" class="dropdown-menu custom-dropdown rounded-3 shadow"
+            [ngClass]="{'d-none': !isDropdownOpen, 'd-block': isDropdownOpen}">
+            <ul class="py-2 fs-6" aria-labelledby="dropdownDefaultButton">
               <li>
                 <a (click)="toggleDropdown()" routerLink="/auth/profile"
-                  class="block px-4 py-2 bg-gray-150 text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile Settings</a>
+                  class="dropdown-item custom-dropdown-item px-4 py-2">Profile Settings</a>
               </li>
               <li>
-                <a (click)="logout()"
-                  class="block px-4 py-2 bg-gray-150 text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log Out</a>
+                <a (click)="logout()" class="dropdown-item custom-dropdown-item px-4 py-2">Log Out</a>
               </li>
             </ul>
           </div>
@@ -46,27 +41,27 @@
   </div>
 </nav>
 
-<nav class="bg-gray-50 dark:bg-gray-700">
-  <div class="max-w-screen-xl px-4 py-3 mx-auto">
-    <div class="flex items-center">
-      <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
+<nav class="navbar navbar-light custom-secondary-navbar">
+  <div class="container-xxl py-2">
+    <div class="d-flex align-items-center">
+      <ul class="nav fw-medium gap-4 fs-6">
         <ng-container *ngIf="wizardRole === 'user'">
-          <li>
-            <a routerLink="/product/orders" class="text-gray-900 dark:text-white hover:underline">My Orders</a>
+          <li class="nav-item">
+            <a routerLink="/product/orders" class="nav-link custom-nav-link">My Orders</a>
           </li>
-          <li>
-            <a routerLink="/product/answers" class="text-gray-900 dark:text-white hover:underline">My Quizzes</a>
+          <li class="nav-item">
+            <a routerLink="/product/answers" class="nav-link custom-nav-link">My Quizzes</a>
           </li>
         </ng-container>
         <ng-container *ngIf="wizardRole === 'admin'">
-          <li>
-            <a routerLink="/product/wands" class="text-gray-900 dark:text-white hover:underline">Wands</a>
+          <li class="nav-item">
+            <a routerLink="/product/wands" class="nav-link custom-nav-link">Wands</a>
           </li>
-          <li>
-            <a routerLink="/auth/wizards" class="text-gray-900 dark:text-white hover:underline">Wizards</a>
+          <li class="nav-item">
+            <a routerLink="/auth/wizards" class="nav-link custom-nav-link">Wizards</a>
           </li>
-          <li>
-            <a routerLink="/auth/dashboard" class="text-gray-900 dark:text-white hover:underline">Dashboard</a>
+          <li class="nav-item">
+            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Dashboard</a>
           </li>
         </ng-container>
       </ul>
