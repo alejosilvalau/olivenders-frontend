@@ -10,6 +10,7 @@ img {
     padding: 2rem 0;
     position: relative;
     overflow: hidden;
+    z-index: 100;
 }
 
 .con {

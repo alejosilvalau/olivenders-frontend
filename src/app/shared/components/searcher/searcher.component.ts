@@ -12,10 +12,12 @@ export class SearcherComponent {
   @Input() data: any[] = [];
   @Input() filterAttributes: string[] = [];
   @Output() filteredData = new EventEmitter<any[]>();
+  @Output() searchTermChange = new EventEmitter<string>();
 
   searchTerm: string = '';
 
   onSearchChange(): void {
+    this.searchTermChange.emit(this.searchTerm);
     if (!this.searchTerm) {
       this.filteredData.emit(this.data);
       return;

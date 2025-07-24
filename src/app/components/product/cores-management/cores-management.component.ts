@@ -21,6 +21,7 @@ export class CoresManagementComponent implements OnInit {
   cores: Core[] = [];
   selectedCore: Core | null = null;
   filteredCores: Core[] = [];
+  searchTerm: string = '';
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
@@ -72,9 +73,45 @@ export class CoresManagementComponent implements OnInit {
     });
   }
 
-  onSearch(filteredCores: Core[]): void {
-    this.filteredCores = filteredCores.length > 0 ? filteredCores : [];
+  private searchCore(term: string): void {
+    const trimmedTerm = term.trim();
+    if (!trimmedTerm) {
+      this.filteredCores = [];
+      return;
+    }
+
+    const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
+    if (isObjectId) {
+      this.coreService.findOne(trimmedTerm).subscribe({
+        next: res => {
+          this.filteredCores = res.data ? [res.data] : [];
+        },
+        error: err => {
+          this.filteredCores = [];
+          this.alertComponent.showAlert(err.message || 'Core not found', AlertType.Error);
+        }
+      });
+    } else {
+      this.coreService.findOneByName(trimmedTerm).subscribe({
+        next: res => {
+          this.filteredCores = res.data ? [res.data] : [];
+        },
+        error: err => {
+          this.filteredCores = [];
+          this.alertComponent.showAlert(err.message || 'Core not found', AlertType.Error);
+        }
+      });
+    }
   }
+
+  onSearch(filteredCores: Core[]): void {
+    if (filteredCores.length > 0) {
+      this.filteredCores = filteredCores;
+      return;
+    }
+    this.searchCore(this.searchTerm);
+  }
+
   addCore(): void {
     if (this.coreForm.valid) {
       const coreData = this.coreForm.value;
