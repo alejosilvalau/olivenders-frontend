@@ -91,7 +91,7 @@ export class CoresManagementComponent implements OnInit {
       },
       error: err => {
         this.filteredCores = [];
-        this.alertComponent.showAlert(err.message || 'Core not found', AlertType.Error);
+        this.alertComponent.showAlert(err.error.message || 'Core not found', AlertType.Error);
       }
     });
   }
@@ -108,15 +108,15 @@ export class CoresManagementComponent implements OnInit {
     if (this.coreForm.valid) {
       const coreData = this.coreForm.value;
       this.coreService.add(coreData).subscribe({
-        next: (response: CoreResponse) => {
-          this.alertComponent.showAlert(response.message, AlertType.Success);
+        next: (res: CoreResponse) => {
+          this.alertComponent.showAlert(res.message, AlertType.Success);
           this.findAllCores();
           this.closeModal('addCore');
           this.coreForm.reset();
         },
         error: (err: any) => {
           this.closeModal('addCore');
-          this.alertComponent.showAlert(err.message || 'Error adding core', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message || 'Error adding core', AlertType.Error);
           this.coreForm.reset();
         }
       });
