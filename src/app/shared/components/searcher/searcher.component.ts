@@ -16,7 +16,7 @@ export class SearcherComponent {
 
   searchTerm: string = '';
 
-  onSearchChange(): void {
+  onSearchSubmit(): void {
     this.searchTermChange.emit(this.searchTerm);
     if (!this.searchTerm) {
       this.filteredData.emit(this.data);

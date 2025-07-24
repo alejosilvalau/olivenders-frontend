@@ -1,13 +1,15 @@
-<form class="search-container">
+<form class="search-container" (ngSubmit)="onSearchSubmit()">
   <label for="default-search" class="visually-hidden">Search</label>
   <div class="position-relative">
-    <div class="position-absolute top-0 start-0 h-100 d-flex align-items-center ps-2 me-4 pe-none">
-      <svg class="search-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-      </svg>
+    <div class="position-absolute top-0 start-0 h-100 d-flex align-items-center ps-2 me-4">
+      <button type="submit" class="btn p-0 border-0 bg-transparent h-100">
+        <svg class="search-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+        </svg>
+      </button>
     </div>
-    <input type="search" id="default-search" [(ngModel)]="searchTerm" name="searchTerm" (input)="onSearchChange()"
-      class="searcher-input" placeholder="Search..." required />
+    <input type="search" id="default-search" [(ngModel)]="searchTerm" name="searchTerm" class="searcher-input"
+      placeholder="Search..." required />
   </div>
 </form>
