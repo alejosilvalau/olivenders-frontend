@@ -2,8 +2,8 @@
   <app-alert></app-alert>
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
     <h2 class="mb-3 mb-md-0"><strong class="text-primary">CORES MANAGEMENT </strong></h2>
-    <app-searcher [data]="cores" [filterAttributes]="['coreName']" (filteredData)="onSearch($event)"
-      style="display: block; width: 70%;"></app-searcher>
+    <app-searcher [data]="cores" [filterAttributes]="['name']" (filteredData)="onSearch($event)"
+      class="searcher"></app-searcher>
     <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCore">
       <i class="bi bi-person-plus me-2"></i>Add Core
     </button>
@@ -52,7 +52,7 @@
           <form [formGroup]="coreForm" (ngSubmit)="addCore()">
             <div class="col-md-12">
               <label for="name">Core Name</label>
-              <input type="text" formControlName="coreName" id="name" name="name" class="form-control" required>
+              <input type="text" formControlName="name" id="name" name="name" class="form-control" required>
             </div>
 
             <div class="modal-footer">
@@ -68,12 +68,12 @@
   <div id="removeCore" class="modalChanged">
     <div class="modal-contentChanged">
       <span class="close" (click)="closeModal('removeCore')">&times;</span>
-      <h2>Delete Core</h2>
+      <h2>Remove Core</h2>
       <p><strong>Are you sure that you want to remove the core?</strong></p>
       <p><strong>Name:</strong> {{ selectedCore?.name }}</p>
       <div class="modal-footer">
         <button class="btn btn-secondary" (click)="closeModal('removeCore')">Cancel</button>
-        <button class="btn btn-danger" (click)="deleteCore(selectedCore, 'removeCore')">Remove</button>
+        <button class="btn btn-danger" (click)="removeCore(selectedCore, 'removeCore')">Remove</button>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@
       <form [formGroup]="coreForm" (ngSubmit)="editCore()">
         <div class="form-group">
           <label for="coreName">Core Name</label>
-          <input type="text" id="coreName" formControlName="coreName" class="form-control" required>
+          <input type="text" id="coreName" formControlName="name" class="form-control" required>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="closeModal('editCore')">Cancel</button>

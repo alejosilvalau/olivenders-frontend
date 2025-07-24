@@ -280,3 +280,8 @@ form {
     margin-bottom: 0.5rem;
   }
 }
+
+.searcher {
+  display: block;
+  width: 70%;
+}

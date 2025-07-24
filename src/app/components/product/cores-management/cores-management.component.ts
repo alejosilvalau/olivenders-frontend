@@ -5,7 +5,6 @@ import { CoreService } from '../../../core/services/core.service';
 import { Core, CoreResponse } from '../../../core/models/core.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { alertMethod } from '../../../functions/alert.function.js';
@@ -30,12 +29,12 @@ export class CoresManagementComponent implements OnInit {
     private coreService: CoreService
   ) {
     this.coreForm = this.fb.group({
-      coreName: ['', Validators.required]
+      name: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.loadCores();
+    this.findAllCores();
   }
 
   openModal(modalId: string, core: Core): void {
@@ -64,7 +63,7 @@ export class CoresManagementComponent implements OnInit {
     this.coreForm.reset();
   }
 
-  loadCores(): void {
+  findAllCores(): void {
     this.coreService.findAll().subscribe((coreResponse: CoreResponse<Core[]>) => {
       this.cores = coreResponse.data!;
       this.filteredCores = coreResponse.data!;
@@ -81,40 +80,33 @@ export class CoresManagementComponent implements OnInit {
     );
   }
 
-  addCore() {
+  addCore(): void {
     if (this.coreForm.valid) {
       const coreData = this.coreForm.value;
-      this.checkCoreExists(coreData.name).pipe(switchMap((exists: boolean) => {
-        if (!exists) {
-          return this.coreService.add(coreData);
-        }
-        return throwError(() => new Error('La marca ya existe'));
-      })).subscribe({
-        next: () => {
-          alertMethod('Alta de marcas', 'Marca creada exitosamente', 'success');
-          this.loadCores();
+      this.checkCoreExists(coreData.coreName).pipe(
+        switchMap((exists: boolean) => {
+          if (!exists) {
+            return this.coreService.add(coreData);
+          }
+          return throwError(() => new Error('A core with this name already exists'));
+        })
+      ).subscribe({
+        next: (response: CoreResponse) => {
+          this.alertComponent.showAlert(response.message, AlertType.Success);
+          this.findAllCores();
           this.closeModal('addCore');
           this.coreForm.reset();
         },
         error: (err: any) => {
-          if (err.message === 'La marca ya existe') {
-            this.closeModal('addCore');
-            this.alertComponent.showAlert(err.message, AlertType.Error);
-          } else if (err.status === 500) {
-            this.alertComponent.showAlert('Error interno del servidor', AlertType.Error);
-          } else {
-            this.closeModal('addCore');
-            this.alertComponent.showAlert('Ocurrió un error al agregar la marca', AlertType.Error);
-          }
+          this.closeModal('addCore');
+          this.alertComponent.showAlert(err.message || 'Error adding core', AlertType.Error);
           this.coreForm.reset();
         }
       });
     } else {
-      this.alertComponent.showAlert('Por favor, complete todos los campos requeridos.', AlertType.Error);
-      return
+      this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
     }
   }
-
   editCore(): void {
     if (this.selectedCore) {
       const updatedCore: Core = {
@@ -124,38 +116,40 @@ export class CoresManagementComponent implements OnInit {
       this.checkCoreExists(updatedCore.name).pipe(
         switchMap((exists: boolean) => {
           if (exists) {
-            return throwError(() => new Error('La marca ya existe'));
+            return throwError(() => new Error('A core with this name already exists'));
           }
           return this.coreService.update(updatedCore.id, updatedCore);
         })
       ).subscribe({
-        next: () => {
-          alertMethod('Actualización de marcas', 'Marca actualizada exitosamente', 'success');
-          this.loadCores();
+        next: (response: CoreResponse) => {
+          this.alertComponent.showAlert(response.message, AlertType.Success);
+          this.findAllCores();
           this.closeModal('editCore');
           this.coreForm.reset();
         },
         error: (err: any) => {
           this.closeModal('editCore');
-          if (err.message === 'La marca ya existe') {
-            this.alertComponent.showAlert(err.message, AlertType.Error);
-          } else if (err.status === 500) {
-            this.alertComponent.showAlert('Error interno del servidor', AlertType.Error);
-          } else {
-            this.alertComponent.showAlert('Ocurrió un error al actualizar la marca', AlertType.Error);
-          }
+          this.alertComponent.showAlert(err.message || 'Error updating core', AlertType.Error);
+          this.coreForm.reset();
         }
-      })
+      });
     }
   }
 
-  deleteCore(core: Core | null, modalId: string) {
+  removeCore(core: Core | null, modalId: string): void {
     if (core) {
-      this.coreService.remove(core.id).subscribe(() => {
-        alertMethod('Baja de marcas', 'Marca eliminada exitosamente', 'success');
-        this.loadCores();
-        this.closeModal(modalId);
-        this.coreForm.reset();
+      this.coreService.remove(core.id).subscribe({
+        next: (response: CoreResponse) => {
+          this.alertComponent.showAlert(response.message, AlertType.Success);
+          this.findAllCores();
+          this.closeModal(modalId);
+          this.coreForm.reset();
+        },
+        error: (err: any) => {
+          this.closeModal(modalId);
+          this.alertComponent.showAlert(err.message || 'Error deleting core', AlertType.Error);
+          this.coreForm.reset();
+        }
       });
     }
   }
