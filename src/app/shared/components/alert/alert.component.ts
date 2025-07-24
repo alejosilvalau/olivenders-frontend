@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
+
 export enum AlertType {
   Success = 'success',
   Error = 'error',
@@ -17,11 +18,12 @@ export enum AlertType {
 export class AlertComponent {
 
   @Input() message: string = '';
-  @Input() type: AlertType = AlertType.Info;
+  @Input() type: 'success' | 'error' | 'info' = 'info';
+  @Input() alertId: string = '';
 
   show: boolean = false;
 
-  showAlert(message: string, type: AlertType): void {
+  showAlert(message: string, type: 'success' | 'error' | 'info'): void {
     this.message = message;
     this.type = type;
     this.show = true;
