@@ -4,7 +4,7 @@ export interface Core {
   id: string;
   name: string;
   description: string;
-  price: string;
+  price: number;
 }
 
 export interface CoreRequest extends Omit<Core, 'id'> { }

@@ -13,13 +13,19 @@
     <table class="table table-hover table-striped mb-0">
       <thead class="table-primary">
         <tr>
+          <th>ID</th>
           <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody *ngIf="cores.length > 0">
         <tr *ngFor="let core of filteredCores">
+          <td data-label="ID">{{ core.id }}</td>
           <td data-label="Name">{{ core.name }}</td>
+          <td data-label="Description">{{ core.description }}</td>
+          <td data-label="Price">{{ core.price | currency: 'USD' }}</td>
           <td data-label="Actions">
             <button (click)="openModal('editCore', core)" class="btn btn-lg btn-outline-primary" data-bs-toggle="modal">
               <img src="edit-logo.png" alt="">
@@ -51,8 +57,12 @@
         <div class="modal-body">
           <form [formGroup]="coreForm" (ngSubmit)="addCore()">
             <div class="col-md-12">
-              <label for="name">Core Name</label>
+              <label for="name">Name</label>
               <input type="text" formControlName="name" id="name" name="name" class="form-control" required>
+              <label for="description">Description</label>
+              <input type="text" formControlName="description" id="description" name="description" class="form-control" required>
+              <label for="price">Price</label>
+              <input type="number" formControlName="price" id="price" name="price" class="form-control" required>
             </div>
 
             <div class="modal-footer">

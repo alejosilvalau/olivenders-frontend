@@ -29,7 +29,9 @@ export class CoresManagementComponent implements OnInit {
     private coreService: CoreService
   ) {
     this.coreForm = this.fb.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      price: ['', Validators.required]
     });
   }
 
@@ -73,24 +75,10 @@ export class CoresManagementComponent implements OnInit {
   onSearch(filteredCores: Core[]): void {
     this.filteredCores = filteredCores.length > 0 ? filteredCores : [];
   }
-
-  checkCoreExists(coreName: string): Observable<boolean> {
-    return this.coreService.findOneByName(coreName).pipe(
-      map((coreResponse: CoreResponse) => !!coreResponse.data),
-    );
-  }
-
   addCore(): void {
     if (this.coreForm.valid) {
       const coreData = this.coreForm.value;
-      this.checkCoreExists(coreData.coreName).pipe(
-        switchMap((exists: boolean) => {
-          if (!exists) {
-            return this.coreService.add(coreData);
-          }
-          return throwError(() => new Error('A core with this name already exists'));
-        })
-      ).subscribe({
+      this.coreService.add(coreData).subscribe({
         next: (response: CoreResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllCores();
@@ -107,20 +95,14 @@ export class CoresManagementComponent implements OnInit {
       this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
     }
   }
+
   editCore(): void {
     if (this.selectedCore) {
       const updatedCore: Core = {
         ...this.selectedCore,
         ...this.coreForm.value
       };
-      this.checkCoreExists(updatedCore.name).pipe(
-        switchMap((exists: boolean) => {
-          if (exists) {
-            return throwError(() => new Error('A core with this name already exists'));
-          }
-          return this.coreService.update(updatedCore.id, updatedCore);
-        })
-      ).subscribe({
+      this.coreService.update(updatedCore.id, updatedCore).subscribe({
         next: (response: CoreResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllCores();
