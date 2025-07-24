@@ -1,0 +1,83 @@
+:host {
+  display: block;
+}
+
+button > img {
+  width: 30px;
+  height: 30px;
+}
+
+.vertical-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  gap: 10px;
+  flex-grow: inherit;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 1.5rem;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #fff;
+  }
+
+  .table td {
+    position: relative;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+  }
+  .table td:last-child {
+    border-bottom: none;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    color: #495057;
+  }
+
+  .table thead tr {
+    display: table-row;
+  }
+
+  .table th {
+    display: table-cell;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    padding: 0.75rem;
+  }
+
+  .table td:last-child {
+    border-bottom: none;
+  }
+
+  .horizontal-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 10px;
+  }
+}

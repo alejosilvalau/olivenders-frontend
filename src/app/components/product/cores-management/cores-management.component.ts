@@ -8,10 +8,11 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { alertMethod } from '../../../functions/alert.function.js';
+import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
 @Component({
   selector: 'app-cores-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent],
   templateUrl: './cores-management.component.html',
   styleUrl: './cores-management.component.css'
 })
