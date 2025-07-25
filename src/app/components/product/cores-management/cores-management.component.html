@@ -1,133 +1,67 @@
 <div class="container my-4">
   <app-alert></app-alert>
-  <div
-    class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4"
-  >
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
     <h2 class="mb-3 mb-md-0">
       <strong class="text-primary">CORES MANAGEMENT </strong>
     </h2>
-    <app-searcher
-      [data]="cores"
-      [filterAttributes]="['name', 'id']"
-      (filteredData)="onSearch($event)"
-      (searchTermChange)="searchTerm = $event"
-      class="searcher"
-    ></app-searcher>
+    <app-searcher [data]="cores" [filterAttributes]="['name', 'id']" (filteredData)="onSearch($event)"
+      (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
     <app-add-button [modalTarget]="'#addCore'" [buttonText]="'Add Core'" />
   </div>
-
-  <app-data-table
-    [columns]="[
+  <app-data-table [columns]="[
       { key: 'id', label: 'ID' },
       { key: 'name', label: 'Name' },
       { key: 'description', label: 'Description' },
       { key: 'price', label: 'Price' }
-    ]"
-    [data]="filteredCores"
-    [emptyMessage]="'There are no cores available.'"
-    [editModalTarget]="'#editCore'"
-    [removeModalTarget]="'#removeCore'"
-    (selectedEntity)="onCoreSelected($event)"
-  >
+    ]" [data]="filteredCores" [emptyMessage]="'There are no cores available.'" [editModalTarget]="'#editCore'"
+    [removeModalTarget]="'#removeCore'" (selectedEntity)="onCoreSelected($event)">
   </app-data-table>
-  <app-modal
-    [config]="{
+  <app-modal [config]="{
       id: 'addCore',
       title: 'New Core',
       submitButtonText: 'Create Core',
       cancelButtonText: 'Cancel'
-    }"
-    (onSubmit)="addCore()"
-    (onCancel)="coreForm.reset()"
-  >
+    }" (onSubmit)="addCore()" (onCancel)="coreForm.reset()">
     <ng-template #modalContent>
       <form [formGroup]="coreForm">
         <div class="col-md-12">
           <label for="name">Name</label>
-          <input
-            type="text"
-            formControlName="name"
-            id="name"
-            name="name"
-            class="form-control"
-            required
-          />
+          <input type="text" formControlName="name" id="name" name="name" class="form-control" required />
           <label for="description">Description</label>
-          <textarea
-            formControlName="description"
-            id="description"
-            name="description"
-            class="form-control"
-            rows="4"
-            required
-          ></textarea>
+          <textarea formControlName="description" id="description" name="description" class="form-control" rows="4"
+            required></textarea>
           <label for="price">Price</label>
-          <input
-            type="number"
-            formControlName="price"
-            id="price"
-            name="price"
-            class="form-control"
-            required
-          />
+          <input type="number" formControlName="price" id="price" name="price" class="form-control" required />
         </div>
       </form>
     </ng-template>
   </app-modal>
-  <app-modal
-    [config]="{
+  <app-modal [config]="{
       id: 'editCore',
       title: 'Edit Core',
       submitButtonText: 'Save Changes',
       cancelButtonText: 'Cancel'
-    }"
-    (onSubmit)="editCore()"
-    (onCancel)="coreForm.reset()"
-  >
+    }" (onSubmit)="editCore()" (onCancel)="coreForm.reset()">
     <ng-template #modalContent>
       <form [formGroup]="coreForm">
         <div class="col-md-12">
           <label for="name">Name</label>
-          <input
-            type="text"
-            formControlName="name"
-            id="name"
-            name="name"
-            class="form-control"
-            required
-          />
+          <input type="text" formControlName="name" id="name" name="name" class="form-control" required />
           <label for="description">Description</label>
-          <textarea
-            formControlName="description"
-            id="description"
-            name="description"
-            class="form-control"
-            rows="4"
-            required
-          ></textarea>
+          <textarea formControlName="description" id="description" name="description" class="form-control" rows="4"
+            required></textarea>
           <label for="price">Price</label>
-          <input
-            type="number"
-            formControlName="price"
-            id="price"
-            name="price"
-            class="form-control"
-            required
-          />
+          <input type="number" formControlName="price" id="price" name="price" class="form-control" required />
         </div>
       </form>
     </ng-template>
   </app-modal>
-  <app-modal
-    [config]="{
+  <app-modal [config]="{
       id: 'removeCore',
       title: 'Remove Core',
       submitButtonText: 'Confirm Delete',
       cancelButtonText: 'Cancel'
-    }"
-    (onSubmit)="removeCore()"
-    (onCancel)="coreForm.reset()"
-  >
+    }" (onSubmit)="removeCore()" (onCancel)="coreForm.reset()">
     <ng-template #modalContent>
       <div class="col-md-12">
         <p>Are you sure that you want to remove the core?</p>
