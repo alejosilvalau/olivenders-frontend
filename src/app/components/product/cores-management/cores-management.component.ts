@@ -41,7 +41,7 @@ export class CoresManagementComponent implements OnInit {
     this.findAllCores();
   }
 
-  onCoreSelected(core: any) {
+  onCoreSelected(core: Core): void {
     this.selectedCore = core;
     if (core) {
       this.coreForm.patchValue({

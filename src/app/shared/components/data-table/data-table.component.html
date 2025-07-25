@@ -9,15 +9,11 @@
     <tbody *ngIf="data.length > 0">
       <tr *ngFor="let item of data">
         <td *ngFor="let col of columns">
-          <ng-container *ngIf="col.key === 'name'; else defaultCell">
-            {{ item[col.key] | titlecase }}
-          </ng-container>
-          <ng-container *ngIf="col.key === 'price'">
-            ${{ item[col.key] }}
-          </ng-container>
+          <ng-container *ngIf="col.key === 'name'; else defaultCell"> {{ item[col.key] | titlecase }} </ng-container>
+          <ng-container *ngIf="col.key === 'price'"> ${{ item[col.key] }} </ng-container>
+          <ng-container *ngIf="col.key === 'phone'"> +{{ item[col.key] }} </ng-container>
           <ng-template #defaultCell>
-            <ng-container *ngIf="col.key !== 'price' && col.key !== 'name'">
-              {{ item[col.key] }}
+            <ng-container *ngIf="col.key !== 'price' && col.key !== 'name' && col.key !== 'phone'"> {{ item[col.key] }}
             </ng-container>
           </ng-template>
         </td>
@@ -38,8 +34,7 @@
     <tfoot *ngIf="data.length === 0">
       <tr>
         <td [attr.colspan]="columns.length + 1" class="text-center py-5 text-muted">
-          <i class="bi bi-people display-6 d-block mb-2"></i>
-          {{ emptyMessage }}
+          <i class="bi bi-people display-6 d-block mb-2"></i> {{ emptyMessage }}
         </td>
       </tr>
     </tfoot>

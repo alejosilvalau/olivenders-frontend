@@ -1,0 +1,75 @@
+<div class="container my-4">
+  <app-alert></app-alert>
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+    <h2 class="mb-3 mb-md-0">
+      <strong class="text-primary">SCHOOLS MANAGEMENT </strong>
+    </h2>
+    <app-searcher [data]="schools" [filterAttributes]="['name', 'id', 'email']" (filteredData)="onSearch($event)"
+      (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
+    <app-add-button [modalTarget]="'#addSchool'" [buttonText]="'Add School'" />
+  </div>
+  <app-data-table [columns]="[
+      { key: 'id', label: 'ID' },
+      { key: 'name', label: 'Name' },
+      { key: 'email', label: 'Email' },
+      { key: 'address', label: 'Address' },
+      { key: 'phone', label: 'Phone' }
+    ]" [data]="filteredSchools" [emptyMessage]="'There are no schools available.'" [editModalTarget]="'#editSchool'"
+    [removeModalTarget]="'#removeSchool'" (selectedEntity)="onSchoolSelected($event)">
+  </app-data-table>
+  <app-modal [config]="{
+      id: 'addSchool',
+      title: 'New School',
+      submitButtonText: 'Create School',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="addSchool()" (onCancel)="schoolForm.reset()">
+    <ng-template #modalContent>
+      <form [formGroup]="schoolForm">
+        <div class="col-md-12">
+          <label for="name">Name</label>
+          <input type="text" formControlName="name" id="name" name="name" class="form-control" required />
+          <label for="email">Email</label>
+          <input type="email" formControlName="email" id="name" name="email" class="form-control" required />
+          <label for="address">Address</label>
+          <input type="text" formControlName="address" id="address" name="address" class="form-control" required />
+          <label for="phone">Phone</label>
+          <input type="text" formControlName="phone" id="phone" name="phone" class="form-control" required />
+        </div>
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal [config]="{
+      id: 'editSchool',
+      title: 'Edit School',
+      submitButtonText: 'Save Changes',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="editSchool()" (onCancel)="schoolForm.reset()">
+    <ng-template #modalContent>
+      <form [formGroup]="schoolForm">
+        <div class="col-md-12">
+          <label for="name">Name</label>
+          <input type="text" formControlName="name" id="name" name="name" class="form-control" required />
+          <label for="email">Email</label>
+          <input type="email" formControlName="email" id="name" name="email" class="form-control" required />
+          <label for="address">Address</label>
+          <input type="text" formControlName="address" id="address" name="address" class="form-control" required />
+          <label for="phone">Phone</label>
+          <input type="text" formControlName="phone" id="phone" name="phone" class="form-control" required />
+        </div>
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal [config]="{
+      id: 'removeSchool',
+      title: 'Remove School',
+      submitButtonText: 'Confirm Delete',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="removeSchool()" (onCancel)="schoolForm.reset()">
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to remove the school?</p>
+        <p><strong>Name:</strong> {{ selectedSchool?.name | titlecase }}</p>
+      </div>
+    </ng-template>
+  </app-modal>
+</div>
