@@ -9,10 +9,11 @@ import { SearcherComponent } from '../../../shared/components/searcher/searcher.
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { alertMethod } from '../../../functions/alert.function.js';
 import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
+import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 @Component({
   selector: 'app-cores-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent],
   templateUrl: './cores-management.component.html',
   styleUrl: './cores-management.component.css'
 })
