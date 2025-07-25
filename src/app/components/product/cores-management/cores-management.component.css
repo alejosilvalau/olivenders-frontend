@@ -37,4 +37,5 @@ textarea.form-control {
 .searcher {
   display: block;
   width: 70%;
+  margin: 0 15px;
 }
