@@ -1,7 +1,8 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
 body {
-  background-color: bg-light;
+  background-color: #f8f9fa;
 }
 
 html, body { height: 100%; }

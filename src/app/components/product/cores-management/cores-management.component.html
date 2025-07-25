@@ -5,8 +5,10 @@
     <app-searcher [data]="cores" [filterAttributes]="['name', 'id']" (filteredData)="onSearch($event)"
       (searchTermChange)="searchTerm = $event"
       class="searcher"></app-searcher>
-    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCore">
-      <i class="bi bi-person-plus me-2"></i>Add Core
+    <button type="button" class="btn btn-primary btn-lg d-flex align-items-center text-nowrap" data-bs-toggle="modal"
+      data-bs-target="#addCore">
+      <i class="bi bi-plus me-2 fs-3"></i>
+      Add Core
     </button>
   </div>
 
