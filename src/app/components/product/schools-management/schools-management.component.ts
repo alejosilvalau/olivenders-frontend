@@ -45,12 +45,7 @@ export class SchoolsManagementComponent implements OnInit {
   onSchoolSelected(school: School): void {
     this.selectedSchool = school;
     if (school) {
-      this.schoolForm.patchValue({
-        name: school.name,
-        email: school.email,
-        address: school.address,
-        phone: school.phone
-      });
+      this.schoolForm.patchValue({ ...school });
     }
   }
 

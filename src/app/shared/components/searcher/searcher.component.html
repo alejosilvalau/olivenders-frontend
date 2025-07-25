@@ -10,6 +10,6 @@
       </button>
     </div>
     <input type="search" id="default-search" [(ngModel)]="searchTerm" name="searchTerm" class="searcher-input"
-      placeholder="Search..." required />
+      placeholder="Search..." required (input)="onClearInput()"/>
   </div>
 </form>

@@ -33,7 +33,7 @@ export class CoresManagementComponent implements OnInit {
     this.coreForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      price: ['', Validators.required]
+      price: [0, Validators.required]
     });
   }
 
@@ -44,11 +44,7 @@ export class CoresManagementComponent implements OnInit {
   onCoreSelected(core: Core): void {
     this.selectedCore = core;
     if (core) {
-      this.coreForm.patchValue({
-        name: core.name,
-        description: core.description,
-        price: core.price
-      });
+      this.coreForm.patchValue({ ...core });
     }
   }
 

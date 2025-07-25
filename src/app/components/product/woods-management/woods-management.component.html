@@ -1,0 +1,79 @@
+<div class="container my-4">
+  <app-alert></app-alert>
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+    <h2 class="mb-3 mb-md-0">
+      <strong class="text-primary">WOODS MANAGEMENT </strong>
+    </h2>
+    <app-searcher [data]="woods" [filterAttributes]="['name', 'id', 'binomial_name']" (filteredData)="onSearch($event)"
+      (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
+    <app-add-button [modalTarget]="'#addWood'" [buttonText]="'Add Wood'" />
+  </div>
+  <app-data-table [columns]="[
+      { key: 'id', label: 'ID' },
+      { key: 'name', label: 'Name' },
+      { key: 'binomial_name', label: 'Binomial Name' },
+      { key: 'description', label: 'Description' },
+      { key: 'price', label: 'Price' }
+    ]" [data]="filteredWoods" [emptyMessage]="'There are no woods available.'" [editModalTarget]="'#editWood'"
+    [removeModalTarget]="'#removeWood'" (selectedEntity)="onWoodSelected($event)">
+  </app-data-table>
+  <app-modal [config]="{
+      id: 'addWood',
+      title: 'New Wood',
+      submitButtonText: 'Create Wood',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="addWood()" (onCancel)="woodForm.reset()">
+    <ng-template #modalContent>
+      <form [formGroup]="woodForm">
+        <div class="col-md-12">
+          <label for="name">Name</label>
+          <input type="text" formControlName="name" id="name" name="name" class="form-control" required />
+          <label for="binomial_name">Binomial Name</label>
+          <input type="text" formControlName="binomial_name" id="binomial_name" name="binomial_name"
+            class="form-control" required />
+          <label for="description">Description</label>
+          <textarea formControlName="description" id="description" name="description" class="form-control" rows="4"
+            required></textarea>
+          <label for="price">Price</label>
+          <input type="number" formControlName="price" id="price" name="price" class="form-control" required />
+        </div>
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal [config]="{
+      id: 'editWood',
+      title: 'Edit Wood',
+      submitButtonText: 'Save Changes',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="editWood()" (onCancel)="woodForm.reset()">
+    <ng-template #modalContent>
+      <form [formGroup]="woodForm">
+        <div class="col-md-12">
+          <label for="name">Name</label>
+          <input type="text" formControlName="name" id="name" name="name" class="form-control" required />
+          <label for="binomial_name">Binomial Name</label>
+          <input type="text" formControlName="binomial_name" id="binomial_name" name="binomial_name"
+            class="form-control" required />
+          <label for="description">Description</label>
+          <textarea formControlName="description" id="description" name="description" class="form-control" rows="4"
+            required></textarea>
+          <label for="price">Price</label>
+          <input type="number" formControlName="price" id="price" name="price" class="form-control" required />
+        </div>
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal [config]="{
+      id: 'removeWood',
+      title: 'Remove Wood',
+      submitButtonText: 'Confirm Delete',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="removeWood()" (onCancel)="woodForm.reset()">
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to remove the wood?</p>
+        <p><strong>Name:</strong> {{ selectedWood?.name | titlecase }}</p>
+      </div>
+    </ng-template>
+  </app-modal>
+</div>

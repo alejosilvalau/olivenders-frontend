@@ -31,4 +31,10 @@ export class SearcherComponent {
 
     this.filteredData.emit(filtered.length ? filtered : []);
   }
+
+  onClearInput(): void {
+    if (!this.searchTerm) {
+      this.onSearchSubmit();
+    }
+  }
 }
