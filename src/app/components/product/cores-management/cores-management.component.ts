@@ -40,30 +40,15 @@ export class CoresManagementComponent implements OnInit {
     this.findAllCores();
   }
 
-  openModal(modalId: string, core: Core): void {
+  onCoreSelected(core: any) {
     this.selectedCore = core;
     if (core) {
       this.coreForm.patchValue({
         name: core.name,
+        description: core.description,
+        price: core.price
       });
     }
-    const modalDiv = document.getElementById(modalId);
-    if (modalDiv != null) {
-      modalDiv.style.display = 'block';
-    }
-  }
-
-  closeModal(modalId: string) {
-    const modalDiv = document.getElementById(modalId);
-    if (modalDiv != null) {
-      modalDiv.style.display = 'none';
-    }
-    const backdrop = document.querySelector('.modal-backdrop');
-    if (backdrop != null) {
-      backdrop.parentNode?.removeChild(backdrop);
-    }
-    this.selectedCore = null;
-    this.coreForm.reset();
   }
 
   findAllCores(): void {
@@ -111,11 +96,9 @@ export class CoresManagementComponent implements OnInit {
         next: (res: CoreResponse) => {
           this.alertComponent.showAlert(res.message, AlertType.Success);
           this.findAllCores();
-          this.closeModal('addCore');
           this.coreForm.reset();
         },
         error: (err: any) => {
-          this.closeModal('addCore');
           this.alertComponent.showAlert(err.error.message || 'Error adding core', AlertType.Error);
           this.coreForm.reset();
         }
@@ -135,33 +118,25 @@ export class CoresManagementComponent implements OnInit {
         next: (response: CoreResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllCores();
-          this.closeModal('editCore');
-          this.coreForm.reset();
         },
         error: (err: any) => {
-          this.closeModal('editCore');
           this.alertComponent.showAlert(err.message || 'Error updating core', AlertType.Error);
-          this.coreForm.reset();
         }
       });
+      this.coreForm.reset();
     }
   }
 
-  removeCore(core: Core | null, modalId: string): void {
-    if (core) {
-      this.coreService.remove(core.id).subscribe({
-        next: (response: CoreResponse) => {
-          this.alertComponent.showAlert(response.message, AlertType.Success);
-          this.findAllCores();
-          this.closeModal(modalId);
-          this.coreForm.reset();
-        },
-        error: (err: any) => {
-          this.closeModal(modalId);
-          this.alertComponent.showAlert(err.message || 'Error deleting core', AlertType.Error);
-          this.coreForm.reset();
-        }
-      });
-    }
+  removeCore(): void {
+    this.coreService.remove(this.selectedCore!.id).subscribe({
+      next: (response: CoreResponse) => {
+        this.alertComponent.showAlert(response.message, AlertType.Success);
+        this.findAllCores();
+      },
+      error: (err: any) => {
+        this.alertComponent.showAlert(err.message || 'Error deleting core', AlertType.Error);
+      }
+    });
+    this.coreForm.reset();
   }
 }

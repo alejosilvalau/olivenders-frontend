@@ -24,10 +24,12 @@
         </td>
         <td>
           <div class="vertical-buttons horizontal-buttons">
-            <button [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="editModalTarget" class="btn btn-outline-primary">
+            <button [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="editModalTarget" class="btn btn-outline-primary"
+              (click)="onSelectEntity(item)">
               <img src="edit-logo.png" alt="">
             </button>
-            <button [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="removeModalTarget" class="btn btn-outline-danger">
+            <button [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="removeModalTarget" class="btn btn-outline-danger"
+              (click)="onSelectEntity(item)">
               <img src="cancel-logo.png" alt="">
             </button>
           </div>

@@ -14,6 +14,9 @@ export class DataTableComponent<T extends Record<string, any>> {
   @Input() emptyMessage: string = 'No data available.';
   @Input() editModalTarget: string = '';
   @Input() removeModalTarget: string = '';
-  // @Output() edit = new EventEmitter<T>();
-  // @Output() remove = new EventEmitter<T>();
+  @Output() selectedEntity = new EventEmitter<T>();
+
+  onSelectEntity(entity: T) {
+    this.selectedEntity.emit(entity);
+  }
 }
