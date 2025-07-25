@@ -11,9 +11,8 @@
         <td *ngFor="let col of columns">
           <ng-container *ngIf="col.key === 'name'; else defaultCell"> {{ item[col.key] | titlecase }} </ng-container>
           <ng-container *ngIf="col.key === 'price'"> ${{ item[col.key] }} </ng-container>
-          <ng-container *ngIf="col.key === 'phone'"> +{{ item[col.key] }} </ng-container>
           <ng-template #defaultCell>
-            <ng-container *ngIf="col.key !== 'price' && col.key !== 'name' && col.key !== 'phone'"> {{ item[col.key] }}
+            <ng-container *ngIf="col.key !== 'price' && col.key !== 'name'"> {{ item[col.key] }}
             </ng-container>
           </ng-template>
         </td>

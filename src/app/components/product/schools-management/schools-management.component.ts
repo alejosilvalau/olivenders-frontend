@@ -112,7 +112,8 @@ export class SchoolsManagementComponent implements OnInit {
 
   editSchool(): void {
     if (this.selectedSchool) {
-      this.schoolService.update(this.selectedSchool.id, this.selectedSchool).subscribe({
+      const schoolData = this.schoolForm.value;
+      this.schoolService.update(this.selectedSchool.id, schoolData).subscribe({
         next: (response: SchoolResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllSchools();

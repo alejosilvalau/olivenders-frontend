@@ -110,7 +110,8 @@ export class CoresManagementComponent implements OnInit {
 
   editCore(): void {
     if (this.selectedCore) {
-      this.coreService.update(this.selectedCore.id, this.selectedCore).subscribe({
+      const coreData = this.coreForm.value;
+      this.coreService.update(this.selectedCore.id, coreData).subscribe({
         next: (response: CoreResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllCores();
