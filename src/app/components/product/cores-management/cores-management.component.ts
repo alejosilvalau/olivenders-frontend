@@ -97,13 +97,12 @@ export class CoresManagementComponent implements OnInit {
         next: (res: CoreResponse) => {
           this.alertComponent.showAlert(res.message, AlertType.Success);
           this.findAllCores();
-          this.coreForm.reset();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message || 'Error adding core', AlertType.Error);
-          this.coreForm.reset();
         }
       });
+      this.coreForm.reset();
     } else {
       this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
     }
@@ -111,11 +110,7 @@ export class CoresManagementComponent implements OnInit {
 
   editCore(): void {
     if (this.selectedCore) {
-      const updatedCore: Core = {
-        ...this.selectedCore,
-        ...this.coreForm.value
-      };
-      this.coreService.update(updatedCore.id, updatedCore).subscribe({
+      this.coreService.update(this.selectedCore.id, this.selectedCore).subscribe({
         next: (response: CoreResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllCores();
@@ -129,15 +124,17 @@ export class CoresManagementComponent implements OnInit {
   }
 
   removeCore(): void {
-    this.coreService.remove(this.selectedCore!.id).subscribe({
-      next: (response: CoreResponse) => {
-        this.alertComponent.showAlert(response.message, AlertType.Success);
-        this.findAllCores();
-      },
-      error: (err: any) => {
-        this.alertComponent.showAlert(err.message || 'Error deleting core', AlertType.Error);
-      }
-    });
-    this.coreForm.reset();
+    if (this.selectedCore) {
+      this.coreService.remove(this.selectedCore.id).subscribe({
+        next: (response: CoreResponse) => {
+          this.alertComponent.showAlert(response.message, AlertType.Success);
+          this.findAllCores();
+        },
+        error: (err: any) => {
+          this.alertComponent.showAlert(err.message || 'Error deleting core', AlertType.Error);
+        }
+      });
+      this.coreForm.reset();
+    }
   }
 }

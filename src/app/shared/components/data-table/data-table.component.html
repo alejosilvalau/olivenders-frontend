@@ -12,7 +12,6 @@
           <ng-container *ngIf="col.key === 'name'; else defaultCell">
             {{ item[col.key] | titlecase }}
           </ng-container>
-          <!-- Show price with dollar sign -->
           <ng-container *ngIf="col.key === 'price'">
             ${{ item[col.key] }}
           </ng-container>
