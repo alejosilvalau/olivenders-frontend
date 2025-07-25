@@ -1,7 +1,7 @@
 .form-group {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 label {
@@ -9,12 +9,13 @@ label {
   font-weight: bold;
   margin-right: 10px;
   margin-bottom: 5px;
+  margin-top: 5px;;
   display: block;
   white-space: nowrap;
 }
 
 input {
-  border: 1px solid #004080;
+
   border-radius: 4px;
   padding: 8px;
   width: 100%;
@@ -147,7 +148,6 @@ form {
 .modal-content-changed label {
   font-weight: 500;
   color: #495057;
-  margin-bottom: 0.5rem;
   display: block;
 }
 
