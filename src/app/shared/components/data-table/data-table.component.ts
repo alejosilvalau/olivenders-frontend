@@ -12,6 +12,8 @@ export class DataTableComponent<T extends Record<string, any>> {
   @Input() columns: { key: string, label: string }[] = [];
   @Input() data: T[] = [];
   @Input() emptyMessage: string = 'No data available.';
-  @Output() edit = new EventEmitter<T>();
-  @Output() remove = new EventEmitter<T>();
+  @Input() editModalTarget: string = '';
+  @Input() removeModalTarget: string = '';
+  // @Output() edit = new EventEmitter<T>();
+  // @Output() remove = new EventEmitter<T>();
 }

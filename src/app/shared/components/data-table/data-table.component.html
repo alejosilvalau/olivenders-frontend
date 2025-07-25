@@ -24,10 +24,10 @@
         </td>
         <td>
           <div class="vertical-buttons horizontal-buttons">
-            <button (click)="edit.emit(item)" class="btn btn-outline-primary">
+            <button [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="editModalTarget" class="btn btn-outline-primary">
               <img src="edit-logo.png" alt="">
             </button>
-            <button (click)="remove.emit(item)" class="btn btn-outline-danger">
+            <button [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="removeModalTarget" class="btn btn-outline-danger">
               <img src="cancel-logo.png" alt="">
             </button>
           </div>

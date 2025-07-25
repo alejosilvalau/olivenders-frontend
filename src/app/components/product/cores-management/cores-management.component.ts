@@ -44,7 +44,7 @@ export class CoresManagementComponent implements OnInit {
     this.selectedCore = core;
     if (core) {
       this.coreForm.patchValue({
-        coreName: core.name,
+        name: core.name,
       });
     }
     const modalDiv = document.getElementById(modalId);

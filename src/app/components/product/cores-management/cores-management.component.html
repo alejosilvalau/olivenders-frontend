@@ -13,8 +13,8 @@
         { key: 'name', label: 'Name' },
         { key: 'description', label: 'Description' },
         { key: 'price', label: 'Price' }
-      ]" [data]="filteredCores" [emptyMessage]="'There are no cores available.'" (edit)="openModal('editCore', $event)"
-    (remove)="openModal('removeCore', $event)">
+      ]" [data]="filteredCores" [emptyMessage]="'There are no cores available.'" [editModalTarget]="'#editCore'"
+    [removeModalTarget]="'#removeCore'">
   </app-data-table>
 
   <div class="modal fade" id="addCore" tabindex="-1" aria-labelledby="addCoreModalLabel" aria-hidden="true">
@@ -38,43 +38,13 @@
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="submit" class="btn btn-primary">Create Core</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-
-  <div id="removeCore" class="modal-changed">
-    <div class="modal-content-changed">
-      <span class="close" (click)="closeModal('removeCore')">&times;</span>
-      <h2>Remove Core</h2>
-      <p><strong>Are you sure that you want to remove the core?</strong></p>
-      <p><strong>Name:</strong> {{ selectedCore?.name }}</p>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" (click)="closeModal('removeCore')">Cancel</button>
-        <button class="btn btn-danger" (click)="removeCore(selectedCore, 'removeCore')">Remove</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- <div id="editCore" class="modal-changed">
-    <div class="modal-content-changed">
-      <span class="close" (click)="closeModal('editCore')">&times;</span>
-      <h2>Edit Core</h2>
-      <form [formGroup]="coreForm" (ngSubmit)="editCore()">
-        <div class="form-group">
-          <label for="coreName">Core Name</label>
-          <input type="text" id="coreName" formControlName="name" class="form-control" required>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal('editCore')">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Changes</button>
-        </div>
-      </form>
-    </div>
-  </div> -->
 
   <div class="modal fade" id="editCore" tabindex="-1" aria-labelledby="editCoreModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -94,14 +64,67 @@
               <label for="price">Price</label>
               <input type="number" formControlName="price" id="price" name="price" class="form-control" required>
             </div>
-
+  
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+              </div>
+              </form>
+              </div>
+              </div>
+              </div>
+              </div>
+              <!-- <div id="editCore" class="modal-changed">
+                                                                                                                                                <div class="modal-content-changed">
+                                                                                                                                                  <span class="close" (click)="closeModal('editCore')">&times;</span>
+                                                                                                                                                  <h2>Edit Core</h2>
+                                                                                                                                                  <form [formGroup]="coreForm" (ngSubmit)="editCore()">
+                                                                                                                                                    <div class="form-group">
+                                                                                                                                                      <label for="coreName">Core Name</label>
+                                                                                                                                                      <input type="text" id="coreName" formControlName="name" class="form-control" required>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div class="modal-footer">
+                                                                                                                                                      <button type="button" class="btn btn-secondary" (click)="closeModal('editCore')">Cancel</button>
+                                                                                                                                                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                                                                                                                    </div>
+                                                                                                                                                  </form>
+                                                                                                                                                </div>
+  </div> -->
+
+<!-- <div id="removeCore" class="modal-changed">
+    <div class="modal-content-changed">
+      <span class="close" (click)="closeModal('removeCore')">&times;</span>
+      <h2>Remove Core</h2>
+      <p><strong>Are you sure that you want to remove the core?</strong></p>
+      <p><strong>Name:</strong> {{ selectedCore?.name }}</p>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeModal('removeCore')">Cancel</button>
+        <button class="btn btn-danger" (click)="removeCore(selectedCore, 'removeCore')">Remove</button>
+        </div>
+        </div>
+        </div> -->
+
+<div class="modal fade" id="removeCore" tabindex="-1" aria-labelledby="removeCoreModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="removeCoreModalLabel">Remove Core</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="coreForm" (ngSubmit)="removeCore(selectedCore, 'removeCore')">
+            <div class="col-md-12">
+              <p><strong>Are you sure that you want to remove the core?</strong></p>
+              <p><strong>Name:</strong> {{ selectedCore?.name }}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Confirm Delete</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+
 </div>
