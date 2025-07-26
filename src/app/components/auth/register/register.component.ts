@@ -61,14 +61,14 @@ export class RegisterComponent implements OnInit {
 
   registerWizard() {
     if (!this.passwordMatchValidator(this.registerForm)) {
-      this.alertComponent.showAlert('Passwords do not match. Please re-enter.', AlertType.Error);
+      alertMethod('Passwords do not match', 'Please re-enter your password.', AlertType.Error);
       this.registerForm.get('password')?.reset();
       this.registerForm.get('confirmPassword')?.reset();
       return;
     }
 
     if (!this.registerForm.valid) {
-      this.alertComponent.showAlert('Invalid form. Please complete all fields.', AlertType.Error);
+      alertMethod('Form is invalid', 'Please fill in all required fields.', AlertType.Error);
       return;
     }
 
@@ -89,23 +89,21 @@ export class RegisterComponent implements OnInit {
 
             this.wizardService.add(userData).subscribe({
               next: (addResponse) => {
-                alertMethod('Registration Successful', 'You can now log in with your credentials.', AlertType.Success);
-                this.registerForm.reset();
+                alertMethod(addResponse.message, 'You can now log in with your credentials.', AlertType.Success);
                 this.router.navigate(['/login']);
-                // this.alertComponent.showAlert(addResponse.message, AlertType.Success);
               },
               error: (err: any) => {
-                this.alertComponent.showAlert(err.error.message, AlertType.Error);
+                alertMethod(err.error.message, 'Please try again.', AlertType.Error);
               }
             });
           },
           error: (err: any) => {
-            this.alertComponent.showAlert(err.error.message, AlertType.Error);
+            alertMethod(err.error.message, 'Please try again.', AlertType.Error);
           }
         });
       },
       error: (err: any) => {
-        this.alertComponent.showAlert(err.error.message, AlertType.Error);
+        alertMethod(err.error.message, 'Please try again.', AlertType.Error);
       },
     });
   }
