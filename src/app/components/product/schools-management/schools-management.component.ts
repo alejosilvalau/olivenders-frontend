@@ -74,7 +74,7 @@ export class SchoolsManagementComponent implements OnInit {
       },
       error: err => {
         this.filteredSchools = [];
-        this.alertComponent.showAlert(err.error.message || 'School not found', AlertType.Error);
+        this.alertComponent.showAlert(err.error.message, AlertType.Error);
       }
     });
   }
@@ -96,7 +96,7 @@ export class SchoolsManagementComponent implements OnInit {
           this.findAllSchools();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.error.message || 'Error adding the school', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message, AlertType.Error);
         }
       });
       this.schoolForm.reset();
@@ -114,7 +114,7 @@ export class SchoolsManagementComponent implements OnInit {
           this.findAllSchools();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.error.message || 'Error updating the school', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message, AlertType.Error);
         }
       });
       this.schoolForm.reset();
@@ -129,7 +129,7 @@ export class SchoolsManagementComponent implements OnInit {
           this.findAllSchools();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.error.message || 'Error deleting the school', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message, AlertType.Error);
         }
       });
       this.schoolForm.reset();

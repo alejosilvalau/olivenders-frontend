@@ -82,7 +82,7 @@ export class QuestionsManagementComponent implements OnInit {
       },
       error: err => {
         this.filteredQuestions = [];
-        this.alertComponent.showAlert(err.error.message || 'Question not found', AlertType.Error);
+        this.alertComponent.showAlert(err.error.message, AlertType.Error);
       }
     });
   }
@@ -133,7 +133,7 @@ export class QuestionsManagementComponent implements OnInit {
           this.findAllQuestions();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.error.message || 'Error adding the question', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message, AlertType.Error);
         }
       });
     } else {
@@ -151,7 +151,7 @@ export class QuestionsManagementComponent implements OnInit {
           this.findAllQuestions();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.error.message || 'Error updating the question', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message, AlertType.Error);
         }
       });
       this.selectedQuestion = null;
@@ -167,7 +167,7 @@ export class QuestionsManagementComponent implements OnInit {
           this.findAllQuestions();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.error.message || 'Error deleting the question', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message, AlertType.Error);
         }
       });
       this.selectedQuestion = null;

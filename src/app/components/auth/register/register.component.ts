@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { Wizard } from '../../../core/models/wizard.interface';
 import { alertMethod } from '../../../functions/alert.function';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -21,7 +22,6 @@ import { AlertComponent, AlertType } from '../../../shared/components/alert/aler
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});
-  private readonly defaultErrorMessage = 'An error occurred while registering. Please try again later.';
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent;
 
@@ -51,11 +51,6 @@ export class RegisterComponent implements OnInit {
       : false;
   }
 
-  private showErrorAlert(err: any) {
-    const message = err?.error?.message || this.defaultErrorMessage;
-    this.alertComponent.showAlert(message, AlertType.Error);
-  }
-
   registerWizard() {
     if (!this.passwordMatchValidator(this.registerForm)) {
       this.alertComponent.showAlert('Passwords do not match. Please re-enter.', AlertType.Error);
@@ -74,13 +69,13 @@ export class RegisterComponent implements OnInit {
     this.wizardService.isUsernameAvailable(userData.username).subscribe({
       next: (usernameResponse) => {
         if (!usernameResponse.data) {
-          this.alertComponent.showAlert(usernameResponse.message || this.defaultErrorMessage, AlertType.Error);
+          this.alertComponent.showAlert(usernameResponse.message, AlertType.Error);
           return;
         }
         this.wizardService.isEmailAvailable(userData.email).subscribe({
           next: (emailResponse) => {
             if (!emailResponse.data) {
-              this.alertComponent.showAlert(emailResponse.message || this.defaultErrorMessage, AlertType.Error);
+              this.alertComponent.showAlert(emailResponse.message, AlertType.Error);
               return;
             }
 
@@ -92,17 +87,17 @@ export class RegisterComponent implements OnInit {
                 // this.alertComponent.showAlert(addResponse.message, AlertType.Success);
               },
               error: (err: any) => {
-                this.showErrorAlert(err);
+                this.alertComponent.showAlert(err.error.message, AlertType.Error);
               }
             });
           },
           error: (err: any) => {
-            this.showErrorAlert(err);
+            this.alertComponent.showAlert(err.error.message, AlertType.Error);
           }
         });
       },
       error: (err: any) => {
-        this.showErrorAlert(err);
+        this.alertComponent.showAlert(err.error.message, AlertType.Error);
       },
     });
   }
