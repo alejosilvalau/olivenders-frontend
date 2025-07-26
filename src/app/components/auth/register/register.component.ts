@@ -59,10 +59,6 @@ export class RegisterComponent implements OnInit {
       : false;
   }
 
-  onSchoolSelected(event: any) {
-    // this.schoolFormControl.setValue(event.id);
-  }
-
   registerWizard() {
     if (!this.passwordMatchValidator(this.registerForm)) {
       this.alertComponent.showAlert('Passwords do not match. Please re-enter.', AlertType.Error);

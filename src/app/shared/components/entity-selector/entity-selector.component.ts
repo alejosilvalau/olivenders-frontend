@@ -9,11 +9,10 @@ import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
   templateUrl: './entity-selector.component.html',
   styleUrl: '../../styles/forms.style.css',
 })
-export class EntitySelectorComponent implements OnInit {
+export class EntitySelectorComponent {
   @Input() entityControl!: FormControl;
   @Input() service!: any;
   @Input() label: string = 'Entity';
-  @Input() idField: string = 'id';
   @Input() displayField: string = 'name';
   @Input() pageSize: number = 100;
 
@@ -23,10 +22,6 @@ export class EntitySelectorComponent implements OnInit {
   filteredEntities: any[] = [];
   showDropdown: boolean = false;
   selectedEntityName: string = '';
-
-  ngOnInit(): void {
-    // Optionally preload some entities
-  }
 
   onInput(event: Event): void {
     const term = (event.target as HTMLInputElement).value.trim();
@@ -67,7 +62,7 @@ export class EntitySelectorComponent implements OnInit {
   }
 
   selectEntity(entity: any): void {
-    this.entityControl.setValue(entity[this.idField]);
+    this.entityControl.setValue(entity["id"]);
     this.selectedEntityName = entity[this.displayField];
     this.entitySelected.emit(entity);
     this.showDropdown = false;
