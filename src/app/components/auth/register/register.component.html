@@ -1,11 +1,9 @@
-<!-- <div class="register-container ">
+<div class="register-container ">
   <div class="register-box">
     <app-universal-alert></app-universal-alert>
     <h2>Registrarse</h2>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="two-column-form">
-
       <div class="form-column">
-
         <div class="input">
           <label for="usuario">Usuario</label>
           <input type="text" id="usuario" formControlName="usuario" placeholder="Ingrese su usuario">
@@ -15,7 +13,6 @@
             <small *ngIf="registerForm.get('usuario')?.errors?.['minlength']">Mínimo 3 caracteres</small>
           </div>
         </div>
-
         <div class="input">
           <label for="nombre">Nombre</label>
           <input type="text" id="nombre" formControlName="nombre" placeholder="Ingrese su nombre">
@@ -24,7 +21,6 @@
             <small *ngIf="registerForm.get('nombre')?.errors?.['required']">Nombre es requerido.</small>
           </div>
         </div>
-
         <div class="input">
           <label for="direccion">Dirección</label>
           <input type="text" id="direccion" formControlName="direccion" placeholder="Ingrese su dirección">
@@ -33,7 +29,6 @@
             <small *ngIf="registerForm.get('direccion')?.errors?.['required']">La dirección es requerida.</small>
           </div>
         </div>
-
         <div class="input">
           <label for="clave">Clave</label>
           <input type="password" id="clave" formControlName="clave" placeholder="Ingrese su clave">
@@ -44,9 +39,7 @@
           </div>
         </div>
       </div>
-
       <div class="form-column">
-
         <div class="input">
           <label for="mail">Correo Electrónico</label>
           <input type="email" id="mail" formControlName="mail" placeholder="Ingrese su correo electrónico">
@@ -56,7 +49,6 @@
             <small *ngIf="registerForm.get('mail')?.errors?.['email']">Formato inválido</small>
           </div>
         </div>
-
         <div class="input">
           <label for="apellido">Apellido</label>
           <input type="text" id="apellido" formControlName="apellido" placeholder="Ingrese su apellido">
@@ -65,8 +57,6 @@
             <small *ngIf="registerForm.get('apellido')?.errors?.['required']">Apellido es requerido.</small>
           </div>
         </div>
-
-
         <div class="input">
           <label for="telefono">Teléfono</label>
           <input type="text" id="telefono" formControlName="telefono" placeholder="Ingrese su teléfono">
@@ -75,8 +65,6 @@
             <small *ngIf="registerForm.get('telefono')?.errors?.['required']">Teléfono requerido.</small>
           </div>
         </div>
-
-
         <div class="input">
           <label for="repetirClave">Repetir Clave</label>
           <input type="password" id="repetirClave" formControlName="repetirClave" placeholder="Repita su clave">
@@ -87,12 +75,9 @@
           </div>
         </div>
       </div>
-
-
       <div class="full-width">
         <button type="submit">Registrarse</button>
       </div>
-
     </form>
   </div>
-</div> -->
+</div>

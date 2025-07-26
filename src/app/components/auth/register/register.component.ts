@@ -1,135 +1,109 @@
-// import { Component, ViewChild } from '@angular/core';
-// import {
-//   FormBuilder,
-//   FormGroup,
-//   ReactiveFormsModule,
-//   Validators,
-// } from '@angular/forms';
-// import { OnInit } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { Router } from '@angular/router';
-// import { Wizard } from '../../../core/models/wizard.interface';
-// // import { alertMethod } from '../../../shared/components/alerts/alert-function/alerts.functions';
-// import { UniversalAlertComponent } from '../../../shared/components/alert/alert.component';
-// import { WizardService } from '../../../core/services/wizard.service.js';
-// import { forkJoin, of } from 'rxjs';
-// import { catchError } from 'rxjs/operators';
+import { Component, ViewChild } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { WizardService } from '../../../core/services/wizard.service';
+import { Router } from '@angular/router';
+import { Wizard } from '../../../core/models/wizard.interface';
+import { alertMethod } from '../../../functions/alert.function';
+import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
+@Component({
+  selector: 'app-register',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css',
+})
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup = new FormGroup({});
+  private readonly defaultErrorMessage = 'An error occurred while registering. Please try again later.';
 
-// @Component({
-//   selector: 'app-register',
-//   standalone: true,
-//   imports: [ReactiveFormsModule, CommonModule, UniversalAlertComponent],
-//   templateUrl: './register.component.html',
-//   styleUrl: './register.component.css',
-// })
-// export class RegisterComponent implements OnInit {
-//   registerForm: FormGroup = new FormGroup({});
+  @ViewChild(AlertComponent) alertComponent!: AlertComponent;
 
-//   @ViewChild(UniversalAlertComponent) alertComponent!: UniversalAlertComponent;
+  constructor(
+    private fb: FormBuilder,
+    private wizardService: WizardService,
+    private router: Router
+  ) { }
 
-//   constructor(
-//     private fb: FormBuilder,
-//     private wizardService: WizardService,
-//     private router: Router
-//   ) { }
+  ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      passwordRepeat: ['', [Validators.required]],
+      name: ['', [Validators.required]],
+      last_name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      address: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      school: ['', [Validators.required]]
+    });
+  }
 
-//   ngOnInit(): void {
-//     this.registerForm = this.fb.group({
-//       usuario: ['', [Validators.required, Validators.minLength(3)]],
-//       clave: ['', [Validators.required, Validators.minLength(6)]],
-//       repetirClave: ['', [Validators.required]],
-//       nombre: ['', [Validators.required]],
-//       apellido: ['', [Validators.required]],
-//       telefono: ['', [Validators.required]],
-//       mail: ['', [Validators.required, Validators.email]],
-//       direccion: ['', [Validators.required]],
-//       rol: null,
-//     });
-//     if (this.passwordMatchValidator(this.registerForm) !== null) {
-//       console.log('Las contraseñas no coinciden');
-//     }
-//   }
+  private passwordMatchValidator(form: FormGroup) {
+    return form.get('clave')?.value === form.get('repetirClave')?.value
+      ? true
+      : false;
+  }
 
-//   passwordMatchValidator(form: FormGroup) {
-//     return form.get('clave')?.value === form.get('repetirClave')?.value
-//       ? true
-//       : false;
-//   }
+  private showErrorAlert(err: any) {
+    const message = err?.error?.message || this.defaultErrorMessage;
+    this.alertComponent.showAlert(message, AlertType.Error);
+  }
 
-//   onSubmit() {
-//     if (this.passwordMatchValidator(this.registerForm)) {
-//       if (this.registerForm.valid) {
-//         // Create separate calls to check email and username
-//         const checkUsername = this.wizardService.checkUsername(this.registerForm.value.usuario);
-//         const checkEmail = this.wizardService.checkEmail(this.registerForm.value.mail);
+  registerWizard() {
+    if (!this.passwordMatchValidator(this.registerForm)) {
+      this.alertComponent.showAlert('Passwords do not match. Please re-enter.', AlertType.Error);
+      this.registerForm.get('password')?.reset();
+      this.registerForm.get('passwordRepeat')?.reset();
+      return;
+    }
 
-//         forkJoin([
-//           checkUsername.pipe(catchError(err => of(true))), // true = username exists (error case)
-//           checkEmail.pipe(catchError(err => of(true)))     // true = email exists (error case)
-//         ]).subscribe({
-//           next: ([usernameExists, emailExists]) => {
-//             if (usernameExists) {
-//               this.alertComponent.showAlert('El nombre de usuario ya está registrado', 'error');
-//               return;
-//             }
+    if (!this.registerForm.valid) {
+      this.alertComponent.showAlert('Invalid form. Please complete all fields.', AlertType.Error);
+      return;
+    }
 
-//             if (emailExists) {
-//               this.alertComponent.showAlert('El email ya está registrado', 'error');
-//               return;
-//             }
+    const userData = this.registerForm.value;
 
-//             // If both checks pass, create the user
-//             const wizardFinal = {
-//               ...this.registerForm.value,
-//               username: this.registerForm.value.usuario,
-//               password: this.registerForm.value.clave,
-//               name: this.registerForm.value.nombre,
-//               last_name: this.registerForm.value.apellido,
-//               phone: this.registerForm.value.telefono,
-//               email: this.registerForm.value.mail,
-//               address: this.registerForm.value.direccion,
-//               role: 'user', // assuming 'user' is the correct value for regular users
-//             };
+    this.wizardService.isUsernameAvailable(userData.username).subscribe({
+      next: (usernameResponse) => {
+        if (!usernameResponse.data) {
+          this.alertComponent.showAlert(usernameResponse.message || this.defaultErrorMessage, AlertType.Error);
+          return;
+        }
+        this.wizardService.isEmailAvailable(userData.email).subscribe({
+          next: (emailResponse) => {
+            if (!emailResponse.data) {
+              this.alertComponent.showAlert(emailResponse.message || this.defaultErrorMessage, AlertType.Error);
+              return;
+            }
 
-//             this.wizardService.addWizard(wizardFinal).subscribe({
-//               next: () => {
-//                 alertMethod(
-//                   'Usuario registrado',
-//                   'El usuario se ha registrado correctamente',
-//                   'success'
-//                 );
-//                 this.registerForm.reset();
-//                 this.router.navigate(['/auth/login']);
-//               },
-//               error: (error: any) => {
-//                 console.error('Error al crear usuario:', error);
-//                 alertMethod(
-//                   'Ocurrió un error',
-//                   'Error al registrar el usuario',
-//                   'error'
-//                 );
-//               },
-//             });
-//           },
-//           error: (error: any) => {
-//             console.error('Error al verificar disponibilidad:', error);
-//             alertMethod(
-//               'Error',
-//               'Error al verificar disponibilidad de datos',
-//               'error'
-//             );
-//           }
-//         });
-//       } else {
-//         this.alertComponent.showAlert(
-//           'Formulario inválido. Complete todos los campos',
-//           'error'
-//         );
-//       }
-//     } else {
-//       this.alertComponent.showAlert('Las contraseñas no coinciden', 'error');
-//       this.registerForm.get('clave')?.reset();
-//       this.registerForm.get('repetirClave')?.reset();
-//     }
-//   }
-// }
+            this.wizardService.add(userData).subscribe({
+              next: (addResponse) => {
+                alertMethod('Registration Successful', 'You can now log in with your credentials.', AlertType.Success);
+                this.registerForm.reset();
+                this.router.navigate(['/login']);
+                // this.alertComponent.showAlert(addResponse.message, AlertType.Success);
+              },
+              error: (err: any) => {
+                this.showErrorAlert(err);
+              }
+            });
+          },
+          error: (err: any) => {
+            this.showErrorAlert(err);
+          }
+        });
+      },
+      error: (err: any) => {
+        this.showErrorAlert(err);
+      },
+    });
+  }
+}

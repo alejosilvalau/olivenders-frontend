@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { QuestionService } from '../../../core/services/question.service';
 import { Question, QuestionResponse } from '../../../core/models/question.interface';
-import { Observable } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
