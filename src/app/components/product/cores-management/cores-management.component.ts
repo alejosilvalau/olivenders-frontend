@@ -14,7 +14,7 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent],
   templateUrl: './cores-management.component.html',
-  styleUrl: './cores-management.component.css'
+  styleUrl: '../../../shared/styles/management.style.css'
 })
 
 export class CoresManagementComponent implements OnInit {
