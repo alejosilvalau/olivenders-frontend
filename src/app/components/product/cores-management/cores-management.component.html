@@ -1,9 +1,7 @@
 <div class="container my-4">
   <app-alert></app-alert>
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
-    <h2 class="mb-3 mb-md-0">
-      <strong class="text-primary">CORES MANAGEMENT </strong>
-    </h2>
+    <h2 class="mb-3 mb-md-0">CORES MANAGEMENT</h2>
     <app-searcher [data]="cores" [filterAttributes]="['name', 'id']" (filteredData)="onSearch($event)"
       (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
     <app-add-button [modalTarget]="'#addCore'" [buttonText]="'Add Core'" />

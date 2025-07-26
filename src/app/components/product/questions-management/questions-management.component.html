@@ -1,9 +1,7 @@
 <div class="container my-4">
   <app-alert></app-alert>
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
-    <h2 class="mb-3 mb-md-0">
-      <strong class="text-primary">QUESTIONS MANAGEMENT </strong>
-    </h2>
+    <h2 class="mb-3 mb-md-0">QUESTIONS MANAGEMENT</h2>
     <app-searcher [data]="questions" [filterAttributes]="['id']" (filteredData)="onSearch($event)"
       (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
     <app-add-button [modalTarget]="'#addQuestion'" [buttonText]="'Add Question'" />

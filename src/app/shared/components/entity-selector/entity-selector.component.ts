@@ -7,7 +7,7 @@ import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './entity-selector.component.html',
-  styleUrl: './entity-selector.component.css',
+  styleUrl: '../../styles/forms.style.css',
 })
 export class EntitySelectorComponent implements OnInit {
   @Input() entityControl!: FormControl;

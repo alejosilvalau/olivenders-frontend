@@ -21,7 +21,7 @@ import { SchoolService } from '../../../core/services/school.service';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, AlertComponent, EntitySelectorComponent],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  styleUrls: ['./register.component.css', '../../../shared/styles/forms.style.css'],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});

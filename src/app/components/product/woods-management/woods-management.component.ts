@@ -14,7 +14,7 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent],
   templateUrl: './woods-management.component.html',
-  styleUrl: '../../../shared/styles/management.style.css'
+  styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
 
 export class WoodsManagementComponent implements OnInit {
