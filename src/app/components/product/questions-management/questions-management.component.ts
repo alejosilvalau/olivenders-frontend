@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { QuestionService } from '../../../core/services/question.service';
 import { Question, QuestionResponse } from '../../../core/models/question.interface';
 import { Observable } from 'rxjs';
@@ -33,9 +33,11 @@ export class QuestionsManagementComponent implements OnInit {
   ) {
     this.questionForm = this.fb.group({
       question: ['', Validators.required],
-      option_one: ['', Validators.required],
-      option_two: ['', Validators.required],
-      option_three: [''],
+      options: this.fb.array([
+        this.fb.control('', Validators.required),
+        this.fb.control('', Validators.required),
+        this.fb.control('') // optional
+      ])
     });
   }
 
@@ -43,11 +45,24 @@ export class QuestionsManagementComponent implements OnInit {
     this.findAllQuestions();
   }
 
-  onQuestionSelected(question: Question): void {
-    this.selectedQuestion = question;
-    if (question) {
-      this.questionForm.patchValue({ ...question });
+  onQuestionSelected(q: Question): void {
+    this.selectedQuestion = q;
+    if (q) {
+      this.questionForm.patchValue({
+        question: q.question,
+      });
+
+      const optionsFormArray = this.optionsFormArray;
+      optionsFormArray.clear();
+
+      q.options.slice(0, 3).forEach(option => {
+        optionsFormArray.push(this.fb.control(option, Validators.required));
+      });
     }
+  }
+
+  get optionsFormArray(): FormArray {
+    return this.questionForm.get('options') as FormArray;
   }
 
   findAllQuestions(): void {
@@ -83,13 +98,18 @@ export class QuestionsManagementComponent implements OnInit {
     this.searchQuestion(this.searchTerm);
   }
 
+  private formatQuestionData(): { question: string; options: string[] } {
+    const { question } = this.questionForm.value;
+    const options = this.optionsFormArray.value.filter((opt: string) => !!opt); // Filter out empty options
+    return {
+      question,
+      options
+    };
+  }
+
   addQuestion(): void {
     if (this.questionForm.valid) {
-      const { question, option_one, option_two, option_three } = this.questionForm.value;
-      const questionData = {
-        question,
-        options: [option_one, option_two, option_three].filter(opt => !!opt)
-      };
+      const questionData = this.formatQuestionData();
       this.questionService.add(questionData).subscribe({
         next: (res: QuestionResponse) => {
           this.alertComponent.showAlert(res.message, AlertType.Success);
@@ -107,11 +127,7 @@ export class QuestionsManagementComponent implements OnInit {
 
   editQuestion(): void {
     if (this.selectedQuestion) {
-      const { question, option_one, option_two, option_three } = this.questionForm.value;
-      const questionData = {
-        question,
-        options: [option_one, option_two, option_three].filter(opt => !!opt)
-      };
+      const questionData = this.formatQuestionData();
       this.questionService.update(this.selectedQuestion.id, questionData).subscribe({
         next: (response: QuestionResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);

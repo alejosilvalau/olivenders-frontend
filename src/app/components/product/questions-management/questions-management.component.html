@@ -12,9 +12,7 @@
       { key: 'id', label: 'ID' },
       { key: 'question', label: 'Question' },
       { key: 'created_at', label: 'Created At' },
-      { key: 'option_one', label: 'Option One' },
-      { key: 'option_two', label: 'Option Two' },
-      { key: 'option_three', label: 'Option Three' }
+      { key: 'options', label: 'Options', isArray: true }
     ]" [data]="filteredQuestions" [emptyMessage]="'There are no questions available.'"
     [editModalTarget]="'#editQuestion'" [removeModalTarget]="'#removeQuestion'"
     (selectedEntity)="onQuestionSelected($event)">
@@ -30,15 +28,13 @@
         <div class="col-md-12">
           <label for="question">Question</label>
           <input type="text" formControlName="question" id="question" name="question" class="form-control" required />
-          <label for="option_one">Option 1</label>
-          <input type="text" formControlName="option_one" id="option_one" name="option_one" class="form-control"
-            required />
-          <label for="option_two">Option 2</label>
-          <input type="text" formControlName="option_two" id="option_two" name="option_two" class="form-control"
-            required />
-          <label for="option_three">Option 3 (optional)</label>
-          <input type="text" formControlName="option_three" id="option_three" name="option_three"
-            class="form-control" />
+          <ng-container formArrayName="options">
+            <div *ngFor="let optionCtrl of optionsFormArray.controls; let i = index">
+              <label [for]="'option_' + i">Option {{ i + 1 }}<span *ngIf="i === 2"> (optional)</span></label>
+              <input type="text" [formControlName]="i" [id]="'option_' + i" [name]="'option_' + i" class="form-control"
+                [required]="i < 2" />
+            </div>
+          </ng-container>
         </div>
       </form>
     </ng-template>
@@ -54,15 +50,13 @@
         <div class="col-md-12">
           <label for="question">Question</label>
           <input type="text" formControlName="question" id="question" name="question" class="form-control" required />
-          <label for="option_one">Option 1</label>
-          <input type="text" formControlName="option_one" id="option_one" name="option_one" class="form-control"
-            required />
-          <label for="option_two">Option 2</label>
-          <input type="text" formControlName="option_two" id="option_two" name="option_two" class="form-control"
-            required />
-          <label for="option_three">Option 3 (optional)</label>
-          <input type="text" formControlName="option_three" id="option_three" name="option_three"
-            class="form-control" />
+          <ng-container formArrayName="options">
+            <div *ngFor="let optionCtrl of optionsFormArray.controls; let i = index">
+              <label [for]="'option_' + i">Option {{ i + 1 }}<span *ngIf="i === 2"> (optional)</span></label>
+              <input type="text" [formControlName]="i" [id]="'option_' + i" [name]="'option_' + i" class="form-control"
+                [required]="i < 2" />
+            </div>
+          </ng-container>
         </div>
       </form>
     </ng-template>

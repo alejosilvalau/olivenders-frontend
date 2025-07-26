@@ -9,7 +9,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrl: './data-table.component.css'
 })
 export class DataTableComponent<T extends Record<string, any>> {
-  @Input() columns: { key: string, label: string }[] = [];
+  @Input() columns: { key: string, label: string, isArray?: boolean }[] = [];
   @Input() data: T[] = [];
   @Input() emptyMessage: string = 'No data available.';
   @Input() editModalTarget: string = '';
