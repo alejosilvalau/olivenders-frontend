@@ -1,0 +1,13 @@
+<div class="input" (document:click)="onDocumentClick($event)">
+  <label>{{ label }}</label>
+  <input type="text" [value]="selectedEntityName | titlecase" (input)="onInput($event)" (focus)="onFocus()"
+    (blur)="entityControl.markAsTouched()" placeholder="Search by name or ID" class="form-control" autocomplete="off"
+    #entityInput />
+  <ul *ngIf="showDropdown && filteredEntities.length > 0" class="dropdown-list">
+    <li *ngFor="let entity of filteredEntities" (click)="selectEntity(entity)"> {{ entity[displayField] | titlecase }}
+    </li>
+  </ul>
+  <div *ngIf="entityControl.invalid && (entityControl.touched || entityControl.dirty)">
+    <small *ngIf="entityControl.errors?.['required']">{{ label }} is required</small>
+  </div>
+</div>

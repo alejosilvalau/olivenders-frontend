@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -12,11 +13,13 @@ import { Router } from '@angular/router';
 import { Wizard } from '../../../core/models/wizard.interface';
 import { alertMethod } from '../../../functions/alert.function';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
+import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
+import { SchoolService } from '../../../core/services/school.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, AlertComponent, EntitySelectorComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -28,25 +31,36 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private wizardService: WizardService,
+    public schoolService: SchoolService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(6)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      passwordRepeat: ['', [Validators.required]],
       name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       address: ['', [Validators.required]],
       phone: ['', [Validators.required]],
-      school: ['', [Validators.required]]
+      school: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
+  get schoolFormControl() {
+    return this.registerForm.get('school') as FormControl;
+  }
+
+  onSchoolSelected(school: any): void {
+    // You can handle the selected school here if needed
+    // For example, display the name or perform additional logic
+    // Example: this.selectedSchoolName = school.name;
+  }
+
   private passwordMatchValidator(form: FormGroup) {
-    return form.get('clave')?.value === form.get('repetirClave')?.value
+    return form.get('password')?.value === form.get('confirmPassword')?.value
       ? true
       : false;
   }
@@ -55,7 +69,7 @@ export class RegisterComponent implements OnInit {
     if (!this.passwordMatchValidator(this.registerForm)) {
       this.alertComponent.showAlert('Passwords do not match. Please re-enter.', AlertType.Error);
       this.registerForm.get('password')?.reset();
-      this.registerForm.get('passwordRepeat')?.reset();
+      this.registerForm.get('confirmPassword')?.reset();
       return;
     }
 
