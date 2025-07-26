@@ -1,0 +1,83 @@
+<div class="container my-4">
+  <app-alert></app-alert>
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+    <h2 class="mb-3 mb-md-0">
+      <strong class="text-primary">QUESTIONS MANAGEMENT </strong>
+    </h2>
+    <app-searcher [data]="questions" [filterAttributes]="['id']" (filteredData)="onSearch($event)"
+      (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
+    <app-add-button [modalTarget]="'#addQuestion'" [buttonText]="'Add Question'" />
+  </div>
+  <app-data-table [columns]="[
+      { key: 'id', label: 'ID' },
+      { key: 'question', label: 'Question' },
+      { key: 'created_at', label: 'Created At' },
+      { key: 'option_one', label: 'Option One' },
+      { key: 'option_two', label: 'Option Two' },
+      { key: 'option_three', label: 'Option Three' }
+    ]" [data]="filteredQuestions" [emptyMessage]="'There are no questions available.'"
+    [editModalTarget]="'#editQuestion'" [removeModalTarget]="'#removeQuestion'"
+    (selectedEntity)="onQuestionSelected($event)">
+  </app-data-table>
+  <app-modal [config]="{
+      id: 'addQuestion',
+      title: 'New Question',
+      submitButtonText: 'Create Question',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="addQuestion()" (onCancel)="questionForm.reset()">
+    <ng-template #modalContent>
+      <form [formGroup]="questionForm">
+        <div class="col-md-12">
+          <label for="question">Question</label>
+          <input type="text" formControlName="question" id="question" name="question" class="form-control" required />
+          <label for="option_one">Option 1</label>
+          <input type="text" formControlName="option_one" id="option_one" name="option_one" class="form-control"
+            required />
+          <label for="option_two">Option 2</label>
+          <input type="text" formControlName="option_two" id="option_two" name="option_two" class="form-control"
+            required />
+          <label for="option_three">Option 3 (optional)</label>
+          <input type="text" formControlName="option_three" id="option_three" name="option_three"
+            class="form-control" />
+        </div>
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal [config]="{
+      id: 'editQuestion',
+      title: 'Edit Question',
+      submitButtonText: 'Save Changes',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="editQuestion()" (onCancel)="questionForm.reset()">
+    <ng-template #modalContent>
+      <form [formGroup]="questionForm">
+        <div class="col-md-12">
+          <label for="question">Question</label>
+          <input type="text" formControlName="question" id="question" name="question" class="form-control" required />
+          <label for="option_one">Option 1</label>
+          <input type="text" formControlName="option_one" id="option_one" name="option_one" class="form-control"
+            required />
+          <label for="option_two">Option 2</label>
+          <input type="text" formControlName="option_two" id="option_two" name="option_two" class="form-control"
+            required />
+          <label for="option_three">Option 3 (optional)</label>
+          <input type="text" formControlName="option_three" id="option_three" name="option_three"
+            class="form-control" />
+        </div>
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal [config]="{
+      id: 'removeQuestion',
+      title: 'Remove Question',
+      submitButtonText: 'Confirm Delete',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="removeQuestion()" (onCancel)="questionForm.reset()">
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to remove the question?</p>
+        <p><strong>Question:</strong> {{ selectedQuestion?.question | titlecase }}</p>
+      </div>
+    </ng-template>
+  </app-modal>
+</div>

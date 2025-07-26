@@ -96,7 +96,7 @@ export class WoodsManagementComponent implements OnInit {
           this.findAllWoods();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.error.message || 'Error adding wood', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message || 'Error adding the wood', AlertType.Error);
         }
       });
       this.woodForm.reset();
@@ -114,7 +114,7 @@ export class WoodsManagementComponent implements OnInit {
           this.findAllWoods();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.message || 'Error updating wood', AlertType.Error);
+          this.alertComponent.showAlert(err.message || 'Error updating the wood', AlertType.Error);
         }
       });
       this.woodForm.reset();
@@ -129,7 +129,7 @@ export class WoodsManagementComponent implements OnInit {
           this.findAllWoods();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.message || 'Error deleting wood', AlertType.Error);
+          this.alertComponent.showAlert(err.message || 'Error deleting the wood', AlertType.Error);
         }
       });
       this.woodForm.reset();
