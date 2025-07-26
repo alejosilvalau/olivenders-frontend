@@ -24,6 +24,7 @@ export class QuestionsManagementComponent implements OnInit {
   selectedQuestion: Question | null = null;
   filteredQuestions: Question[] = [];
   searchTerm: string = '';
+  maxOptions: number = 3;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
@@ -35,8 +36,7 @@ export class QuestionsManagementComponent implements OnInit {
       question: ['', Validators.required],
       options: this.fb.array([
         this.fb.control('', Validators.required),
-        this.fb.control('', Validators.required),
-        this.fb.control('') // optional
+        this.fb.control('', Validators.required)
       ])
     });
   }
@@ -45,24 +45,33 @@ export class QuestionsManagementComponent implements OnInit {
     this.findAllQuestions();
   }
 
-  onQuestionSelected(q: Question): void {
-    this.selectedQuestion = q;
-    if (q) {
-      this.questionForm.patchValue({
-        question: q.question,
-      });
+  get optionsFormArray(): FormArray {
+    return this.questionForm.get('options') as FormArray;
+  }
 
-      const optionsFormArray = this.optionsFormArray;
-      optionsFormArray.clear();
-
-      q.options.slice(0, 3).forEach(option => {
-        optionsFormArray.push(this.fb.control(option, Validators.required));
-      });
+  onQuestionSelected(question: Question): void {
+    this.selectedQuestion = question;
+    if (question) {
+      this.questionForm.patchValue({ ...question });
     }
   }
 
-  get optionsFormArray(): FormArray {
-    return this.questionForm.get('options') as FormArray;
+  addOption(): void {
+    if (this.optionsFormArray.length < this.maxOptions) {
+      this.optionsFormArray.push(this.fb.control(''));
+    } else {
+      console.warn(`Maximum of ${ this.maxOptions } options reached.`);
+    }
+  }
+
+  updateOption(index: number, value: string): void {
+    const control = this.optionsFormArray.at(index);
+    if (control) {
+      control.setValue(value.trim());
+      if (!value.trim()) {
+        this.optionsFormArray.removeAt(index);
+      }
+    }
   }
 
   findAllQuestions(): void {
@@ -99,13 +108,35 @@ export class QuestionsManagementComponent implements OnInit {
   }
 
   private formatQuestionData(): { question: string; options: string[] } {
-    const { question } = this.questionForm.value;
-    const options = this.optionsFormArray.value.filter((opt: string) => !!opt); // Filter out empty options
-    return {
+    const { question, options } = this.questionForm.value;
+    const questionData = {
       question,
-      options
+      options: options.filter((opt: string) => !!opt)
     };
+    return questionData;
   }
+
+  private clearOptionsFormArray(): void {
+    // Clear all empty options
+    for (let i = this.optionsFormArray.length - 1; i >= 0; i--) {
+      const control = this.optionsFormArray.at(i);
+      if (control.value.trim() === '') {
+        this.optionsFormArray.removeAt(i);
+      }
+    }
+
+    // Ensure at least two empty options
+    while (this.optionsFormArray.length < 2) {
+      this.optionsFormArray.push(this.fb.control('', Validators.required));
+    }
+  }
+
+
+  cancelAddQuestion(): void {
+    this.clearOptionsFormArray();
+    this.questionForm.reset();
+  }
+
 
   addQuestion(): void {
     if (this.questionForm.valid) {
@@ -119,10 +150,16 @@ export class QuestionsManagementComponent implements OnInit {
           this.alertComponent.showAlert(err.error.message || 'Error adding the question', AlertType.Error);
         }
       });
-      this.questionForm.reset();
     } else {
       this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
     }
+    this.clearOptionsFormArray();
+    this.questionForm.reset();
+  }
+
+  cancelEditQuestion(): void {
+    this.clearOptionsFormArray();
+    this.questionForm.reset();
   }
 
   editQuestion(): void {
@@ -137,8 +174,10 @@ export class QuestionsManagementComponent implements OnInit {
           this.alertComponent.showAlert(err.message || 'Error updating the question', AlertType.Error);
         }
       });
-      this.questionForm.reset();
+      this.selectedQuestion = null;
     }
+    this.clearOptionsFormArray();
+    this.questionForm.reset();
   }
 
   removeQuestion(): void {
@@ -152,7 +191,7 @@ export class QuestionsManagementComponent implements OnInit {
           this.alertComponent.showAlert(err.message || 'Error deleting the question', AlertType.Error);
         }
       });
-      this.questionForm.reset();
+      this.selectedQuestion = null;
     }
   }
 }

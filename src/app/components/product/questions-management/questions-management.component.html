@@ -22,19 +22,19 @@
       title: 'New Question',
       submitButtonText: 'Create Question',
       cancelButtonText: 'Cancel'
-    }" (onSubmit)="addQuestion()" (onCancel)="questionForm.reset()">
+    }" (onSubmit)="addQuestion()" (onCancel)="cancelAddQuestion()">
     <ng-template #modalContent>
       <form [formGroup]="questionForm">
         <div class="col-md-12">
           <label for="question">Question</label>
-          <input type="text" formControlName="question" id="question" name="question" class="form-control" required />
-          <ng-container formArrayName="options">
+          <input type="text" formControlName="question" id="question" class="form-control" required />
+          <div formArrayName="options">
             <div *ngFor="let optionCtrl of optionsFormArray.controls; let i = index">
-              <label [for]="'option_' + i">Option {{ i + 1 }}<span *ngIf="i === 2"> (optional)</span></label>
-              <input type="text" [formControlName]="i" [id]="'option_' + i" [name]="'option_' + i" class="form-control"
-                [required]="i < 2" />
+              <label [for]="'option_' + i">Option {{ i + 1 }}</label>
+              <input type="text" [formControlName]="i" [id]="'option_' + i" class="form-control" />
             </div>
-          </ng-container>
+          </div>
+          <button type="button" (click)="addOption()" class="btn btn-dark btn-sm">Add Option</button>
         </div>
       </form>
     </ng-template>
@@ -44,19 +44,19 @@
       title: 'Edit Question',
       submitButtonText: 'Save Changes',
       cancelButtonText: 'Cancel'
-    }" (onSubmit)="editQuestion()" (onCancel)="questionForm.reset()">
+    }" (onSubmit)="editQuestion()" (onCancel)="cancelEditQuestion()">
     <ng-template #modalContent>
       <form [formGroup]="questionForm">
         <div class="col-md-12">
           <label for="question">Question</label>
-          <input type="text" formControlName="question" id="question" name="question" class="form-control" required />
-          <ng-container formArrayName="options">
+          <input type="text" formControlName="question" id="question" class="form-control" required />
+          <div formArrayName="options">
             <div *ngFor="let optionCtrl of optionsFormArray.controls; let i = index">
-              <label [for]="'option_' + i">Option {{ i + 1 }}<span *ngIf="i === 2"> (optional)</span></label>
-              <input type="text" [formControlName]="i" [id]="'option_' + i" [name]="'option_' + i" class="form-control"
-                [required]="i < 2" />
+              <label [for]="'option_' + i">Option {{ i + 1 }}</label>
+              <input type="text" [formControlName]="i" [id]="'option_' + i" class="form-control" />
             </div>
-          </ng-container>
+          </div>
+          <button type="button" (click)="addOption()" class="btn btn-dark btn-sm">Add Option</button>
         </div>
       </form>
     </ng-template>
