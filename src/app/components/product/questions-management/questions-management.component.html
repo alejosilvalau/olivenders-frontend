@@ -22,7 +22,7 @@
       title: 'New Question',
       submitButtonText: 'Create Question',
       cancelButtonText: 'Cancel'
-    }" (onSubmit)="addQuestion()" (onCancel)="cancelAddQuestion()">
+    }" (onSubmit)="addQuestion()" (onCancel)="cancelQuestionInput()">
     <ng-template #modalContent>
       <form [formGroup]="questionForm">
         <div class="col-md-12">
@@ -44,7 +44,7 @@
       title: 'Edit Question',
       submitButtonText: 'Save Changes',
       cancelButtonText: 'Cancel'
-    }" (onSubmit)="editQuestion()" (onCancel)="cancelEditQuestion()">
+    }" (onSubmit)="editQuestion()" (onCancel)="cancelQuestionInput()">
     <ng-template #modalContent>
       <form [formGroup]="questionForm">
         <div class="col-md-12">

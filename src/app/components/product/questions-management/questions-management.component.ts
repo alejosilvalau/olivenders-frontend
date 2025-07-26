@@ -132,7 +132,7 @@ export class QuestionsManagementComponent implements OnInit {
   }
 
 
-  cancelAddQuestion(): void {
+  cancelQuestionInput(): void {
     this.clearOptionsFormArray();
     this.questionForm.reset();
   }
@@ -153,11 +153,6 @@ export class QuestionsManagementComponent implements OnInit {
     } else {
       this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
     }
-    this.clearOptionsFormArray();
-    this.questionForm.reset();
-  }
-
-  cancelEditQuestion(): void {
     this.clearOptionsFormArray();
     this.questionForm.reset();
   }
