@@ -24,6 +24,7 @@ export class QuestionsManagementComponent implements OnInit {
   selectedQuestion: Question | null = null;
   filteredQuestions: Question[] = [];
   searchTerm: string = '';
+  minOptions: number = 2;
   maxOptions: number = 3;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
@@ -45,8 +46,11 @@ export class QuestionsManagementComponent implements OnInit {
     this.findAllQuestions();
   }
 
-  get optionsFormArray(): FormArray {
-    return this.questionForm.get('options') as FormArray;
+  findAllQuestions(): void {
+    this.questionService.findAll().subscribe((questionResponse: QuestionResponse<Question[]>) => {
+      this.questions = questionResponse.data!;
+      this.filteredQuestions = questionResponse.data!;
+    });
   }
 
   onQuestionSelected(question: Question): void {
@@ -56,29 +60,14 @@ export class QuestionsManagementComponent implements OnInit {
     }
   }
 
+  get optionsFormArray(): FormArray {
+    return this.questionForm.get('options') as FormArray;
+  }
+
   addOption(): void {
     if (this.optionsFormArray.length < this.maxOptions) {
       this.optionsFormArray.push(this.fb.control(''));
-    } else {
-      console.warn(`Maximum of ${ this.maxOptions } options reached.`);
     }
-  }
-
-  updateOption(index: number, value: string): void {
-    const control = this.optionsFormArray.at(index);
-    if (control) {
-      control.setValue(value.trim());
-      if (!value.trim()) {
-        this.optionsFormArray.removeAt(index);
-      }
-    }
-  }
-
-  findAllQuestions(): void {
-    this.questionService.findAll().subscribe((questionResponse: QuestionResponse<Question[]>) => {
-      this.questions = questionResponse.data!;
-      this.filteredQuestions = questionResponse.data!;
-    });
   }
 
   private searchQuestion(term: string): void {
@@ -117,26 +106,24 @@ export class QuestionsManagementComponent implements OnInit {
   }
 
   private clearOptionsFormArray(): void {
-    // Clear all empty options
     for (let i = this.optionsFormArray.length - 1; i >= 0; i--) {
       const control = this.optionsFormArray.at(i);
       if (control.value.trim() === '') {
         this.optionsFormArray.removeAt(i);
+      } else {
+        break;
       }
     }
 
-    // Ensure at least two empty options
-    while (this.optionsFormArray.length < 2) {
+    while (this.optionsFormArray.length < this.minOptions) {
       this.optionsFormArray.push(this.fb.control('', Validators.required));
     }
   }
-
 
   cancelQuestionInput(): void {
     this.clearOptionsFormArray();
     this.questionForm.reset();
   }
-
 
   addQuestion(): void {
     if (this.questionForm.valid) {
@@ -153,8 +140,7 @@ export class QuestionsManagementComponent implements OnInit {
     } else {
       this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
     }
-    this.clearOptionsFormArray();
-    this.questionForm.reset();
+    this.cancelQuestionInput();
   }
 
   editQuestion(): void {
@@ -166,13 +152,12 @@ export class QuestionsManagementComponent implements OnInit {
           this.findAllQuestions();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.message || 'Error updating the question', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message || 'Error updating the question', AlertType.Error);
         }
       });
       this.selectedQuestion = null;
     }
-    this.clearOptionsFormArray();
-    this.questionForm.reset();
+    this.cancelQuestionInput();
   }
 
   removeQuestion(): void {
@@ -183,7 +168,7 @@ export class QuestionsManagementComponent implements OnInit {
           this.findAllQuestions();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.message || 'Error deleting the question', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message || 'Error deleting the question', AlertType.Error);
         }
       });
       this.selectedQuestion = null;

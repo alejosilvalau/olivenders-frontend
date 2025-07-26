@@ -113,7 +113,7 @@ export class CoresManagementComponent implements OnInit {
           this.findAllCores();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.message || 'Error updating the core', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message || 'Error updating the core', AlertType.Error);
         }
       });
       this.coreForm.reset();
@@ -128,7 +128,7 @@ export class CoresManagementComponent implements OnInit {
           this.findAllCores();
         },
         error: (err: any) => {
-          this.alertComponent.showAlert(err.message || 'Error deleting the core', AlertType.Error);
+          this.alertComponent.showAlert(err.error.message || 'Error deleting the core', AlertType.Error);
         }
       });
       this.coreForm.reset();
