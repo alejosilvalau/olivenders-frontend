@@ -1,7 +1,8 @@
 <div class="input" (document:click)="onDocumentClick($event)" #selectorRoot>
-  <label>{{ label }}</label>
-  <input type="text" [value]="selectedEntityName | titlecase" (input)="onInput($event)" (focus)="onFocus()"
-    (blur)="entityControl.markAsTouched()" placeholder="Search by name or ID" class="form-control" autocomplete="off"
+  <label for="entity-selector">{{ label }}</label>
+  <input type="text" id="entity-selector" [value]="selectedEntityName | titlecase" (input)="onInput($event)"
+    (focus)="onFocus()" (blur)="entityControl.markAsTouched()" [placeholder]="placeholder" class="form-control"
+    autocomplete="off"
     #entityInput />
   <ul *ngIf="showDropdown && filteredEntities.length > 0" class="dropdown-list">
     <li *ngFor="let entity of filteredEntities" (click)="selectEntity(entity)"> {{ entity[displayField] | titlecase }}

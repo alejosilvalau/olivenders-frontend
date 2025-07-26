@@ -29,7 +29,8 @@
             <small *ngIf="registerForm.get('last_name')?.errors?.['required']">Last Name is required</small>
           </div>
         </div>
-        <app-entity-selector [entityControl]="schoolFormControl" [service]="schoolService" label="School" displayField="name">
+        <app-entity-selector [entityControl]="schoolFormControl" [service]="schoolService"
+          [findOneByString]="schoolService.findOneByName" label="School">
           <input type="hidden" formControlName="school" />
         </app-entity-selector>
         </div>

@@ -12,7 +12,9 @@ import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 export class EntitySelectorComponent {
   @Input() entityControl!: FormControl;
   @Input() service!: any;
+  @Input() findOneByString?: (term: string) => any;
   @Input() label: string = 'Entity';
+  @Input() placeholder: string = 'Search by name or ID';
   @Input() displayField: string = 'name';
   @Input() pageSize: number = 100;
 
@@ -28,16 +30,17 @@ export class EntitySelectorComponent {
     const term = (event.target as HTMLInputElement).value.trim();
     this.selectedEntityName = term;
     if (!term) {
-      // Load all entities if input is empty
       this.service.findAll(1, this.pageSize).subscribe((res: any) => {
         this.filteredEntities = res.data || [];
         this.showDropdown = true;
       });
     } else {
       const isObjectId = /^[a-f\d]{24}$/i.test(term);
-      const search$ = isObjectId
-        ? this.service.findOne(term)
-        : this.service.findOneByName(term);
+      let search$;
+      if (!isObjectId && this.findOneByString) {
+        search$ = this.findOneByString(term);
+      }
+      search$ = this.service.findOne(term);
 
       search$.subscribe({
         next: (res: any) => {
@@ -45,8 +48,9 @@ export class EntitySelectorComponent {
           this.showDropdown = true;
         },
         error: () => {
-          this.filteredEntities = [];
-          this.showDropdown = false;
+          this.filteredEntities = this.filteredEntities.filter(entity =>
+            entity[this.displayField].toLowerCase().includes(term.toLowerCase())
+          );
         }
       });
     }
