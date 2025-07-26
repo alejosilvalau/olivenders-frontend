@@ -53,16 +53,14 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('school') as FormControl;
   }
 
-  onSchoolSelected(school: any): void {
-    // You can handle the selected school here if needed
-    // For example, display the name or perform additional logic
-    // Example: this.selectedSchoolName = school.name;
-  }
-
   private passwordMatchValidator(form: FormGroup) {
     return form.get('password')?.value === form.get('confirmPassword')?.value
       ? true
       : false;
+  }
+
+  onSchoolSelected(event: any) {
+    // this.schoolFormControl.setValue(event.id);
   }
 
   registerWizard() {
