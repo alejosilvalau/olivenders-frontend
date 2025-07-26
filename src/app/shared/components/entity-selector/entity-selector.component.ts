@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
@@ -17,6 +17,7 @@ export class EntitySelectorComponent {
   @Input() pageSize: number = 100;
 
   @Output() entitySelected = new EventEmitter<any>();
+  @ViewChild('selectorRoot', { static: true }) selectorRoot!: ElementRef;
 
   entities: any[] = [];
   filteredEntities: any[] = [];
@@ -53,8 +54,8 @@ export class EntitySelectorComponent {
 
   onFocus(): void {
     if (!this.selectedEntityName) {
-      // Load all entities on focus if input is empty
-      this.service.findAll(1, this.pageSize).subscribe((res: any) => {
+      const pageNumber = 1;
+      this.service.findAll(pageNumber, this.pageSize).subscribe((res: any) => {
         this.filteredEntities = res.data || [];
         this.showDropdown = true;
       });
@@ -69,10 +70,10 @@ export class EntitySelectorComponent {
     this.filteredEntities = [];
   }
 
+  @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
-    // Only keep dropdown open if click is inside this component
-    if (!target.closest('.input')) {
+    if (this.selectorRoot && !this.selectorRoot.nativeElement.contains(target)) {
       this.showDropdown = false;
     }
   }

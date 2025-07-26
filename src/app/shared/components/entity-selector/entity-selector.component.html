@@ -1,4 +1,4 @@
-<div class="input" (document:click)="onDocumentClick($event)">
+<div class="input" (document:click)="onDocumentClick($event)" #selectorRoot>
   <label>{{ label }}</label>
   <input type="text" [value]="selectedEntityName | titlecase" (input)="onInput($event)" (focus)="onFocus()"
     (blur)="entityControl.markAsTouched()" placeholder="Search by name or ID" class="form-control" autocomplete="off"
