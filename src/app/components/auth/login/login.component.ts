@@ -11,11 +11,11 @@ import { AlertType } from '../../../shared/components/alert/alert.component.js';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css', '../../../shared/styles/forms.style.css']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
-  wizard: string = '';
+  username: string = '';
   password: string = '';
   isLoggedIn: boolean = false;
 
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      wizard: ['', [Validators.required, Validators.minLength(6)]],
+      username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
@@ -37,9 +37,9 @@ export class LoginComponent implements OnInit {
       alertMethod('Form is invalid', 'Please fill in all required fields.', AlertType.Error);
       return;
     }
-
     this.authService.login(this.loginForm.value).subscribe({
       next: (loginResponse) => {
+        console.log('Login successful:', loginResponse);
         this.isLoggedIn = true
         this.router.navigate(['/']);
       },
