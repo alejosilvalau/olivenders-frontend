@@ -73,10 +73,6 @@ export class WizardService {
     return this.http.patch<WizardResponse>(`${ this.apiUrl }/${ id }/deactivate`, {}, { headers: this.authToken.getAuthHeaders() });
   }
 
-  activate(id: string): Observable<WizardResponse> {
-    return this.http.patch<WizardResponse>(`${ this.apiUrl }/${ id }/activate`, {}, { headers: this.authToken.getAuthHeaders() });
-  }
-
   remove(id: string): Observable<WizardResponse> {
     return this.http.delete<WizardResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }

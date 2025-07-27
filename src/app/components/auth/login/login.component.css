@@ -88,11 +88,6 @@ button:hover {
 }
 
 @media (max-width: 768px) {
-  .login-container {
-    padding: 20px;
-    min-height: 90vh;
-  }
-
   .login-box {
     padding: 15px;
   }
