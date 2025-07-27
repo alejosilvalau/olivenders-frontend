@@ -10,23 +10,20 @@ import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WizardService } from '../../../core/services/wizard.service';
 import { Router } from '@angular/router';
-import { Wizard } from '../../../core/models/wizard.interface';
 import { alertMethod } from '../../../functions/alert.function';
-import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
+import { AlertType } from '../../../shared/components/alert/alert.component';
 import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
 import { SchoolService } from '../../../core/services/school.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, AlertComponent, EntitySelectorComponent],
+  imports: [ReactiveFormsModule, CommonModule, EntitySelectorComponent],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css', '../../../shared/styles/forms.style.css'],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});
-
-  @ViewChild(AlertComponent) alertComponent!: AlertComponent;
 
   constructor(
     private fb: FormBuilder,
@@ -77,13 +74,13 @@ export class RegisterComponent implements OnInit {
     this.wizardService.isUsernameAvailable(userData.username).subscribe({
       next: (usernameResponse) => {
         if (!usernameResponse.data) {
-          this.alertComponent.showAlert(usernameResponse.message, AlertType.Error);
+          alertMethod(usernameResponse.message, 'Please choose a different username.', AlertType.Error);
           return;
         }
         this.wizardService.isEmailAvailable(userData.email).subscribe({
           next: (emailResponse) => {
             if (!emailResponse.data) {
-              this.alertComponent.showAlert(emailResponse.message, AlertType.Error);
+              alertMethod(emailResponse.message, 'Please use a different email address.', AlertType.Error);
               return;
             }
 

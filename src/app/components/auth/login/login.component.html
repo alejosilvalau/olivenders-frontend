@@ -1,25 +1,23 @@
-<!-- <div class="login-container">
+<div class="login-container">
   <div class="login-box">
-    <app-universal-alert></app-universal-alert>
-    <h2>Log In</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <h2>Sign in to Olivenders</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="loginWizard()">
       <div class="input">
-        <label for="wizard">Wizard</label>
-        <input type="text" id="user" formControlName="wizard" placeholder="Username...">
+        <label for="username">Username</label>
+        <input type="text" id="username" formControlName="username" placeholder="Enter your username">
         <div
-          *ngIf="loginForm.get('user')?.invalid && (loginForm.get('wizard')?.touched || loginForm.get('wizard')?.dirty)">
-          <small *ngIf="loginForm.get('wizard')?.errors?.['required']">Username is required</small>
+          *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.touched || loginForm.get('username')?.dirty)">
+          <small *ngIf="loginForm.get('username')?.errors?.['required']">Username is required</small>
+          <small *ngIf="loginForm.get('username')?.errors?.['minlength']">Minimum 6 characters</small>
         </div>
       </div>
       <div class="input">
         <label for="password">Password</label>
-        <input type="password" id="password" formControlName="password" placeholder="Password...">
+        <input type="password" id="password" formControlName="password" placeholder="Enter your password">
         <div
           *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)">
           <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</small>
-          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">The Password must have at least 6
-            characters</small>
-
+          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Minimum 6 characters</small>
         </div>
       </div>
       <button type="submit">Log In</button>
@@ -27,8 +25,8 @@
         <a [routerLink]="['/auth/forgot-password']">Forgot password?</a>
       </div>
       <div class="password-register">
-        <a [routerLink]="['/auth/register']">Sign Up</a>
+        <a [routerLink]="['/auth/register']">Create new account</a>
       </div>
     </form>
   </div>
-</div> -->
+</div>
