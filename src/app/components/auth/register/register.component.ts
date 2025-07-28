@@ -58,14 +58,14 @@ export class RegisterComponent implements OnInit {
 
   registerWizard() {
     if (!this.passwordMatchValidator(this.registerForm)) {
-      alertMethod('Passwords do not match', 'Please re-enter your password.', AlertType.Error);
+      alertMethod('Passwords do not match', 'Please re-enter your password', AlertType.Error);
       this.registerForm.get('password')?.reset();
       this.registerForm.get('confirmPassword')?.reset();
       return;
     }
 
     if (!this.registerForm.valid) {
-      alertMethod('Form is invalid', 'Please fill in all required fields.', AlertType.Error);
+      alertMethod('Form is invalid', 'Please fill in all required fields', AlertType.Error);
       return;
     }
 
@@ -74,33 +74,33 @@ export class RegisterComponent implements OnInit {
     this.wizardService.isUsernameAvailable(userData.username).subscribe({
       next: (usernameResponse) => {
         if (!usernameResponse.data) {
-          alertMethod(usernameResponse.message, 'Please choose a different username.', AlertType.Error);
+          alertMethod(usernameResponse.message, 'Please choose a different username', AlertType.Error);
           return;
         }
         this.wizardService.isEmailAvailable(userData.email).subscribe({
           next: (emailResponse) => {
             if (!emailResponse.data) {
-              alertMethod(emailResponse.message, 'Please use a different email address.', AlertType.Error);
+              alertMethod(emailResponse.message, 'Please use a different email address', AlertType.Error);
               return;
             }
 
             this.wizardService.add(userData).subscribe({
               next: (addResponse) => {
-                alertMethod(addResponse.message, 'You can now log in with your credentials.', AlertType.Success);
+                alertMethod(addResponse.message, 'You can now log in with your credentials', AlertType.Success);
                 this.router.navigate(['/login']);
               },
               error: (err: any) => {
-                alertMethod(err.error.message, 'Please try again.', AlertType.Error);
+                alertMethod(err.error.message, 'Please try again', AlertType.Error);
               }
             });
           },
           error: (err: any) => {
-            alertMethod(err.error.message, 'Please try again.', AlertType.Error);
+            alertMethod(err.error.message, 'Please try again', AlertType.Error);
           }
         });
       },
       error: (err: any) => {
-        alertMethod(err.error.message, 'Please try again.', AlertType.Error);
+        alertMethod(err.error.message, 'Please try again', AlertType.Error);
       },
     });
   }
