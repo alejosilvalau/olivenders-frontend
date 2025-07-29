@@ -170,22 +170,34 @@ export class ProfileComponent implements OnInit {
   }
 
   changePassword(): void {
-    if (this.usuario?.id) {
-      this.userService
-        .changePassword(this.usuario.id, this.changePasswordForm.value)
+    if (this.wizard?.id) {
+      this.wizardService.validatePassword(this.wizard.id, { password: this.changePasswordForm.value.currentPassword })
         .subscribe({
-          next: () => {
-            this.closeModal('updatePassword');
-            this.changePasswordForm.reset();
-            this.ngOnInit();
-            alertMethod('Actualizar perfil', 'Contraseña actualizada correctamente', 'success');
+          next: (res) => {
+            if (!res.data) {
+              alertMethod('Invalid current password', 'Please enter your current password correctly', AlertType.Error);
+              return;
+            }
+
+            if (this.changePasswordForm.invalid) {
+              alertMethod('Form is invalid', 'Please fill in all required fields', AlertType.Error);
+              return;
+            }
+
+            const newPassword: WizardRequest = { password: this.changePasswordForm.value.newPassword.trim() };
+            this.wizardService.changePasswordWithoutToken(this.wizard!.id, newPassword)
+              .subscribe({
+                next: (res) => {
+                  alertMethod(res.message, 'Password changed successfully', AlertType.Success);
+                  this.changePasswordForm.reset();
+                  this.ngOnInit();
+                }
+              });
           },
-          error: () => {
-            alertMethod('Actualizar perfil', 'Error al actualizar la contraseña', 'error');
-          },
+          error: (err) => {
+            alertMethod(err.error.message, 'Please try again later', AlertType.Error);
+          }
         });
-    } else
-      console.error('El id del usuario es indefinido');
-  }
+    }
 }
 }
