@@ -23,7 +23,7 @@ Ver diagrama en [Draw.io](https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEm
 
 ## Alcance Funcional
 ### Alcance Mínimo
-*Regularidad:*
+Regularidad:
 |Req|Detalle|
 |:-|:-|
 |CRUD simple|1. CRUD **School**<br>2. CRUD **Core**<br>|
@@ -32,13 +32,14 @@ Ver diagrama en [Draw.io](https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEm
 |CUU/Epic|1. Vender una **Wand**|
 
 
-*Adicionales para Aprobación Directa:*
+Adicionales para Aprobación Directa:
 |Req|Detalle|
 |:-|:-|
 |CRUD |1. CRUD **Wand** {depende de} CRUD **Wood** y CRUD **Core** <br/> 2. CRUD **Order** <br/> 3. CRUD **Wood**|
-|CUU/Epic |1. Reseñar compra <br> 2. Moderar reseñas con IA (OpenAI - ChatGPT) |
+|CUU/Epic |1. Reseñar compra |
 
-*Alcance Adicional Voluntario:*
+Alcance Adicional Voluntario:
 |Req|Detalle|
 |:-|:-|
-|Listado<br>+<br>Detalle | Listado de reseñas donde se muestra fecha de compra, comentario de la reseña => Detalle muestra imagen, nombre y precio de la **Wand**.|
+|Listado<br>+<br>Detalle | 1. Listado de reseñas donde se muestra fecha de compra, comentario de la reseña => Detalle muestra imagen, nombre y precio de la **Wand**.|
+|CUU/Epic |1. Moderar reseñas con IA (OpenAI - ChatGPT) |
