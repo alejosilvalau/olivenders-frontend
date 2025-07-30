@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { WizardService } from '../../../core/services/wizard.service.js';
@@ -11,20 +11,15 @@ import { CommonModule } from '@angular/common';
 import { alertMethod } from '../../../functions/alert.function';
 import { AlertType } from '../../../shared/components/alert/alert.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
-
-export enum FormState {
-  Pending = 'PENDING',
-  Valid = 'VALID',
-  Invalid = 'INVALID',
-  Disabled = 'DISABLED',
-}
+import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
+import { SchoolService } from '../../../core/services/school.service.js';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, EntitySelectorComponent, ModalComponent],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css',
+  styleUrls: ['./profile.component.css', '../../../shared/styles/forms.style.css']
 })
 export class ProfileComponent implements OnInit {
   wizard: Wizard | null = null;
@@ -34,96 +29,45 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private wizardService: WizardService,
+    public schoolService: SchoolService,
     private authService: AuthService,
     private fb: FormBuilder
-  ) { }
-
-  ngOnInit(): void {
-    this.wizard = this.authService.getCurrentWizard();
+  ) {
     this.profileForm = this.fb.group({
-      username: [
-        this.wizard?.username,
-        {
-          validators: [Validators.required],
-          asyncValidators: [this.validateUsername.bind(this)],
-          updateOn: 'blur'
-        },
-      ],
-      password: [
-        this.currentPassword,
-        {
-          validators: [Validators.required, Validators.minLength(6)],
-          asyncValidators: [this.validateCurrentPassword.bind(this)],
-          updateOn: 'blur'
-        },
-      ],
-      name: [this.wizard?.name, Validators.required],
-      last_name: [this.wizard?.last_name, Validators.required],
-      email: [
-        this.wizard?.email,
-        {
-          validators: [Validators.required, Validators.email],
-          asyncValidators: [this.validateEmail.bind(this)],
-          updateOn: 'blur',
-        },
-      ],
-      address: [this.wizard?.phone, Validators.required],
-      phone: [this.wizard?.phone, Validators.required],
-      school: [this.wizard?.school, Validators.required],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      address: ['', Validators.required],
+      phone: ['', Validators.required],
+      school: ['', Validators.required],
     });
     this.changePasswordForm = this.fb.group({
-      currentPassword: [
-        this.currentPassword,
-        {
-          validators: [Validators.required, Validators.minLength(6)],
-          asyncValidators: [this.validateCurrentPassword.bind(this)],
-          updateOn: 'blur'
-        },
-      ],
+      currentPassword: ['', [Validators.required, Validators.minLength(6)]],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required, Validators.minLength(6)],
-    },
-      { validators: this.passwordsMatch }
-    );
+      confirmNewPassword: ['', Validators.required, Validators.minLength(6)],
+    });
   }
 
-  passwordsMatch(control: AbstractControl): ValidationErrors | null {
-    const newPassword = this.changePasswordForm.get('newPassword')?.value;
-    const confirmNewPassword = this.changePasswordForm.get('confirmNewPassword')?.value;
-    if (newPassword !== confirmNewPassword) {
-      control.get('confirmPassword')?.setErrors({ notMatching: true });
-      return { notMatching: true };
-    } else {
-      control.get('confirmPassword')?.setErrors(null);
-      return null;
-    }
+  ngOnInit(): void {
+    this.reloadProfile();
   }
 
-
-  validateCurrentPassword(control: AbstractControl): Observable<ValidationErrors | null> {
-    const wizardData = { password: control.value };
-    return this.wizardService.validatePassword(this.wizard!.id, wizardData).pipe(
-      map((res) => res.data ? null : { invalidCurrentPassword: true }),
-      catchError(() => of({ invalidCurrentPassword: true }))
-    );
+  reloadProfile(): void {
+    this.wizard = this.authService.getCurrentWizard();
+    this.profileForm.patchValue({ ...this.wizard });
+    this.changePasswordForm.reset();
   }
 
-  validateUsername(control: AbstractControl): Observable<ValidationErrors | null> {
-    return this.wizardService.isUsernameAvailable(control.value).pipe(
-      map((res) => res.data ? null : { usernameTaken: true }),
-      catchError(err => of({ usernameTaken: true }))
-    );
+  private newPasswordMatchValidator(form: FormGroup) {
+    return form.get('newPassword')?.value === form.get('confirmNewPassword')?.value
+      ? true
+      : false;
   }
 
-  validateEmail(control: AbstractControl): Observable<ValidationErrors | null> {
-    return this.wizardService.isEmailAvailable(control.value).pipe(
-      map((res) => res.data ? null : { emailTaken: true }),
-      catchError(err => of({ emailTaken: true }))
-    );
-  }
-
-  get formPending(): boolean {
-    return this.profileForm.pending;
+  get profileFormControl() {
+    return this.profileForm.get('school') as FormControl;
   }
 
   async updateProfile() {
@@ -133,19 +77,6 @@ export class ProfileComponent implements OnInit {
       const control = this.profileForm.get(key);
       control?.updateValueAndValidity();
     });
-
-    if (this.profileForm.pending) {
-      const isValid = await new Promise<boolean>((resolve) => {
-        const sub = this.profileForm.statusChanges.subscribe((status) => {
-          if (status !== FormState.Pending) {
-            sub.unsubscribe();
-            resolve(status === FormState.Valid);
-          }
-        });
-      });
-
-      if (!isValid) return;
-    }
 
     if (this.profileForm.invalid) return;
 
@@ -158,7 +89,6 @@ export class ProfileComponent implements OnInit {
 
           this.authService.setWizardSession(updatedWizard, token);
           this.profileForm.reset();
-          this.ngOnInit();
 
           alertMethod(res.message, 'Wizard successfully updated', AlertType.Success);
         },
@@ -166,6 +96,7 @@ export class ProfileComponent implements OnInit {
           alertMethod(err.error.message, 'Please try again', AlertType.Error);
         },
       });
+      this.reloadProfile();
     }
   }
 
@@ -190,7 +121,6 @@ export class ProfileComponent implements OnInit {
                 next: (res) => {
                   alertMethod(res.message, 'Password changed successfully', AlertType.Success);
                   this.changePasswordForm.reset();
-                  this.ngOnInit();
                 }
               });
           },
@@ -198,6 +128,7 @@ export class ProfileComponent implements OnInit {
             alertMethod(err.error.message, 'Please try again later', AlertType.Error);
           }
         });
+      this.reloadProfile();
     }
 }
 }

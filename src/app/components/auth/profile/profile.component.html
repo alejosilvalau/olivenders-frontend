@@ -1,122 +1,273 @@
-<div class="max-w-2xl mx-auto my-10 bg-white shadow-md rounded-lg p-8 dark:bg-gray-800">
-  <h2 class="text-2xl text-center font-semibold text-gray-900 dark:text-blue-600 mb-6"> Editar Perfil </h2>
-  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label for="nombre" class="block text-blue-600 dark:text-blue-600 font-medium mb-1">Nombre</label>
-        <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      </div>
-      <div>
-        <label for="apellido" class="block text-blue-600 dark:text-blue-600 font-medium mb-1">Apellido</label>
-        <input type="text" id="apellido" formControlName="apellido" placeholder="Apellido"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      </div>
-      <div>
-        <label for="usuario" class="block text-blue-600 dark:text-blue-600 font-medium">Usuario</label>
-        <input type="text" id="usuario" formControlName="usuario"
-          class="form-control w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Usuario" />
-        <small class="text-red-500" *ngIf="
-            profileForm.get('usuario')?.touched &&
-            profileForm.get('usuario')?.hasError('usernameTaken')
-          "> El usuario ya está en uso. </small>
-        <small class="text-red-500" *ngIf="
+<div class="container my-4">
+  <form [formGroup]="profileForm" class="two-column-form mb-lg-5">
+    <div class="row g-3 m-auto">
+      <div class="col-md-6">
+        <label for="username" class="form-label text-primary fw-medium"
+          >Username</label
+        >
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          class="form-control"
+          placeholder="Username"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            profileForm.get('username')?.touched &&
+            profileForm.get('username')?.hasError('usernameTaken')
+          "
+        >
+          The username is already taken
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="
             profileForm.get('usuario')?.touched &&
             profileForm.get('usuario')?.hasError('required')
-          "> El usuario es obligatorio. </small>
+          "
+        >
+          Username is required
+        </small>
       </div>
-      <div>
-        <label for="email" class="block text-blue-600 dark:text-blue-600 font-medium">Correo Electrónico</label>
-        <input type="email" id="email" formControlName="mail"
-          class="form-control w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="miemail@ejemplo.com" />
-        <small class="text-red-500" *ngIf="
-            profileForm.get('mail')?.touched &&
-            profileForm.get('mail')?.hasError('emailTaken')
-          "> El correo electrónico ya está en uso. </small>
-        <small class="text-red-500" *ngIf="
-            profileForm.get('mail')?.touched &&
-            profileForm.get('mail')?.hasError('required')
-          "> El correo electrónico es obligatorio. </small>
-        <small class="text-red-500" *ngIf="
-            profileForm.get('mail')?.touched &&
-            profileForm.get('mail')?.hasError('email')
-          "> Formato de correo electrónico inválido. </small>
+      <div class="col-md-6">
+        <label for="name" class="form-label text-primary fw-medium mb-1"
+          >Name</label
+        >
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Name"
+          class="form-control"
+        />
       </div>
-      <div>
-        <label for="telefono" class="block text-blue-600 dark:text-blue-600 font-medium mb-1">Teléfono</label>
-        <input type="text" id="telefono" formControlName="telefono" placeholder="341-222355454"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <div class="col-md-6">
+        <label for="last_name" class="form-label text-primary fw-medium mb-1"
+          >Last Name</label
+        >
+        <input
+          type="text"
+          id="last_name"
+          formControlName="last_name"
+          placeholder="Last Name"
+          class="form-control"
+        />
       </div>
-      <div>
-        <label for="direccion" class="block text-blue-600 dark:text-blue-600 font-medium mb-1">Dirección</label>
-        <input type="text" id="direccion" formControlName="direccion" placeholder="Montevideo 1234"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <div class="col-md-6">
+        <label for="email" class="form-label text-primary fw-medium"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          placeholder="name.last_name@hogwarts.edu"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            profileForm.get('email')?.touched &&
+            profileForm.get('email')?.hasError('emailTaken')
+          "
+        >
+          Email is already taken
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="
+            profileForm.get('email')?.touched &&
+            profileForm.get('email')?.hasError('required')
+          "
+        >
+          Email is required
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="
+            profileForm.get('email')?.touched &&
+            profileForm.get('email')?.hasError('email')
+          "
+        >
+          Email format is invalid
+        </small>
       </div>
-    </div>
-    <div class="mt-8 flex justify-center space-x-4">
-      <button type="button" (click)="openModal('updatePassword')"
-        class="px-5 py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-blue-300">
-        Cambiar Contraseña </button>
-      <button type="submit"
-        class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:bg-blue-400 disabled:cursor-not-allowed disabled:opacity-50"
-        [disabled]="profileForm.invalid || formPending"> Guardar Cambios </button>
+      <div class="col-md-6">
+        <label for="address" class="form-label text-primary fw-medium mb-1"
+          >Address</label
+        >
+        <input
+          type="text"
+          id="address"
+          formControlName="address"
+          placeholder="Weasleys' Wizard Wheezes, Diagon Alley"
+          class="form-control"
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="phone" class="form-label text-primary fw-medium mb-1"
+          >Phone</label
+        >
+        <input
+          type="text"
+          id="phone"
+          formControlName="phone"
+          placeholder="443456789"
+          class="form-control"
+        />
+      </div>
+      <div class="col-md-6">
+        <app-entity-selector
+          [entityControl]="profileFormControl"
+          [service]="schoolService"
+          [findOneByString]="schoolService.findOneByName"
+          label="School"
+        >
+          <input type="hidden" formControlName="school" />
+        </app-entity-selector>
+      </div>
+      <div class="mt-4 d-flex justify-content-center gap-3 w-50 align-items-center">
+        <button
+          type="button"
+          [attr.data-bs-toggle]="'modal'"
+          [attr.data-bs-target]="'#changePassword'"
+          class="btn btn-secondary text-white flex-grow-1"
+        >
+          Change Password
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary flex-grow-1"
+          [attr.data-bs-toggle]="'modal'"
+          [attr.data-bs-target]="'#updateProfile'"
+        >
+          Save Changes
+        </button>
+
+      </div>
     </div>
   </form>
-</div>
-<div id="updatePassword" class="modalChanged">
-  <div class="modal-contentChanged relative">
-    <span class="close absolute top-2 right-4 text-gray-500 hover:text-red-500 cursor-pointer"
-      (click)="closeModal('updatePassword')">&times;</span>
-    <h2 class="text-xl font-semibold text-gray-800 mb-6"> Actualizar Contraseña </h2>
-    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
-      <div class="mb-5">
-        <label for="currentPassword" class="block text-gray-700 dark:text-blue-600 font-medium mb-1"> Contraseña Actual
-        </label>
-        <input type="password" id="currentPassword" formControlName="currentPassword"
-          placeholder="Ingresa tu contraseña actual"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <small class="text-red-500" *ngIf="
-            passwordForm.get('currentPassword')?.touched &&
-            passwordForm.get('currentPassword')?.hasError('required')
-          "> La contraseña actual es obligatoria. </small>
-        <small class="text-red-500" *ngIf="
-            passwordForm.get('currentPassword')?.touched &&
-            passwordForm
-              .get('currentPassword')
-              ?.hasError('invalidCurrentPassword')
-          "> La contraseña actual es incorrecta. </small>
-      </div>
-      <div class="mb-5">
-        <label for="newPassword" class="block text-gray-700 dark:text-blue-600 font-medium mb-1"> Nueva Contraseña
-        </label>
-        <input type="password" id="newPassword" formControlName="newPassword" placeholder="Nueva contraseña"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <small class="text-red-500" *ngIf="
-            passwordForm.get('newPassword')?.touched &&
-            passwordForm.get('newPassword')?.invalid
-          "> La nueva contraseña debe tener al menos 6 caracteres. </small>
-      </div>
-      <div class="mb-5">
-        <label for="confirmPassword" class="block text-gray-700 dark:text-blue-600 font-medium mb-1"> Confirmar Nueva
-          Contraseña </label>
-        <input type="password" id="confirmPassword" formControlName="confirmPassword"
-          placeholder="Repite la nueva contraseña"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <small class="text-red-500" *ngIf="
-            passwordForm.get('confirmPassword')?.touched &&
-            passwordForm.hasError('notMatching')
-          "> Las contraseñas deben coincidir. </small>
-      </div>
-      <div class="flex justify-end space-x-4">
-        <button type="button" (click)="closeModal('updatePassword')"
-          class="px-5 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
-          Cancelar </button>
-        <button type="submit"
-          class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          [disabled]="passwordForm.invalid"> Actualizar </button>
-      </div>
-    </form>
-  </div>
+  <app-modal
+    [config]="{
+      id: 'updateProfile',
+      title: 'Update Profile',
+      submitButtonText: 'Save Changes',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="updateProfile()"
+    (onCancel)="profileForm.reset()"
+  >
+    <ng-template #modalContent>
+      <form [formGroup]="profileForm">
+        <div class="col-md-12">
+          <label for="password">Password</label>
+          <input
+            type="text"
+            formControlName="password"
+            id="password"
+            name="password"
+            class="form-control"
+            required
+          />
+        </div>
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal
+    [config]="{
+      id: 'changePassword',
+      title: 'Change Password',
+      submitButtonText: 'Save Changes',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="changePassword()"
+    (onCancel)="changePasswordForm.reset()"
+  >
+    <ng-template #modalContent>
+      <form [formGroup]="changePasswordForm">
+        <div class="col-12">
+          <div class="mb-4">
+            <label
+              for="currentPassword"
+              class="form-label fw-medium text-primary mb-1"
+              >Current Password</label
+            >
+            <input
+              type="password"
+              id="currentPassword"
+              formControlName="currentPassword"
+              placeholder="Current password"
+              class="form-control"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                changePasswordForm.get('currentPassword')?.touched &&
+                changePasswordForm.get('currentPassword')?.hasError('required')
+              "
+            >
+              Current password is required
+            </small>
+            <small
+              class="text-danger"
+              *ngIf="
+                changePasswordForm.get('currentPassword')?.touched &&
+                changePasswordForm
+                  .get('currentPassword')
+                  ?.hasError('invalidCurrentPassword')
+              "
+            >
+              Current password is incorrect
+            </small>
+          </div>
+          <div class="mb-4">
+            <label
+              for="newPassword"
+              class="form-label fw-medium text-primary mb-1"
+              >New Password</label
+            >
+            <input
+              type="password"
+              id="newPassword"
+              formControlName="newPassword"
+              placeholder="New password"
+              class="form-control"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                changePasswordForm.get('newPassword')?.touched &&
+                changePasswordForm.get('newPassword')?.invalid
+              "
+              >Minimum 6 characters</small
+            >
+          </div>
+          <div class="mb-4">
+            <label
+              for="confirmPassword"
+              class="form-label fw-medium text-primary mb-1"
+              >Confirm New Password</label
+            >
+            <input
+              type="password"
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              placeholder="Confirm your new password"
+              class="form-control"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                changePasswordForm.get('confirmPassword')?.touched &&
+                changePasswordForm.hasError('notMatching')
+              "
+              >New Passwords must match</small
+            >
+          </div>
+        </div>
+      </form>
+    </ng-template>
+  </app-modal>
 </div>

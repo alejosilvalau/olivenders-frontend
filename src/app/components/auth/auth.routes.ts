@@ -4,8 +4,8 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 // import { UserComponent } from './usuario/usuario.component';
 // import { onlyAdmin } from '../../guards/onlyAdmin.guard';
-// import { isLoggedInGuard } from '../../guards/is-logged-in.guard';
-// import { ProfileComponent } from './profile/profile.component';
+import { isLoggedInGuard } from '../../guards/is-logged-in.guard';
+import { ProfileComponent } from './profile/profile.component';
 // import { QualificationComponent } from './qualification/qualification.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -14,7 +14,7 @@ export const authRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   // { path: 'users', component: UserComponent, canActivate: [onlyAdmin] },
-  // { path: 'profile', component: ProfileComponent, canActivate: [isLoggedInGuard] },
+  { path: 'profile', component: ProfileComponent },
   // { path: 'rate/:usuarioAcalificar/:id', component: QualificationComponent, canActivate: [isLoggedInGuard] },
   // { path: 'dashboard', component: DashboardComponent, canActivate: [onlyAdmin] }
 

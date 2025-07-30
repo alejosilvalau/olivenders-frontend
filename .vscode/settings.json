@@ -16,7 +16,7 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[css]": {
     "editor.defaultFormatter": "michelemelluso.code-beautifier"
