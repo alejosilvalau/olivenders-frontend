@@ -129,15 +129,7 @@
         </app-entity-selector>
       </div>
       <div class="mt-4 d-flex justify-content-center gap-3 w-50 align-items-center">
-        <button
-          type="button"
-          [attr.data-bs-toggle]="'modal'"
-          [attr.data-bs-target]="'#changePassword'"
-          class="btn btn-secondary text-white flex-grow-1"
 
-        >
-          Change Password
-        </button>
         <button
           type="submit"
           class="btn btn-primary flex-grow-1"
@@ -147,6 +139,29 @@
           Save Changes
         </button>
 
+      </div>
+      <div>
+        <h2>More Options</h2>
+        <div class="d-flex flex-column flex-md-row gap-3">
+          <button
+            type="button"
+            [attr.data-bs-toggle]="'modal'"
+            [attr.data-bs-target]="'#changePassword'"
+            class="btn btn-secondary text-white flex-grow-1"
+
+          >
+            Change Password
+          </button>
+          <button
+            type="button"
+            [attr.data-bs-toggle]="'modal'"
+            [attr.data-bs-target]="'#deactivateAccount'"
+            class="btn btn-danger text-white flex-grow-1"
+
+          >
+            Disable Account
+          </button>
+        </div>
       </div>
     </div>
   </form>
@@ -165,7 +180,7 @@
         <div class="col-md-12">
           <label for="password">Password</label>
           <input
-            type="text"
+            type="password"
             formControlName="password"
             id="password"
             name="password"
@@ -211,17 +226,6 @@
             >
               Current password is required
             </small>
-            <small
-              class="text-danger"
-              *ngIf="
-                changePasswordForm.get('currentPassword')?.touched &&
-                changePasswordForm
-                  .get('currentPassword')
-                  ?.hasError('invalidCurrentPassword')
-              "
-            >
-              Current password is incorrect
-            </small>
           </div>
           <div class="mb-4">
             <label
@@ -258,17 +262,22 @@
               placeholder="Confirm your new password"
               class="form-control"
             />
-            <small
-              class="text-danger"
-              *ngIf="
-                changePasswordForm.get('confirmNewPassword')?.touched &&
-                changePasswordForm.hasError('notMatching')
-              "
-              >New Passwords must match</small
-            >
           </div>
         </div>
       </form>
+    </ng-template>
+  </app-modal>
+    <app-modal [config]="{
+      id: 'deactivateAccount',
+      title: 'Disable Account',
+      submitButtonText: 'Confirm Disable',
+      cancelButtonText: 'Cancel'
+    }" (onSubmit)="deactivateAccount()">
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to disable the account?</p>
+        <p><strong>Username:</strong> {{ this.wizard?.username | titlecase }}</p>
+      </div>
     </ng-template>
   </app-modal>
 </div>

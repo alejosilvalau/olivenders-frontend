@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
     this.changePasswordForm = this.fb.group({
       currentPassword: ['', [Validators.required, Validators.minLength(6)]],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
-      confirmNewPassword: ['', Validators.required, Validators.minLength(6)],
+      confirmNewPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit {
 
   reloadProfile(): void {
     this.wizard = this.authService.getCurrentWizard();
-    this.profileForm.patchValue({ ...this.wizard });
+    this.profileForm.patchValue({ ...this.wizard, password: '' });
     this.changePasswordForm.reset();
   }
 
@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
           const updatedWizard: Wizard = updatedWizardRequest as Wizard;
 
           this.authService.setWizardSession(updatedWizard, token);
-          this.profileForm.reset();
+          this.reloadProfile();
 
           alertMethod(res.message, 'Wizard successfully updated', AlertType.Success);
         },
@@ -96,7 +96,6 @@ export class ProfileComponent implements OnInit {
           alertMethod(err.error.message, 'Please try again', AlertType.Error);
         },
       });
-      this.reloadProfile();
     }
   }
 
@@ -115,6 +114,13 @@ export class ProfileComponent implements OnInit {
               return;
             }
 
+            if (!this.newPasswordMatchValidator(this.changePasswordForm)) {
+              alertMethod('Passwords do not match', 'Please re-enter your password', AlertType.Error);
+              this.changePasswordForm.get('newPassword')?.reset();
+              this.changePasswordForm.get('confirmNewPassword')?.reset();
+              return;
+            }
+
             const newPassword: WizardRequest = { password: this.changePasswordForm.value.newPassword.trim() };
             this.wizardService.changePasswordWithoutToken(this.wizard!.id, newPassword)
               .subscribe({
@@ -128,7 +134,20 @@ export class ProfileComponent implements OnInit {
             alertMethod(err.error.message, 'Please try again later', AlertType.Error);
           }
         });
-      this.reloadProfile();
     }
-}
+  }
+
+  deactivateAccount(): void {
+    if (this.wizard?.id) {
+      this.wizardService.deactivate(this.wizard.id).subscribe({
+        next: (res) => {
+          alertMethod(res.message, 'Account deactivated successfully', AlertType.Success);
+          this.authService.logout();
+        },
+        error: (err) => {
+          alertMethod(err.error.message, 'Please try again later', AlertType.Error);
+        }
+      });
+    }
+  }
 }
