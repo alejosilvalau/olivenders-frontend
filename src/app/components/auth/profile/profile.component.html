@@ -123,6 +123,7 @@
           [entityControl]="profileFormControl"
           [service]="schoolService"
           [findOneByString]="schoolService.findOneByName"
+          [selectedEntityName]="(schoolName | async) || ''"
           label="School"
         >
           <input type="hidden" formControlName="school" />
@@ -134,6 +135,7 @@
           [attr.data-bs-toggle]="'modal'"
           [attr.data-bs-target]="'#changePassword'"
           class="btn btn-secondary text-white flex-grow-1"
+
         >
           Change Password
         </button>
@@ -157,7 +159,7 @@
       cancelButtonText: 'Cancel'
     }"
     (onSubmit)="updateProfile()"
-    (onCancel)="profileForm.reset()"
+
   >
     <ng-template #modalContent>
       <form [formGroup]="profileForm">
@@ -183,7 +185,7 @@
       cancelButtonText: 'Cancel'
     }"
     (onSubmit)="changePassword()"
-    (onCancel)="changePasswordForm.reset()"
+
   >
     <ng-template #modalContent>
       <form [formGroup]="changePasswordForm">
@@ -246,21 +248,21 @@
           </div>
           <div class="mb-4">
             <label
-              for="confirmPassword"
+              for="confirmNewPassword"
               class="form-label fw-medium text-primary mb-1"
               >Confirm New Password</label
             >
             <input
               type="password"
-              id="confirmPassword"
-              formControlName="confirmPassword"
+              id="confirmNewPassword"
+              formControlName="confirmNewPassword"
               placeholder="Confirm your new password"
               class="form-control"
             />
             <small
               class="text-danger"
               *ngIf="
-                changePasswordForm.get('confirmPassword')?.touched &&
+                changePasswordForm.get('confirmNewPassword')?.touched &&
                 changePasswordForm.hasError('notMatching')
               "
               >New Passwords must match</small

@@ -70,6 +70,13 @@ export class ProfileComponent implements OnInit {
     return this.profileForm.get('school') as FormControl;
   }
 
+  get schoolName(): Observable<string | undefined> {
+    return this.schoolService.findOne(this.profileFormControl.value).pipe(
+      map((res) => res.data?.name ? res.data.name : undefined),
+      catchError(() => of(undefined))
+    );
+  }
+
   async updateProfile() {
     this.profileForm.markAllAsTouched();
 

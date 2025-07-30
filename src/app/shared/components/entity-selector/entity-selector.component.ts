@@ -17,6 +17,7 @@ export class EntitySelectorComponent {
   @Input() placeholder: string = 'Search by name or ID';
   @Input() displayField: string = 'name';
   @Input() pageSize: number = 100;
+  @Input() selectedEntityName: string = '';
 
   @Output() entitySelected = new EventEmitter<any>();
   @ViewChild('selectorRoot', { static: true }) selectorRoot!: ElementRef;
@@ -24,7 +25,6 @@ export class EntitySelectorComponent {
   entities: any[] = [];
   filteredEntities: any[] = [];
   showDropdown: boolean = false;
-  selectedEntityName: string = '';
 
   onInput(event: Event): void {
     const term = (event.target as HTMLInputElement).value.trim();
