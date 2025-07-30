@@ -3,8 +3,6 @@
 ## Grupo
 ### Integrantes
 * 46155 - Avila, Marisol
-* 39749 - Egea, Lucas
-* 52889 - Cisneros, Juan Pablo
 * 47868 - Silva, Alejo Lautaro
 
 ### Repositorios
@@ -18,24 +16,29 @@
 
 
 ### Modelo
-![Diagrama DER](./DER-v4.png)
+![Diagrama DER](./DER-v5.png)
 Ver diagrama en [Draw.io](https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEmREH56euT88r/view?usp=sharing)
 
 **Nota:** la division de las varitas entre *madera* y *núcleo* es dada por la [wiki de Harry Potter](https://harrypotter.fandom.com/es/wiki/Varita)
 
-## Alcance Funcional 
-### Alcance Mínimo
-
-Regularidad:
+## Alcance Funcional
+## Alcance Mínimo
+*Regularidad:*
 |Req|Detalle|
 |:-|:-|
-|CRUD simple|1. CRUD Escuela<br>2. CRUD Núcleo<br>3. CRUD Madera<br>4. CRUD Pregunta|
-|CRUD dependiente |1. CRUD Mago {depende de} CRUD Escuela<br>2. CRUD Varita {depende de} CRUD Madera y CRUD Núcleo|
-|Listado<br>+<br>Detalle | 1. Listado de varitas filtrado por madera, núcleo y precio. Muestra imagen, nombre y precio => Detalle muestra madera, núcleo, longitud, flexibilidad y descripción.<br> 2. Listado de reseñas donde se muestra fecha y comentario de la reseña. Además nombre y descripción de la varita vendida. Al seleccionar la fila se muestra imagen, longitud, flexibilidad, madera y núcleo de la varita.|
-|CUU/Epic|1. Vender una varita<br>2. Responder cuestionario|
+|CRUD simple|1. CRUD **School**<br>2. CRUD **Core**<br>|
+|CRUD dependiente |1. CRUD **Wizard** {depende de} CRUD **Core**|
+|Listado<br>+<br>Detalle | 1. Listado de **Wands** filtrado por **Wood**, **Core** y precio. Muestra imagen, nombre y precio => Detalle muestra **Wood**, **Core**, longitud, flexibilidad y descripción.|
+|CUU/Epic|1. Vender una **Wand**|
 
-Adicionales para Aprobación Directa:
+
+*Adicionales para Aprobación Directa:*
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD Clave Token<br> 2. CRUD Cuestionario<br> 3. CRUD Venta|
-|CUU/Epic |1. Reseñar compra<br>2. Moderar reseñas con Gemini AI de Google|
+|CRUD |1. CRUD **Wand** {depende de} CRUD **Wood** y CRUD **Core** <br/> 2. CRUD **Order** <br/> 3. CRUD **Wood**|
+|CUU/Epic |1. Reseñar compra <br> 2. Moderar reseñas con IA (OpenAI - ChatGPT) |
+
+*Alcance Adicional Voluntario:*
+|Req|Detalle|
+|:-|:-|
+|Listado<br>+<br>Detalle | Listado de reseñas donde se muestra fecha de compra, comentario de la reseña => Detalle muestra imagen, nombre y precio de la **Wand**.|
