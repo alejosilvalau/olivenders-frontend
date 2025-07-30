@@ -22,7 +22,7 @@ Ver diagrama en [Draw.io](https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEm
 **Nota:** la division de las varitas entre *madera* y *núcleo* es dada por la [wiki de Harry Potter](https://harrypotter.fandom.com/es/wiki/Varita)
 
 ## Alcance Funcional
-## Alcance Mínimo
+### Alcance Mínimo
 *Regularidad:*
 |Req|Detalle|
 |:-|:-|
