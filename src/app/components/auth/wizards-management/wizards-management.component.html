@@ -1,0 +1,73 @@
+<div class="container my-4">
+  <app-alert></app-alert>
+  <div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4"
+  >
+    <h2 class="mb-3 mb-md-0">WIZARDS MANAGEMENT</h2>
+    <app-searcher
+      [data]="wizards"
+      [filterAttributes]="['username', 'email', 'id']"
+      (filteredData)="onSearch($event)"
+      (searchTermChange)="searchTerm = $event"
+      class="searcher"
+    ></app-searcher>
+  </div>
+  <app-data-table
+    [columns]="[
+      { key: 'id', label: 'ID' },
+      { key: 'username', label: 'Username' },
+      { key: 'name', label: 'Name' },
+      { key: 'last_name', label: 'Last Name' },
+      { key: 'email', label: 'Email' },
+      { key: 'address', label: 'Address' },
+      { key: 'phone', label: 'Phone' },
+      { key: 'role', label: 'Role' },
+      { key: 'deactivated', label: 'Deactivated' },
+      { key: 'school', label: 'School' }
+    ]"
+    [data]="filteredWizards"
+    [emptyMessage]="'There are no wizards available.'"
+    [editModalTarget]="'#editWizard'"
+    [removeModalTarget]="'#removeWizard'"
+    (selectedEntity)="onWizardSelected($event)"
+  >
+  </app-data-table>
+  <app-modal
+    [config]="{
+      id: 'editWizard',
+      title: 'Edit Wizard',
+      submitButtonText: 'Change Role',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="changeWizardRole()"
+  >
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to change the wizard's role?</p>
+        <p>
+          <strong>Username:</strong> {{ selectedWizard?.username | titlecase
+          }}<br />
+          <strong>Role:</strong> {{ selectedWizard?.role | titlecase }}
+        </p>
+      </div>
+    </ng-template>
+  </app-modal>
+  <app-modal
+    [config]="{
+      id: 'removeWizard',
+      title: 'Remove Wizard',
+      submitButtonText: 'Confirm Delete',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="removeWizard()"
+  >
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to remove the wizard?</p>
+        <p>
+          <strong>Username:</strong> {{ selectedWizard?.username | titlecase }}
+        </p>
+      </div>
+    </ng-template>
+  </app-modal>
+</div>

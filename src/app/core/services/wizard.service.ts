@@ -18,7 +18,7 @@ export class WizardService {
 
   findAll(page: number = 1, pageSize: number = 5): Observable<WizardResponse<Wizard[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
-    return this.http.get<WizardResponse<Wizard[]>>(this.apiUrl, { params });
+    return this.http.get<WizardResponse<Wizard[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() },);
   }
 
   findOne(id: string): Observable<WizardResponse> {

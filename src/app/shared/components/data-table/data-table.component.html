@@ -18,8 +18,17 @@
             <ng-container *ngIf="col.key === 'name' || col.key === 'binomial_name'; else notName"> {{ item[col.key] | titlecase }}
             </ng-container>
             <ng-template #notName>
-              <ng-container *ngIf="col.key === 'price'; else defaultCell"> ${{ item[col.key] }} </ng-container>
-              <ng-template #defaultCell> {{ item[col.key] }} </ng-template>
+              <ng-container *ngIf="col.key === 'price'; else notPrice">
+                ${{ item[col.key] }}
+              </ng-container>
+              <ng-template #notPrice>
+                <ng-container *ngIf="col.key === 'school'; else defaultCell">
+                  {{ item[col.key].name | titlecase}}
+                </ng-container>
+                <ng-template #defaultCell>
+                  {{ item[col.key] }}
+                </ng-template>
+              </ng-template>
             </ng-template>
           </ng-template>
         </td>
