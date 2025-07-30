@@ -1,0 +1,72 @@
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+
+<div class="container-fluid">
+  <button class="btn btn-primary d-lg-none mt-2 w-100" (click)="toggleFilter()">
+    {{ showFilter ? "Hide Filters" : "Show Filters" }}
+  </button>
+
+  <div class="row">
+    <div
+      class="col-12 col-lg-3 mb-4 filtro"
+      [class.d-none]="!showFilter && isMobile"
+    >
+      <app-filter
+        (filterChanged)="onFilterChanged($event)"
+        class="sticky-lg-top"
+      ></app-filter>
+    </div>
+
+    <div class="col-12 col-lg-9 coches mt-5">
+      <div class="row g-3">
+        <div
+          *ngFor="let wand of filteredWands"
+          class="col-12 col-sm-6 col-md-4 col-xl-3"
+        >
+          <div class="card h-100">
+            <div class="position-relative">
+              <img
+                id="wand-image"
+                class="card-img-top img-fluid"
+                [src]="wand.image"
+                alt="wand-image"
+              />
+              <button
+                class="btn btn-light btn-details"
+                (click)="openWandDetails(wand)"
+              >
+                <span class="material-icons"> info </span>
+              </button>
+            </div>
+
+            <div class="card-body d-flex flex-column">
+              <p
+                *ngIf="wand.total_price > 0 && wand.total_price !== null"
+                class="card-text price-product mb-2"
+              >
+                <strong class="ms-2">Price:</strong> ${{ wand.total_price }}
+              </p>
+              <div class="mt-auto botonera">
+                <a
+                  [routerLink]="['/product/order', wand.id]"
+                  class="btn btn-primary w-50 mx-1 mb-2"
+                  [class.disabled]="isWandAvailable(wand)"
+                >
+                  Buy
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p
+        *ngIf="filteredWands.length === 0"
+        style="display: flex; justify-content: center; font-size: 20px"
+      >
+        No wands found with the selected filters
+      </p>
+    </div>
+  </div>
+</div>
