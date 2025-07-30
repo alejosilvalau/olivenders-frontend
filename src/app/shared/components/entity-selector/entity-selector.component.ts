@@ -9,7 +9,7 @@ import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
   templateUrl: './entity-selector.component.html',
   styleUrl: '../../styles/forms.style.css',
 })
-export class EntitySelectorComponent {
+export class EntitySelectorComponent implements OnInit {
   @Input() entityControl!: FormControl;
   @Input() service!: any;
   @Input() findOneByString?: (term: string) => any;
@@ -17,7 +17,6 @@ export class EntitySelectorComponent {
   @Input() placeholder: string = 'Search by name or ID';
   @Input() displayField: string = 'name';
   @Input() pageSize: number = 100;
-  @Input() selectedEntityName: string = '';
 
   @Output() entitySelected = new EventEmitter<any>();
   @ViewChild('selectorRoot', { static: true }) selectorRoot!: ElementRef;
@@ -25,6 +24,18 @@ export class EntitySelectorComponent {
   entities: any[] = [];
   filteredEntities: any[] = [];
   showDropdown: boolean = false;
+  selectedEntityName: string = '';
+
+  ngOnInit(): void {
+    const id = this.entityControl.value;
+    if (id) {
+      this.service.findOne(id).subscribe((res: any) => {
+        if (res.data) {
+          this.selectedEntityName = res.data[this.displayField];
+        }
+      });
+    }
+  }
 
   onInput(event: Event): void {
     const term = (event.target as HTMLInputElement).value.trim();

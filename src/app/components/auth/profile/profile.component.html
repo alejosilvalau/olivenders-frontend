@@ -123,7 +123,6 @@
           [entityControl]="profileFormControl"
           [service]="schoolService"
           [findOneByString]="schoolService.findOneByName"
-          [selectedEntityName]="(schoolName | async) || ''"
           label="School"
         >
           <input type="hidden" formControlName="school" />
