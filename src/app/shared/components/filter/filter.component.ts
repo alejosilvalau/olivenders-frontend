@@ -24,19 +24,21 @@ export class FilterComponent implements OnInit {
   woods: WoodResponse<Wood[]> = { message: '' };
   cores: CoreResponse<Core[]> = { message: '' };
 
+  private readonly defaultFilterFormControls = {
+    wood: '',
+    core: '',
+    minPrice: 0,
+    maxPrice: 0,
+    minlengthInches: 0,
+    maxLengthInches: 0,
+  }
+
   constructor(
     private fb: FormBuilder,
     private woodService: WoodService,
     private coreService: CoreService
   ) {
-    this.filterForm = this.fb.group({
-      wood: '',
-      core: '',
-      minPrice: 0,
-      maxPrice: 0,
-      minlengthInches: 0,
-      maxLengthInches: 0,
-    });
+    this.filterForm = this.fb.group(this.defaultFilterFormControls);
   }
 
   ngOnInit(): void {
@@ -65,7 +67,7 @@ export class FilterComponent implements OnInit {
   }
 
   resetFilter(): void {
-    this.filterForm.reset();
+    this.filterForm.reset(this.defaultFilterFormControls);
     this.filterChanged.emit({});
   }
 }

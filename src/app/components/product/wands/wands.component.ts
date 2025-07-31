@@ -12,7 +12,6 @@ import { BottomSheetConfig } from '../../../core/models/bottom-sheet.interface';
 import { CommonModule } from '@angular/common';
 import { Wood } from '../../../core/models/wood.interface.js';
 
-
 @Component({
   selector: 'app-wands',
   standalone: true,
@@ -46,9 +45,6 @@ export class WandsComponent {
         this.wands = res.data!.filter((wand) => wand?.status == WandStatus.Available);
         this.filteredWands = this.wands;
       },
-      error: (err) => {
-        // console.error('Error al obtener vehiculos:', err);
-      },
     });
   }
 
@@ -62,12 +58,6 @@ export class WandsComponent {
 
   onFilterChanged(filters: any): void {
     this.filteredWands = this.wands.filter((wand) => {
-      // if (
-      //   filters.category &&
-      //   vehicle.categoria.nombreCategoria !== filters.category
-      // ) {
-      //   return false;
-      // }
 
       if (filters.wood && typeof wand.wood === 'object') {
         if (wand.wood.name !== filters.wood) return false;
@@ -76,7 +66,6 @@ export class WandsComponent {
       if (filters.core && typeof wand.core === 'object') {
         if (wand.core.name !== filters.core) return false;
       }
-
 
       if (filters.minPrice && wand.total_price < filters.minPrice) {
         return false;
@@ -93,9 +82,37 @@ export class WandsComponent {
       if (filters.maxlengthInches && wand.length_inches > filters.maxlengthInches) {
         return false;
       }
-
       return true;
     });
+
+    this.fallbackBackendSearchIfEmpty(filters);
+  }
+
+  private fallbackBackendSearchIfEmpty(filters: any): void {
+    if (this.filteredWands.length === 0) {
+      if (filters.wood) {
+        this.wandService.findAllByWood(filters.wood).subscribe({
+          next: (res) => {
+            this.filteredWands = res.data || [];
+          },
+          error: () => {
+            this.filteredWands = [];
+          }
+        });
+        return;
+      }
+      if (filters.core) {
+        this.wandService.findAllByCore(filters.core).subscribe({
+          next: (res) => {
+            this.filteredWands = res.data || [];
+          },
+          error: () => {
+            this.filteredWands = [];
+          }
+        });
+        return;
+      }
+    }
   }
 
   private checkScreenSize(): void {
