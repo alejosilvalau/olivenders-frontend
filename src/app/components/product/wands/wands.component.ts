@@ -10,6 +10,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetComponent } from '../../../shared/components/bottom-sheet/bottom-sheet.component';
 import { BottomSheetConfig } from '../../../core/models/bottom-sheet.interface';
 import { CommonModule } from '@angular/common';
+import { Wood } from '../../../core/models/wood.interface.js';
 
 
 @Component({
@@ -68,39 +69,31 @@ export class WandsComponent {
       //   return false;
       // }
 
-      // if (filters.brand && vehicle.marca.nombreMarca !== filters.brand) {
-      //   return false;
-      // }
+      if (filters.wood && typeof wand.wood === 'object') {
+        if (wand.wood.name !== filters.wood) return false;
+      }
 
-      // if (filters.priceDesde && vehicle.precioVenta < filters.priceDesde) {
-      //   return false;
-      // }
+      if (filters.core && typeof wand.core === 'object') {
+        if (wand.core.name !== filters.core) return false;
+      }
 
-      // if (filters.priceHasta && vehicle.precioVenta > filters.priceHasta) {
-      //   return false;
-      // }
 
-      // if (
-      //   filters.kilometersDesde &&
-      //   vehicle.kilometros < filters.kilometersDesde
-      // ) {
-      //   return false;
-      // }
+      if (filters.minPrice && wand.total_price < filters.minPrice) {
+        return false;
+      }
 
-      // if (
-      //   filters.kilometersHasta &&
-      //   vehicle.kilometros > filters.kilometersHasta
-      // ) {
-      //   return false;
-      // }
+      if (filters.maxPrice && wand.total_price > filters.maxPrice) {
+        return false;
+      }
 
-      // if (filters.isRentable && vehicle.precioAlquilerDiario <= 0) {
-      //   return false;
-      // }
+      if (filters.minlengthInches && wand.length_inches < filters.minlengthInches) {
+        return false;
+      }
 
-      // if (filters.isBuyable && vehicle.precioVenta <= 0) {
-      //   return false;
-      // }
+      if (filters.maxlengthInches && wand.length_inches > filters.maxlengthInches) {
+        return false;
+      }
+
       return true;
     });
   }
