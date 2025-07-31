@@ -23,4 +23,8 @@ export class BottomSheetComponent {
   closeSheet(): void {
     this.bottomSheetRef.dismiss();
   }
+
+  isString(value: any): boolean {
+    return typeof value === 'string';
+  }
 }

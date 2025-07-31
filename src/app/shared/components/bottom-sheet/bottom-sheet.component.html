@@ -3,7 +3,18 @@
   <div class="bottom-sheet-content">
     <div *ngFor="let field of config.fields" class="bottom-sheet-field">
       <p>
-        <strong>{{ field.label }}:</strong> {{ getNestedValue(config.data, field.key) }}
+        <strong>{{ field.label }}:</strong>
+        <ng-container *ngIf="field.key !== 'description'; else plainText">
+          <ng-container *ngIf="isString(getNestedValue(config.data, field.key)); else noTitlecase">
+            {{ getNestedValue(config.data, field.key) | titlecase }}
+          </ng-container>
+          <ng-template #noTitlecase>
+            {{ getNestedValue(config.data, field.key) }}
+          </ng-template>
+      </ng-container>
+      <ng-template #plainText>
+        {{ getNestedValue(config.data, field.key) }}
+      </ng-template>
       </p>
     </div>
   </div>
