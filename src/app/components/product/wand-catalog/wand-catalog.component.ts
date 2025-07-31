@@ -13,13 +13,13 @@ import { CommonModule } from '@angular/common';
 import { Wood } from '../../../core/models/wood.interface.js';
 
 @Component({
-  selector: 'app-wands',
+  selector: 'app-wand-catalog',
   standalone: true,
   imports: [CommonModule, RouterLink, FilterComponent],
-  templateUrl: './wands.component.html',
-  styleUrl: './wands.component.css',
+  templateUrl: './wand-catalog.component.html',
+  styleUrl: './wand-catalog.component.css',
 })
-export class WandsComponent {
+export class WandCatalogComponent {
   wands: Wand[] = [];
   filteredWands: Wand[] = [];
   currentWizard: Wizard | null = null;

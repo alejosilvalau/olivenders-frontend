@@ -18,10 +18,10 @@
 
 ::ng-deep .cdk-overlay-pane {
   overflow: hidden !important;
-  max-width: 50% !important;
 }
 
 .bottom-sheet-container {
+  max-width: 50%;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 12px;
@@ -76,4 +76,10 @@
 
 .close-button:hover {
   background-color: #303f9f;
+}
+
+@media (max-width: 768px) {
+  .bottom-sheet-container {
+    max-width: 100%;
+  }
 }
