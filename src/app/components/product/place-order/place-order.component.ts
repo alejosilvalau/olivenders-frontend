@@ -9,12 +9,13 @@ import { OrderService } from '../../../core/services/order.service';
 import { Order, OrderRequest, PaymentProvider } from '../../../core/models/order.interface';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { alertMethod } from '../../../functions/alert.function';
-import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
+import { AlertType } from '../../../shared/components/alert/alert.component';
+import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 
 @Component({
   selector: 'app-place-order',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule, AlertComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule, ModalComponent],
   templateUrl: 'place-order.component.html',
   styleUrl: './place-order.component.css',
 })
@@ -29,8 +30,6 @@ export class PlaceOrderComponent implements OnInit {
   wandId: string = '';
   currentSlideIndex = 0;
   lightboxActive: boolean = false;
-
-  @ViewChild(AlertComponent) alertComponent!: AlertComponent;
 
   constructor(
     private fb: FormBuilder,
@@ -49,8 +48,18 @@ export class PlaceOrderComponent implements OnInit {
     });
   }
 
-  get wandFormControl() {
-    return this.placeOrderForm.get('wand') as FormControl;
+  get wandCoreName() {
+    if (this.wand != null && this.wand.core && typeof this.wand.core !== 'string') {
+      return this.wand.core.name;
+    }
+    return '';
+  }
+
+  get wandWoodName() {
+    if (this.wand != null && this.wand.wood && typeof this.wand.wood !== 'string') {
+      return this.wand.wood.name;
+    }
+    return '';
   }
 
   ngOnInit(): void {

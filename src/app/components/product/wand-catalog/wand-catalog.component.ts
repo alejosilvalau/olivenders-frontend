@@ -49,7 +49,7 @@ export class WandCatalogComponent {
   }
 
   isWandAvailable(wand: Wand): boolean {
-    return wand.status === WandStatus.Available;
+    return wand.status !== WandStatus.Available;
   }
 
   toggleFilter() {
