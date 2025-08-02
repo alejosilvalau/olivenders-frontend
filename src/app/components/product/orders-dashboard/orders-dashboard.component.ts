@@ -7,6 +7,8 @@ import { AlertType } from '../../../shared/components/alert/alert.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Wand } from '../../../core/models/wand.interface.js';
+import { Core } from '../../../core/models/core.interface.js';
 
 @Component({
   selector: 'app-orders-dashboard',
@@ -38,25 +40,29 @@ export class OrdersDashboardComponent implements OnInit {
     });
   }
 
-  getWandName(order: Order): string {
-    if (order.wand && typeof order.wand !== 'string') {
-      return order.wand.name;
+  getWandFromOrder(order: Order): Wand | null {
+    if (typeof order.wand !== 'string') {
+      return order.wand;
     }
-    return '';
+    return null;
   }
 
-  getWandTotalPrice(order: Order): number {
-    if (order.wand && typeof order.wand !== 'string') {
-      return order.wand.total_price;
+  getWoodFromOrder(order: Order): Core | null {
+    if (typeof order.wand !== 'string') {
+      if (typeof order.wand.wood !== 'string') {
+        return order.wand.wood;
     }
-    return 0;
+    }
+    return null;
   }
 
-  getWandImage(order: Order): string {
-    if (order.wand && typeof order.wand !== 'string') {
-      return order.wand.image;
+  getCoreFromOrder(order: Order): Core | null {
+    if (typeof order.wand !== 'string') {
+      if (typeof order.wand.core !== 'string') {
+        return order.wand.core;
+      }
     }
-    return './public/default-wand.jpg';
+    return null;
   }
 
   onSelectedEntity(order: Order): void {
@@ -64,11 +70,11 @@ export class OrdersDashboardComponent implements OnInit {
     this.reviewText = order.review || '';
   }
 
-  canCompleteOrder(order: Order): boolean {
+  canComplete(order: Order): boolean {
     return order.status === OrderStatus.Delivered ? true : false;
   }
 
-  completeOrder(order: Order): void {
+  complete(order: Order): void {
     this.orderService.complete(order.id).subscribe({
       next: (res) => {
         alertMethod(res.message, 'Order marked as complete.', AlertType.Success);
@@ -78,14 +84,14 @@ export class OrdersDashboardComponent implements OnInit {
     });
   }
 
-  canCancelOrder(order: Order): boolean {
+  canCancel(order: Order): boolean {
     if (order.status === OrderStatus.Completed || order.status === OrderStatus.Refunded || order.status === OrderStatus.Pending || order.status === OrderStatus.Cancelled) {
       return false;
     }
     return true;
   }
 
-  cancelOrder(order: Order): void {
+  cancel(order: Order): void {
     this.orderService.cancel(order.id).subscribe({
       next: (res) => {
         alertMethod(res.message, 'Order cancelled successfully.', AlertType.Success);
@@ -95,14 +101,14 @@ export class OrdersDashboardComponent implements OnInit {
     });
   }
 
-  canRefundOrder(order: Order): boolean {
+  canRefund(order: Order): boolean {
     if (order.status !== OrderStatus.Cancelled && order.status !== OrderStatus.Completed) {
       return false;
     };
     return true;
   }
 
-  refundOrder(order: Order): void {
+  refund(order: Order): void {
     this.orderService.refund(order.id).subscribe({
       next: (res) => {
         alertMethod(res.message, 'Order refunded successfully.', AlertType.Success);
@@ -112,14 +118,14 @@ export class OrdersDashboardComponent implements OnInit {
     });
   }
 
-  canReviewOrder(order: Order): boolean {
+  canReview(order: Order): boolean {
     if (!order.completed || order.review) {
       return false;
     };
     return true;
   }
 
-  reviewOrder(): void {
+  review(): void {
     if (!this.selectedOrder) return;
     const reviewData = { review: this.reviewText.trim() };
     console.log('Selected Order:', this.selectedOrder);

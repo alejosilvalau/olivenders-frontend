@@ -3,60 +3,73 @@
   <div *ngIf="orders?.length; else noOrders">
     <div class="row g-4">
       <div class="col-12" *ngFor="let order of orders">
-        <div class="card p-3">
+        <div class="card shadow border-0 mb-2">
           <div class="row g-0 align-items-center">
             <div class="col-md-4 text-center">
               <img
-                [src]="getWandImage(order)"
+                [src]="getWandFromOrder(order)?.image"
                 alt="Wand Photo"
                 class="img-fluid rounded"
                 style="max-height: 220px; object-fit: contain;"
               />
             </div>
-            <div class="col-md-8">
-              <h5 class="card-title mb-2">Order #{{ order.id }}</h5>
-              <ul class="list-unstyled mb-2">
-                <li><strong>Wand:</strong> {{ getWandName(order) }}</li>
-                <li><strong>Status:</strong> {{ order.status }}</li>
-                <li><strong>Total Price:</strong> {{ getWandTotalPrice(order) | currency }}</li>
+            <div class="col-md-8 p-4">
+              <h5 class="card-title mb-3 fw-bold">Order #{{ order.id }}</h5>
+              <ul class="list-unstyled mb-2 bg-light border p-3">
+                <li><strong>Status: </strong><span class="badge bg-warning text-black"> {{ order.status | titlecase }}</span></li>
+                <li><strong>Payment Provider:</strong> {{ order.payment_provider | titlecase}}</li>
+                <li><strong>Payment Reference:</strong> {{ order.payment_reference }}</li>
+                <li><strong>Shipping Address:</strong> {{ order.shipping_address }}</li>
+                <li><strong>Created At:</strong> {{ order.created_at | date:'medium' }}</li>
+                <li><strong>Wand Name:</strong> {{ getWandFromOrder(order)?.name | titlecase}}</li>
+                <li><strong>Wand Price:</strong> {{ getWandFromOrder(order)?.total_price | currency }}</li>
               </ul>
             </div>
+            <div *ngIf="order.review" class="card col-md-11 shadow-sm ms-5">
+            <div class="card-body bg-light">
+              <h6 class="card-title fw-bold mb-2">Review</h6>
+              <p class="mb-0">{{ order.review }}</p>
+            </div>
           </div>
-          <div class="mt-3 text-center">
-            <!-- Complete button: only when delivered -->
-            <button
-              *ngIf="canCompleteOrder(order)"
-              class="btn btn-sm btn-primary me-1"
-              (click)="completeOrder(order)"
-            >
-              Complete
-            </button>
-            <!-- Cancel button: not completed, refunded, or pending -->
-            <button
-              *ngIf="canCancelOrder(order)"
-              class="btn btn-sm btn-warning me-1"
-              (click)="cancelOrder(order)"
-            >
-              Cancel
-            </button>
-            <!-- Refund button: not cancelled or completed -->
-            <button
-              *ngIf="canRefundOrder(order)"
-              class="btn btn-sm btn-danger me-1"
-              (click)="refundOrder(order)"
-            >
-              Refund
-            </button>
-            <!-- Review button: only if completed and not reviewed -->
-            <button
-              *ngIf="canReviewOrder(order)"
-              class="btn btn-sm btn-success me-1"
-              (click)="onSelectedEntity(order)"
-              [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#reviewOrder'"
-            >
-              Review
-            </button>
           </div>
+          <div class="card-footer bg-white border-0 pt-3 gap-3 m-3">
+            <div class="row g-2">
+              <div *ngIf="canComplete(order)" class="col">
+                <button
+                  class="btn btn-lg btn-primary w-100"
+                  (click)="complete(order)"
+                >
+                  Complete
+                </button>
+              </div>
+              <div *ngIf="canCancel(order)" class="col">
+                <button
+                  class="btn btn-lg btn-danger w-100"
+                  (click)="cancel(order)"
+                >
+                  Cancel
+                </button>
+              </div>
+              <div *ngIf="canRefund(order)" class="col">
+                <button
+                  class="btn btn-lg btn-secondary w-100"
+                  (click)="refund(order)"
+                >
+                  Refund
+                </button>
+              </div>
+              <div *ngIf="canReview(order)" class="col">
+                <button
+                  class="btn btn-lg btn-primary w-100"
+                  (click)="onSelectedEntity(order)"
+                  [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#reviewOrder'"
+                >
+                  Review
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -65,7 +78,6 @@
     <div class="alert alert-info">No orders found.</div>
   </ng-template>
 
-  <!-- Review Modal -->
   <app-modal
     [config]="{
       id: 'reviewOrder',
@@ -73,7 +85,7 @@
       submitButtonText: 'Submit Review',
       cancelButtonText: 'Cancel'
     }"
-    (onSubmit)="reviewOrder()"
+    (onSubmit)="review()"
     *ngIf="selectedOrder"
   >
     <ng-template #modalContent>
