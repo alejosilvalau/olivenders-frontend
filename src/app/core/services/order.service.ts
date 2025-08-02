@@ -21,6 +21,16 @@ export class OrderService {
     return this.http.get<OrderResponse<Order[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
+  findAllByWizard(wizardId: string, page: number = 1, pageSize: number = 5): Observable<OrderResponse<Order[]>> {
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
+    return this.http.get<OrderResponse<Order[]>>(`${ this.apiUrl }/wizard/${ wizardId }`, { params, headers: this.authToken.getAuthHeaders() });
+  }
+
+  findAllByWand(wandId: string, page: number = 1, pageSize: number = 5): Observable<OrderResponse<Order[]>> {
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
+    return this.http.get<OrderResponse<Order[]>>(`${ this.apiUrl }/wand/${ wandId }`, { params, headers: this.authToken.getAuthHeaders() });
+  }
+
   findOne(id: string): Observable<OrderResponse> {
     return this.http.get<OrderResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
@@ -54,7 +64,7 @@ export class OrderService {
   }
 
   review(id: string, orderData: OrderRequest): Observable<OrderResponse> {
-    return this.http.put<OrderResponse>(`${ this.apiUrl }/${ id }`, orderData, { headers: this.authToken.getAuthHeaders() });
+    return this.http.patch<OrderResponse>(`${ this.apiUrl }/${ id }/review`, orderData, { headers: this.authToken.getAuthHeaders() });
   }
 
   remove(id: string): Observable<OrderResponse> {

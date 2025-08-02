@@ -5,6 +5,7 @@ import { WoodsManagementComponent } from './woods-management/woods-management.co
 import { QuestionsManagementComponent } from './questions-management/questions-management.component.js';
 import { WandCatalogComponent } from './wand-catalog/wand-catalog.component.js';
 import { PlaceOrderComponent } from './place-order/place-order.component.js';
+import { OrdersDashboardComponent } from './orders-dashboard/orders-dashboard.component.js';
 
 export const productRoutes: Routes = [
   { path: 'schools', component: SchoolsManagementComponent },
@@ -12,5 +13,6 @@ export const productRoutes: Routes = [
   { path: 'woods', component: WoodsManagementComponent },
   { path: 'questions', component: QuestionsManagementComponent },
   { path: 'order/:wandId', component: PlaceOrderComponent },
+  { path: 'dashboard', component: OrdersDashboardComponent },
   { path: '', component: WandCatalogComponent },
 ]
