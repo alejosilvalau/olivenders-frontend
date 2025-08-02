@@ -26,8 +26,8 @@ Ver diagrama en [Draw.io](https://drive.google.com/file/d/1aHBuIdu2SuQJKwL8StDEm
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple|1. CRUD **School**<br>2. CRUD **School**<br>|
-|CRUD dependiente |1. CRUD **Wizard** {depende de} CRUD **Core**|
+|CRUD simple|1. CRUD **School**<br>2. CRUD **Core**<br>|
+|CRUD dependiente |1. CRUD **Wizard** {depende de} CRUD **School**|
 |Listado<br>+<br>Detalle | 1. Listado de **Wands** filtrado por **Wood**, **Core** y precio. Muestra imagen, nombre y precio => Detalle muestra **Wood**, **Core**, longitud, flexibilidad y descripción.|
 |CUU/Epic|1. Vender una **Wand**|
 
@@ -35,11 +35,11 @@ Regularidad:
 Adicionales para Aprobación Directa:
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD **Wand** {depende de} CRUD **Wood** y CRUD **Core** <br/> 2. CRUD **Order** <br/> 3. CRUD **Wood**|
+|CRUD | 1. CRUD **Wood** <br/> 2. CRUD **Order** <br/> 3. CRUD **Wand** {depende de} CRUD **Wood** y CRUD **Core**|
 |CUU/Epic |1. Reseñar compra |
 
 Alcance Adicional Voluntario:
 |Req|Detalle|
 |:-|:-|
 |Listado<br>+<br>Detalle | 1. Listado de reseñas donde se muestra fecha de compra, comentario de la reseña => Detalle muestra imagen, nombre y precio de la **Wand**.|
-|CUU/Epic |1. Moderar reseñas con IA (OpenAI - ChatGPT) |
+|CUU/Epic |1. Moderar reseñas con IA (OpenAI - ChatGPT) <br/> 2. Subida de imagen con drag and drop a través de servicio de Blob Storage (Cloudinary)|

@@ -19,7 +19,7 @@
             </ng-container>
             <ng-template #notName>
               <ng-container *ngIf="col.key === 'price'; else notPrice">
-                ${{ item[col.key] }}
+                {{ item[col.key] | currency}}
               </ng-container>
               <ng-template #notPrice>
                 <ng-container *ngIf="col.key === 'school'; else defaultCell">

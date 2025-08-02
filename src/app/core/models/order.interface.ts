@@ -18,7 +18,7 @@ export enum PaymentProvider {
   WireTransfer = 'wire_transfer',
   CreditCard = 'credit_card',
   DebitCard = 'debit_card',
-  Undefined = 'undefined',
+  Default = 'default',
 }
 
 export interface Order {

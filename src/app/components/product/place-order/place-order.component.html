@@ -5,166 +5,125 @@
     </div>
     <div class="card-body p-4" *ngIf="wand">
       <div class="row mb-4">
-        <div class="col-md-4 mb-3 mb-md-0">
-          <div class="position-relative">
-            <img
-              [src]="wand.image"
-              alt="wand-image"
-              class="img-fluid rounded"
-            />
-          </div>
+        <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center justify-content-center">
+          <img
+            [src]="wand.image"
+            alt="wand-image"
+            class="img-fluid rounded"
+            style="max-height: 250px; object-fit: cover;"
+          />
         </div>
         <div class="col-md-8">
-          <h2 class="h4 mb-3">{{ wand.name }} {{ wand.length_inches }}</h2>
-          <div class="row mb-3">
-            <div class="col-sm-6 mb-2">
-              <div class="d-flex">
-                <span class="text-muted me-2 fw-bold">Wood:</span>
-                <span>${{ wandWoodName }}</span>
-              </div>
+          <h2 class="h4 mb-3 fw-bold mb-4">{{ wand.name | titlecase }}</h2>
+          <div class="card bg-light mb-3">
+            <div class="card-header py-2">
+              <h3 class="h6 mb-0">More Info</h3>
             </div>
-            <div class="col-sm-6 mb-2">
-              <div class="d-flex">
-                <span class="text-muted me-2 fw-bold">Price:</span>
-                <span>${{ wand.total_price }}</span>
+            <div class="card-body py-2">
+              <div class="row">
+                <div class="col-sm-6 mb-2">
+                  <span class="text-muted fw-bold">Wood: </span>
+                  <span>{{ wandWoodName | titlecase }}</span>
+                </div>
+                <div class="col-sm-6 mb-2">
+                  <span class="text-muted fw-bold">Price: </span>
+                  <span>{{ wand.total_price | currency }}</span>
+                </div>
+                <div class="col-sm-6 mb-2">
+                  <span class="text-muted fw-bold">Core: </span>
+                  <span>{{ wandCoreName | titlecase }}</span>
+                </div>
               </div>
-            </div>
-            <div class="col-sm-6 mb-2">
-              <div class="d-flex">
-                <span class="text-muted me-2 fw-bold">Core:</span>
-                <span>${{ wandCoreName }}</span>
-              </div>
-            </div>
-            <div class="card bg-light mb-3">
-              <div class="card-header py-2">
-                <h3 class="h6 mb-0 text-uppercase">Description</h3>
-              </div>
-              <div class="card-body py-2">
-                <p class="mb-0">{{ wand.description }}</p>
-              </div>
+              <hr>
+              <p class="mb-0">{{ wand.description }}</p>
             </div>
           </div>
         </div>
-        <form [formGroup]="placeOrderForm" class="mt-4">
-          <div class="row g-3">
-            <div class="col-12 mb-3">
-              <label for="shipping_address" class="form-label"
-                >Shipping Address</label
-              >
-              <textarea
-                id="shipping_address"
-                formControlName="shipping_address"
-                class="form-control"
-                rows="3"
-                placeholder="Enter your shipping address"
-              ></textarea>
-              <div
-                *ngIf="
-                  placeOrderForm.get('shipping_address')?.invalid &&
-                  placeOrderForm.get('shipping_address')?.touched
-                "
-                class="text-danger small"
-              >
-                Shipping address is required
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="payment_provider" class="form-label">
-                Payment Method
-              </label>
-              <select
-                id="payment_provider"
-                formControlName="payment_provider"
-                class="form-select"
-              >
-                <option value="default" disabled selected>
-                  Select payment method
-                </option>
-                <option value="stripe">Stripe</option>
-                <option value="paypal">PayPal</option>
-                <option value="wire_transfer">Wire Transfer</option>
-                <option value="credit_card">Credit Card</option>
-                <option value="debit_card">Debit Card</option>
-              </select>
-              <div
-                *ngIf="
-                  placeOrderForm.get('payment_provider')?.invalid &&
-                  placeOrderForm.get('payment_provider')?.touched
-                "
-                class="text-danger small"
-              >
-                Payment method is required
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="payment_reference" class="form-label">
-                Payment Reference
-              </label>
-              <input
-                type="text"
-                id="payment_reference"
-                formControlName="payment_reference"
-                class="form-control"
-                placeholder="Enter payment reference"
-              />
-              <div class="form-text">
-                This would normally be generated by the payment provider
-              </div>
-              <div
-                *ngIf="
-                  placeOrderForm.get('payment_reference')?.invalid &&
-                  placeOrderForm.get('payment_reference')?.touched
-                "
-                class="text-danger small"
-              >
-                Payment reference is required
-              </div>
-            </div>
-          </div>
-        </form>
       </div>
-    </div>
-    <button
-      type="button"
-      class="btn btn-primary btn-lg w-100 mb-4"
-      [disabled]="placeOrderForm.invalid"
-      data-bs-toggle="modal"
-      data-bs-target="#confirmOrder"
-    >
-      <i class="bi bi-currency-dollar me-2"></i>Place Order
-    </button>
-    <app-modal
-      [config]="{
-        id: 'confirmOrder',
-        title: 'Confirm Order',
-        submitButtonText: 'Place Order',
-        cancelButtonText: 'Cancel'
-      }"
-      (onSubmit)="placeOrder()"
-    >
-      <ng-template #modalContent>
-        <div class="col-12">
-          <p>Are you sure you want to place this order?</p>
-          <div class="card mb-3">
-            <div class="card-body p-3">
-              <p class="mb-2">
-                <strong>Wand:</strong> {{ wand?.name | titlecase }}
-              </p>
-              <p class="mb-2">
-                <strong>Price:</strong> {{ wand?.total_price | currency }}
-              </p>
-              <p class="mb-2">
-                <strong>Shipping To:</strong>
-                {{ placeOrderForm.get("shipping_address")?.value }}
-              </p>
-              <p class="mb-0">
-                <strong>Payment Method:</strong>
-                {{ placeOrderForm.get("payment_provider")?.value | titlecase }}
-              </p>
+      <form [formGroup]="placeOrderForm" class="mt-4">
+        <div class="row g-3">
+          <div class="col-md-6 mb-3">
+            <label for="shipping_address" class="form-label">Shipping Address</label>
+            <input
+              id="shipping_address"
+              formControlName="shipping_address"
+              class="form-control"
+              placeholder="Enter your shipping address"
+            />
+            <div
+              *ngIf="placeOrderForm.get('shipping_address')?.invalid && placeOrderForm.get('shipping_address')?.touched"
+              class="text-danger small"
+            >
+              Shipping address is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="payment_provider" class="form-label">Payment Method</label>
+            <select
+              id="payment_provider"
+              formControlName="payment_provider"
+              class="form-select"
+            >
+              <option value="default" disabled hidden>
+                Select payment method
+              </option>
+              <option value="stripe">Stripe</option>
+              <option value="paypal">PayPal</option>
+              <option value="wire_transfer">Wire Transfer</option>
+              <option value="credit_card">Credit Card</option>
+              <option value="debit_card">Debit Card</option>
+            </select>
+            <div
+              *ngIf="placeOrderForm.get('payment_provider')?.invalid && placeOrderForm.get('payment_provider')?.touched"
+              class="text-danger small"
+            >
+              Payment method is required
             </div>
           </div>
         </div>
-      </ng-template>
-    </app-modal>
+      </form>
+      <button
+        type="button"
+        class="btn btn-primary btn-lg w-100 mb-2 mt-2"
+        [disabled]="placeOrderForm.invalid"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmOrder"
+      >
+        Place Order
+      </button>
+      <app-modal
+        [config]="{
+          id: 'confirmOrder',
+          title: 'Confirm Order',
+          submitButtonText: 'Place Order',
+          cancelButtonText: 'Cancel'
+        }"
+        (onSubmit)="placeOrder()"
+      >
+        <ng-template #modalContent>
+          <div class="col-12">
+            <p>Are you sure you want to place this order?</p>
+            <div class="card mb-3">
+              <div class="card-body p-3">
+                <p class="mb-2">
+                  <strong>Wand:</strong> {{ wand.name | titlecase }}
+                </p>
+                <p class="mb-2">
+                  <strong>Price:</strong> {{ wand.total_price | currency }}
+                </p>
+                <p class="mb-2">
+                  <strong>Shipping To:</strong>
+                  {{ placeOrderForm.get("shipping_address")?.value }}
+                </p>
+                <p class="mb-0">
+                  <strong>Payment Method:</strong>
+                  {{ placeOrderForm.get("payment_provider")?.value | titlecase }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </app-modal>
+    </div>
   </div>
 </div>

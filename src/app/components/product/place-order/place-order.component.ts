@@ -41,7 +41,7 @@ export class PlaceOrderComponent implements OnInit {
   ) {
     this.placeOrderForm = this.fb.group({
       payment_reference: ['', Validators.required],
-      payment_provider: [PaymentProvider.Undefined, Validators.required],
+      payment_provider: [PaymentProvider.Default, Validators.required],
       shipping_address: ['', Validators.required],
       wizard: ['', Validators.required],
       wand: ['', Validators.required],
@@ -75,6 +75,28 @@ export class PlaceOrderComponent implements OnInit {
       }
     }
     this.wizard = this.authService.getCurrentWizard();
+
+    this.placeOrderForm.get('payment_provider')?.valueChanges.subscribe((provider) => {
+      const reference = this.generatePaymentReference(provider);
+      this.placeOrderForm.get('payment_reference')?.setValue(reference);
+    });
+  }
+
+  generatePaymentReference(provider: string): string {
+    switch (provider) {
+      case 'stripe':
+        return 'STR-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+      case 'paypal':
+        return 'PAY-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+      case 'wire_transfer':
+        return 'WIRE-' + Math.floor(100000 + Math.random() * 900000);
+      case 'credit_card':
+        return 'CC-' + Math.floor(100000 + Math.random() * 900000);
+      case 'debit_card':
+        return 'DC-' + Math.floor(100000 + Math.random() * 900000);
+      default:
+        return '';
+    }
   }
 
   placeOrder(): void {
