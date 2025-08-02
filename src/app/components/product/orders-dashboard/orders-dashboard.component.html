@@ -1,0 +1,80 @@
+<div class="container py-4">
+  <h2 class="mb-4">Order Dashboard</h2>
+  <div *ngIf="orders?.length; else noOrders">
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Order ID</th>
+          <th>Wand</th>
+          <th>Status</th>
+          <th>Total Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order._id }}</td>
+          <td>{{ order.wand?.name }}</td>
+          <td>{{ order.status }}</td>
+          <td>{{ order.total_price | currency }}</td>
+          <td>
+            <button
+              *ngIf="canReview(order)"
+              class="btn btn-sm btn-success me-1"
+              (click)="openReviewModal(order)"
+            >
+              Review
+            </button>
+            <button
+              *ngIf="canComplete(order)"
+              class="btn btn-sm btn-primary me-1"
+              (click)="markComplete(order)"
+            >
+              Complete
+            </button>
+            <button
+              *ngIf="canCancel(order)"
+              class="btn btn-sm btn-warning me-1"
+              (click)="cancelOrder(order)"
+            >
+              Cancel
+            </button>
+            <button
+              *ngIf="canRefund(order)"
+              class="btn btn-sm btn-danger"
+              (click)="refundOrder(order)"
+            >
+              Refund
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noOrders>
+    <div class="alert alert-info">No orders found.</div>
+  </ng-template>
+
+  <!-- Review Modal (example, implement as needed) -->
+  <app-modal
+    [config]="{
+      id: 'reviewOrder',
+      title: 'Review Order',
+      submitButtonText: 'Submit Review',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="submitReview()"
+    *ngIf="selectedOrder"
+  >
+    <ng-template #modalContent>
+      <div>
+        <label for="reviewText" class="form-label">Your Review</label>
+        <textarea
+          id="reviewText"
+          [(ngModel)]="reviewText"
+          class="form-control"
+        ></textarea>
+      </div>
+    </ng-template>
+  </app-modal>
+</div>

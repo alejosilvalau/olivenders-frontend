@@ -42,7 +42,7 @@ export class FilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.woodService.findAll().subscribe({
+    this.woodService.findAll(1, Number.MAX_SAFE_INTEGER).subscribe({
       next: (woods: WoodResponse<Wood[]>) => {
         this.woods = woods;
       },
@@ -51,7 +51,7 @@ export class FilterComponent implements OnInit {
       },
     });
 
-    this.coreService.findAll().subscribe({
+    this.coreService.findAll(1, Number.MAX_SAFE_INTEGER).subscribe({
       next: (cores: CoreResponse<Core[]>) => {
         this.cores = cores;
       },

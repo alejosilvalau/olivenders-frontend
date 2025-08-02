@@ -6,7 +6,7 @@ import { Wand } from '../../../core/models/wand.interface';
 import { AuthService } from '../../../core/services/auth.service';
 import { Wizard } from '../../../core/models/wizard.interface';
 import { OrderService } from '../../../core/services/order.service';
-import { Order, OrderRequest, PaymentProvider } from '../../../core/models/order.interface';
+import { Order, OrderRequest, OrderResponse, PaymentProvider } from '../../../core/models/order.interface';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { alertMethod } from '../../../functions/alert.function';
 import { AlertType } from '../../../shared/components/alert/alert.component';
@@ -112,12 +112,28 @@ export class PlaceOrderComponent implements OnInit {
       this.orderService.add(orderData).subscribe({
         next: (orderRes) => {
           alertMethod(orderRes.message, 'Order placed successfully!', AlertType.Success);
-          this.router.navigate(['/']);
+          this.simulatePayment(orderRes);
         },
         error: (err) => {
           alertMethod(err.error.message, 'Error placing the order, please try again', AlertType.Error);
         }
       });
     }
+  }
+
+  simulatePayment(orderRes: OrderResponse): void {
+    const delay = 10000; // 10 seconds
+
+    setTimeout(() => {
+      this.orderService.pay(orderRes.data!.id).subscribe({
+        next: (paymentRes) => {
+          alertMethod(paymentRes.message, 'Payment processed successfully!', AlertType.Success);
+          this.router.navigate(['/orders']);
+        },
+        error: (err) => {
+          alertMethod(err.error.message, 'Error processing payment, please try again', AlertType.Error);
+        }
+      });
+    }, delay);
   }
 }
