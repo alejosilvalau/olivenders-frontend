@@ -71,6 +71,10 @@ export class PlaceOrderComponent implements OnInit {
       if (wandId) {
         this.wandService.findOne(wandId).subscribe(response => {
           this.wand = response.data as Wand;
+          this.placeOrderForm.patchValue({
+            wand: this.wand.id,
+            wizard: this.authService.getCurrentWizard()!.id
+          });
         });
       }
     }
@@ -78,11 +82,14 @@ export class PlaceOrderComponent implements OnInit {
 
     this.placeOrderForm.get('payment_provider')?.valueChanges.subscribe((provider) => {
       const reference = this.generatePaymentReference(provider);
-      this.placeOrderForm.get('payment_reference')?.setValue(reference);
+      this.placeOrderForm.patchValue({
+        payment_reference: reference
+      });
     });
   }
 
   generatePaymentReference(provider: string): string {
+    console.log(this.placeOrderForm.value);
     switch (provider) {
       case 'stripe':
         return 'STR-' + Math.random().toString(36).substring(2, 10).toUpperCase();
