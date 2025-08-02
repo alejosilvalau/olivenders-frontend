@@ -1,4 +1,5 @@
 <div class="container py-4">
+  <app-alert></app-alert>
   <h2 class="mb-4">Order Dashboard</h2>
   <div *ngIf="orders?.length; else noOrders">
     <div class="row g-4">
@@ -14,7 +15,7 @@
               />
             </div>
             <div class="col-md-8 p-4">
-              <h5 class="card-title mb-3 fw-bold">Order #{{ order.id }}</h5>
+              <h5 class="card-title mb-3"><strong>Order</strong> #{{ order.id }}</h5>
               <ul class="list-unstyled mb-2 bg-light border p-3">
                 <li><strong>Status: </strong><span class="badge bg-warning text-black"> {{ order.status | titlecase }}</span></li>
                 <li><strong>Payment Provider:</strong> {{ order.payment_provider | titlecase}}</li>
@@ -37,7 +38,8 @@
               <div *ngIf="canComplete(order)" class="col">
                 <button
                   class="btn btn-lg btn-primary w-100"
-                  (click)="complete(order)"
+                  (click)="onSelectedEntity(order)"
+                  [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#completeOrder'"
                 >
                   Complete
                 </button>
@@ -45,7 +47,8 @@
               <div *ngIf="canCancel(order)" class="col">
                 <button
                   class="btn btn-lg btn-danger w-100"
-                  (click)="cancel(order)"
+                  (click)="onSelectedEntity(order)"
+                  [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#cancelOrder'"
                 >
                   Cancel
                 </button>
@@ -53,7 +56,8 @@
               <div *ngIf="canRefund(order)" class="col">
                 <button
                   class="btn btn-lg btn-secondary w-100"
-                  (click)="refund(order)"
+                  (click)="onSelectedEntity(order)"
+                  [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#refundOrder'"
                 >
                   Refund
                 </button>
@@ -77,7 +81,54 @@
   <ng-template #noOrders>
     <div class="alert alert-info">No orders found.</div>
   </ng-template>
-
+  <app-modal
+    [config]="{
+      id: 'completeOrder',
+      title: 'Complete Order',
+      submitButtonText: 'Complete',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="complete(this.selectedOrder!)"
+  >
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to complete the order?</p>
+        <p><strong>Order </strong> #{{ selectedOrder?.id | titlecase }}</p>
+      </div>
+    </ng-template>
+  </app-modal>
+    <app-modal
+    [config]="{
+      id: 'cancelOrder',
+      title: 'Cancel Order',
+      submitButtonText: 'Cancel',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="cancel(this.selectedOrder!)"
+  >
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to cancel the order?</p>
+        <p><strong>Order </strong> #{{ selectedOrder?.id | titlecase }}</p>
+      </div>
+    </ng-template>
+  </app-modal>
+    <app-modal
+    [config]="{
+      id: 'refundOrder',
+      title: 'Refund Order',
+      submitButtonText: 'Refund',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="refund(this.selectedOrder!)"
+  >
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to refund the order?</p>
+        <p><strong>Order </strong> #{{ selectedOrder?.id | titlecase }}</p>
+      </div>
+    </ng-template>
+  </app-modal>
   <app-modal
     [config]="{
       id: 'reviewOrder',
@@ -86,23 +137,18 @@
       cancelButtonText: 'Cancel'
     }"
     (onSubmit)="review()"
-    *ngIf="selectedOrder"
   >
     <ng-template #modalContent>
       <div>
         <label for="reviewText" class="form-label">Your Review</label>
-        <!-- Show textarea only if completed and not reviewed -->
         <textarea
-          *ngIf="selectedOrder.status === 'completed' && !selectedOrder.review"
           id="reviewText"
           [(ngModel)]="reviewText"
           class="form-control"
         ></textarea>
-        <!-- Show review text if already reviewed -->
-        <div *ngIf="selectedOrder.status === 'completed' && selectedOrder.review">
-          <span>{{ selectedOrder.review }}</span>
-        </div>
       </div>
     </ng-template>
   </app-modal>
+
+
 </div>

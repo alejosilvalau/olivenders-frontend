@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from '../../../core/services/order.service.js';
 import { Order, OrderStatus } from '../../../core/models/order.interface.js';
 import { AuthService } from '../../../core/services/auth.service.js';
 import { alertMethod } from '../../../functions/alert.function.js';
-import { AlertType } from '../../../shared/components/alert/alert.component.js';
+import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ import { Core } from '../../../core/models/core.interface.js';
 @Component({
   selector: 'app-orders-dashboard',
   standalone: true,
-  imports: [ModalComponent, CommonModule, FormsModule],
+  imports: [ModalComponent, CommonModule, FormsModule, AlertComponent],
   templateUrl: './orders-dashboard.component.html',
   styleUrl: './orders-dashboard.component.css',
 })
@@ -22,6 +22,8 @@ export class OrdersDashboardComponent implements OnInit {
   wizardId: string = '';
   selectedOrder: Order | null = null;
   reviewText: string = '';
+
+  @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
   constructor(private orderService: OrderService, private authService: AuthService) { }
 
@@ -77,10 +79,10 @@ export class OrdersDashboardComponent implements OnInit {
   complete(order: Order): void {
     this.orderService.complete(order.id).subscribe({
       next: (res) => {
-        alertMethod(res.message, 'Order marked as complete.', AlertType.Success);
+        this.alertComponent.showAlert(res.message, AlertType.Success);
         this.loadOrders();
       },
-      error: (err) => alertMethod(err.error.message, 'Failed to mark order as complete.', AlertType.Error),
+      error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
   }
 
@@ -94,10 +96,10 @@ export class OrdersDashboardComponent implements OnInit {
   cancel(order: Order): void {
     this.orderService.cancel(order.id).subscribe({
       next: (res) => {
-        alertMethod(res.message, 'Order cancelled successfully.', AlertType.Success);
+        this.alertComponent.showAlert(res.message, AlertType.Success);
         this.loadOrders();
       },
-      error: (err) => alertMethod(err.error.message, 'Failed to cancel the order.', AlertType.Error),
+      error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
   }
 
@@ -111,10 +113,10 @@ export class OrdersDashboardComponent implements OnInit {
   refund(order: Order): void {
     this.orderService.refund(order.id).subscribe({
       next: (res) => {
-        alertMethod(res.message, 'Order refunded successfully.', AlertType.Success);
+        this.alertComponent.showAlert(res.message, AlertType.Success);
         this.loadOrders();
       },
-      error: (err) => alertMethod(err.error.message, 'Failed to refund the order.', AlertType.Error),
+      error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
   }
 
@@ -131,10 +133,10 @@ export class OrdersDashboardComponent implements OnInit {
     console.log('Selected Order:', this.selectedOrder);
     this.orderService.review(this.selectedOrder.id, reviewData).subscribe({
       next: (res) => {
-        alertMethod(res.message, 'Order reviewed successfully.', AlertType.Success);
+        this.alertComponent.showAlert(res.message, AlertType.Success);
         this.loadOrders();
       },
-      error: (err) => alertMethod(err.error.message, 'Failed to review the order.', AlertType.Error),
+      error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
   }
 }
