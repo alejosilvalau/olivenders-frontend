@@ -7,6 +7,7 @@ import { WandCatalogComponent } from './wand-catalog/wand-catalog.component.js';
 import { PlaceOrderComponent } from './place-order/place-order.component.js';
 import { OrdersDashboardComponent } from './orders-dashboard/orders-dashboard.component.js';
 import { OrdersManagementComponent } from './orders-management/orders-management.component.js';
+import { WandsManagementComponent } from './wands-management/wands-management.component.js';
 
 export const productRoutes: Routes = [
   { path: 'schools', component: SchoolsManagementComponent },
@@ -14,6 +15,7 @@ export const productRoutes: Routes = [
   { path: 'woods', component: WoodsManagementComponent },
   { path: 'questions', component: QuestionsManagementComponent },
   { path: 'orders', component: OrdersManagementComponent },
+  { path: 'wands', component: WandsManagementComponent },
   { path: 'order/:wandId', component: PlaceOrderComponent },
   { path: 'dashboard', component: OrdersDashboardComponent },
   { path: '', component: WandCatalogComponent },

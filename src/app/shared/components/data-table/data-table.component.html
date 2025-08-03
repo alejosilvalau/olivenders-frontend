@@ -11,14 +11,22 @@
         <td *ngFor="let col of columns">
           <ng-container *ngIf="col.isArray; else notArray">
             <span *ngFor="let itemValue of item[col.key]; let i = index">
-              {{ formatValue(col.subKey ? itemValue[col.subKey] : itemValue, col.format) }}
+              <ng-container *ngIf="isImageUrl(col.subKey ? itemValue[col.subKey] : itemValue); else normalValue">
+                <img [src]="col.subKey ? itemValue[col.subKey] : itemValue" alt="Image" style="max-width: 50px; max-height: 50px;" />
+              </ng-container>
+              <ng-template #normalValue>
+                {{ formatValue(col.subKey ? itemValue[col.subKey] : itemValue, col.format) }}
+              </ng-template>
               <span *ngIf="i < item[col.key].length - 1">, </span>
             </span>
           </ng-container>
           <ng-template #notArray>
-            <ng-container>
-              {{ formatValue(col.subKey ? item[col.key]?.[col.subKey] : item[col.key], col.format) }}
+            <ng-container *ngIf="isImageUrl(col.subKey ? item[col.key]?.[col.subKey] : item[col.key]); else normalValueSingle">
+              <img [src]="col.subKey ? item[col.key]?.[col.subKey] : item[col.key]" alt="Image" style="max-width: 50px; max-height: 50px;" />
             </ng-container>
+            <ng-template #normalValueSingle>
+              {{ formatValue(col.subKey ? item[col.key]?.[col.subKey] : item[col.key], col.format) }}
+            </ng-template>
           </ng-template>
         </td>
         <td>

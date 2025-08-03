@@ -1,0 +1,164 @@
+<div class="container my-4">
+  <app-alert></app-alert>
+  <div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4"
+  >
+    <h2 class="mb-3 mb-md-0">WANDS MANAGEMENT</h2>
+    <app-searcher
+      [data]="wands"
+      [filterAttributes]="[
+        'name',
+        'length_inches',
+        'status',
+        'profit',
+        'total_price',
+        'id'
+      ]"
+      (filteredData)="onSearch($event)"
+      (searchTermChange)="searchTerm = $event"
+      class="searcher"
+    ></app-searcher>
+    <app-add-button [modalTarget]="'#addWand'" [buttonText]="'Add Wand'" />
+  </div>
+  <app-data-table
+    [columns]="[
+      { key: 'id', label: 'ID' },
+      { key: 'name', label: 'Name' },
+      { key: 'image', label: 'Image' },
+      { key: 'length_inches', label: 'Lenght' },
+      { key: 'description', label: 'Description' },
+      { key: 'status', label: 'Status' },
+      { key: 'profit', label: 'Profit' },
+      { key: 'total_price', label: 'Price' }
+    ]"
+    [data]="filteredWands"
+    [emptyMessage]="'There are no wands available.'"
+    [editModalTarget]="'#editWand'"
+    [removeModalTarget]="'#removeWand'"
+    (selectedEntity)="onWandSelected($event)"
+  >
+  </app-data-table>
+  <app-modal
+    [config]="{
+      id: 'addWand',
+      title: 'New Wand',
+      submitButtonText: 'Create Wand',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="addWand()"
+    (onCancel)="wandForm.reset()"
+  >
+    <ng-template #modalContent>
+      <form [formGroup]="wandForm">
+        <!-- <div class="col-md-12">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            id="name"
+            name="name"
+            class="form-control"
+            required
+          />
+          <label for="binomial_name">Binomial Name</label>
+          <input
+            type="text"
+            formControlName="binomial_name"
+            id="binomial_name"
+            name="binomial_name"
+            class="form-control"
+            required
+          />
+          <label for="description">Description</label>
+          <textarea
+            formControlName="description"
+            id="description"
+            name="description"
+            class="form-control"
+            rows="4"
+            required
+          ></textarea>
+          <label for="price">Price</label>
+          <input
+            type="number"
+            formControlName="price"
+            id="price"
+            name="price"
+            class="form-control"
+            required
+          />
+        </div> -->
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal
+    [config]="{
+      id: 'editWand',
+      title: 'Edit Wand',
+      submitButtonText: 'Save Changes',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="editWand()"
+    (onCancel)="wandForm.reset()"
+  >
+    <ng-template #modalContent>
+      <form [formGroup]="wandForm">
+        <!-- <div class="col-md-12">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            id="name"
+            name="name"
+            class="form-control"
+            required
+          />
+          <label for="binomial_name">Binomial Name</label>
+          <input
+            type="text"
+            formControlName="binomial_name"
+            id="binomial_name"
+            name="binomial_name"
+            class="form-control"
+            required
+          />
+          <label for="description">Description</label>
+          <textarea
+            formControlName="description"
+            id="description"
+            name="description"
+            class="form-control"
+            rows="4"
+            required
+          ></textarea>
+          <label for="price">Price</label>
+          <input
+            type="number"
+            formControlName="price"
+            id="price"
+            name="price"
+            class="form-control"
+            required
+          />
+        </div> -->
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal
+    [config]="{
+      id: 'removeWand',
+      title: 'Remove Wand',
+      submitButtonText: 'Confirm Delete',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="removeWand()"
+    (onCancel)="wandForm.reset()"
+  >
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to remove the wand?</p>
+        <p><strong>Name:</strong> {{ selectedWand?.name | titlecase }}</p>
+      </div>
+    </ng-template>
+  </app-modal>
+</div>

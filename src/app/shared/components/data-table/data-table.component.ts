@@ -49,4 +49,8 @@ export class DataTableComponent<T extends Record<string, any>> {
         return value;
     }
   }
+
+  isImageUrl(value: string): boolean {
+    return typeof value === 'string' && /\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i.test(value);
+  }
 }
