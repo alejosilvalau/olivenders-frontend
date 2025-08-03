@@ -10,26 +10,15 @@
       <tr *ngFor="let item of data">
         <td *ngFor="let col of columns">
           <ng-container *ngIf="col.isArray; else notArray">
-            <span *ngFor="let itemValue of item[col.key]; let i = index"> {{ itemValue }}<span
-                *ngIf="i < item[col.key].length - 1">, </span>
+            <span *ngFor="let itemValue of item[col.key]; let i = index">
+              {{ formatValue(col.subKey ? itemValue[col.subKey] : itemValue, col.format) }}
+              <span *ngIf="i < item[col.key].length - 1">, </span>
             </span>
           </ng-container>
           <ng-template #notArray>
-            <ng-container *ngIf="col.key === 'name' || col.key === 'binomial_name'; else notName"> {{ item[col.key] | titlecase }}
+            <ng-container>
+              {{ formatValue(col.subKey ? item[col.key]?.[col.subKey] : item[col.key], col.format) }}
             </ng-container>
-            <ng-template #notName>
-              <ng-container *ngIf="col.key === 'price'; else notPrice">
-                {{ item[col.key] | currency}}
-              </ng-container>
-              <ng-template #notPrice>
-                <ng-container *ngIf="col.key === 'school'; else defaultCell">
-                  {{ item[col.key].name | titlecase}}
-                </ng-container>
-                <ng-template #defaultCell>
-                  {{ item[col.key] }}
-                </ng-template>
-              </ng-template>
-            </ng-template>
           </ng-template>
         </td>
         <td>

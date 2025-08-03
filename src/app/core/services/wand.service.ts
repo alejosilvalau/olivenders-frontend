@@ -35,6 +35,10 @@ export class WandService {
     return this.http.get<WandResponse>(`${ this.apiUrl }/${ id }`, {});
   }
 
+  findOneByName(name: string): Observable<WandResponse> {
+    return this.http.get<WandResponse>(`${ this.apiUrl }/name/${ name }`);
+  }
+
   add(formData: FormData): Observable<WandResponse> {
     return this.http.post<WandResponse>(this.apiUrl, formData, { headers: this.authToken.getAuthHeaders() });
   }

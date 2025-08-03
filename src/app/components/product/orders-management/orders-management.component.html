@@ -1,0 +1,102 @@
+<div class="container my-4">
+  <app-alert></app-alert>
+  <div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4"
+  >
+    <h2 class="mb-3 mb-md-0">ORDERS MANAGEMENT</h2>
+    <app-searcher
+      [data]="orders"
+      [filterAttributes]="[
+        'payment_provider',
+        'shipping_address',
+        'tracking_id',
+        'status',
+        'created_at',
+        'id'
+      ]"
+      (filteredData)="onSearch($event)"
+      (searchTermChange)="searchTerm = $event"
+      class="searcher"
+    ></app-searcher>
+  </div>
+  <app-data-table
+    [columns]="[
+      { key: 'id', label: 'ID' },
+      { key: 'payment_provider', label: 'Payment Provider' },
+      { key: 'shipping_address', label: 'Shipping Address' },
+      { key: 'wand', subKey: 'total_price', label: 'Price' },
+      { key: 'wand', subKey: 'profit', label: 'Profit' },
+      { key: 'tracking_id', label: 'Tracking ID' },
+      { key: 'status', label: 'status' },
+      { key: 'wizard', subKey: 'username', label: 'Username' },
+      { key: 'wand', subKey: 'name', label: 'Name' }
+    ]"
+    [data]="filteredOrders"
+    [emptyMessage]="'There are no orders available.'"
+    [editModalTarget]="'#editOrder'"
+    [removeModalTarget]="'#removeOrder'"
+    (selectedEntity)="onOrderSelected($event)"
+  >
+  </app-data-table>
+  <app-modal
+    [config]="{
+      id: 'editOrder',
+      title: 'Edit Order',
+      submitButtonText: 'Save Changes',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="editOrder()"
+    (onCancel)="orderForm.reset()"
+  >
+    <ng-template #modalContent>
+      <form [formGroup]="orderForm">
+        <div class="col-md-12">
+          <!-- <label for="name">Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            id="name"
+            name="name"
+            class="form-control"
+            required
+          />
+          <label for="description">Description</label>
+          <textarea
+            formControlName="description"
+            id="description"
+            name="description"
+            class="form-control"
+            rows="4"
+            required
+          ></textarea>
+          <label for="price">Price</label>
+          <input
+            type="number"
+            formControlName="price"
+            id="price"
+            name="price"
+            class="form-control"
+            required
+          /> -->
+        </div>
+      </form>
+    </ng-template>
+  </app-modal>
+  <app-modal
+    [config]="{
+      id: 'removeOrder',
+      title: 'Remove Order',
+      submitButtonText: 'Confirm Delete',
+      cancelButtonText: 'Cancel'
+    }"
+    (onSubmit)="removeOrder()"
+    (onCancel)="orderForm.reset()"
+  >
+    <ng-template #modalContent>
+      <div class="col-md-12">
+        <p>Are you sure that you want to remove the order?</p>
+        <p><strong>Order:</strong> #{{ selectedOrder?.id }}</p>
+      </div>
+    </ng-template>
+  </app-modal>
+</div>
