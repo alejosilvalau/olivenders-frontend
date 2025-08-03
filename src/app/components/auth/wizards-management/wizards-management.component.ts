@@ -6,11 +6,12 @@ import { Core, CoreResponse } from '../../../core/models/core.interface';
 import { Observable } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
-import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
+import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { Wizard, WizardResponse, WizardRole } from '../../../core/models/wizard.interface.js';
 import { WizardService } from '../../../core/services/wizard.service.js';
+
 @Component({
   selector: 'app-wizards-management',
   standalone: true,
@@ -25,6 +26,7 @@ export class WizardsManagementComponent implements OnInit {
   selectedWizard: Wizard | null = null;
   filteredWizards: Wizard[] = [];
   searchTerm: string = '';
+  // public DataTableFormat = DataTableFormat;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 

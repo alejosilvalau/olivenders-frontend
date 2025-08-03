@@ -6,7 +6,7 @@ import { Order, OrderResponse } from '../../../core/models/order.interface';
 import { Observable } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
-import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
+import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { WandService } from '../../../core/services/wand.service.js';
 import { WizardService } from '../../../core/services/wizard.service.js';
@@ -24,6 +24,7 @@ export class OrdersManagementComponent implements OnInit {
   selectedOrder: Order | null = null;
   filteredOrders: Order[] = [];
   searchTerm: string = '';
+  public DataTableFormat = DataTableFormat;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 

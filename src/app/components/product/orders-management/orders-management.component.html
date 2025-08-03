@@ -22,14 +22,14 @@
   <app-data-table
     [columns]="[
       { key: 'id', label: 'ID' },
-      { key: 'payment_provider', label: 'Payment Provider' },
-      { key: 'shipping_address', label: 'Shipping Address' },
-      { key: 'wand', subKey: 'total_price', label: 'Price' },
-      { key: 'wand', subKey: 'profit', label: 'Profit' },
+      { key: 'payment_provider', label: 'Payment Provider', format: DataTableFormat.TitleCase },
+      { key: 'shipping_address', label: 'Shipping Address', format: DataTableFormat.TitleCase },
+      { key: 'wand', subKey: 'total_price', label: 'Price', format: DataTableFormat.Currency },
+      { key: 'wand', subKey: 'profit', label: 'Profit', format: DataTableFormat.Currency },
       { key: 'tracking_id', label: 'Tracking ID' },
-      { key: 'status', label: 'status' },
-      { key: 'wizard', subKey: 'username', label: 'Username' },
-      { key: 'wand', subKey: 'name', label: 'Name' }
+      { key: 'status', label: 'status', format: DataTableFormat.TitleCase },
+      { key: 'wizard', subKey: 'username', label: 'Username', format: DataTableFormat.TitleCase },
+      { key: 'wand', subKey: 'name', label: 'Name', format: DataTableFormat.TitleCase }
     ]"
     [data]="filteredOrders"
     [emptyMessage]="'There are no orders available.'"
