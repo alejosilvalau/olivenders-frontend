@@ -22,14 +22,14 @@
   <app-data-table
     [columns]="[
       { key: 'id', label: 'ID' },
-      { key: 'payment_provider', label: 'Payment Provider', format: DataTableFormat.TitleCase },
-      { key: 'shipping_address', label: 'Shipping Address', format: DataTableFormat.TitleCase },
-      { key: 'wand', subKey: 'total_price', label: 'Price', format: DataTableFormat.Currency },
-      { key: 'wand', subKey: 'profit', label: 'Profit', format: DataTableFormat.Currency },
+      { key: 'payment_provider', format: DataTableFormat.TitleCase, label: 'Payment Provider' },
+      { key: 'shipping_address', format: DataTableFormat.TitleCase, label: 'Shipping Address' },
+      { key: 'wand', subKey: 'total_price', format: DataTableFormat.Currency, label: 'Price' },
+      { key: 'wand', subKey: 'profit', format: DataTableFormat.Currency, label: 'Profit' },
       { key: 'tracking_id', label: 'Tracking ID' },
-      { key: 'status', label: 'status', format: DataTableFormat.TitleCase },
-      { key: 'wizard', subKey: 'username', label: 'Username', format: DataTableFormat.TitleCase },
-      { key: 'wand', subKey: 'name', label: 'Name', format: DataTableFormat.TitleCase }
+      { key: 'status', format: DataTableFormat.TitleCase, label: 'status' },
+      { key: 'wizard', subKey: 'username', format: DataTableFormat.TitleCase, label: 'Username', },
+      { key: 'wand', subKey: 'name', format: DataTableFormat.TitleCase, label: 'Name' }
     ]"
     [data]="filteredOrders"
     [emptyMessage]="'There are no orders available.'"
@@ -51,33 +51,19 @@
     <ng-template #modalContent>
       <form [formGroup]="orderForm">
         <div class="col-md-12">
-          <!-- <label for="name">Name</label>
-          <input
-            type="text"
-            formControlName="name"
-            id="name"
-            name="name"
-            class="form-control"
-            required
-          />
-          <label for="description">Description</label>
-          <textarea
-            formControlName="description"
-            id="description"
-            name="description"
-            class="form-control"
-            rows="4"
-            required
-          ></textarea>
-          <label for="price">Price</label>
-          <input
-            type="number"
-            formControlName="price"
-            id="price"
-            name="price"
-            class="form-control"
-            required
-          /> -->
+          <label for="shipping_address">Shipping Address</label>
+          <input type="text" formControlName="shipping_address" id="shipping_address" name="shipping_address" class="form-control" required />
+          <label for="dispatchOrderButton">More Options</label>
+          <button
+          id="dispatchOrderButton"
+          type="button"
+          class="btn btn-success w-100"
+          (click)="dispatchOrder()"
+          data-bs-dismiss="modal"
+          [disabled]="!selectedOrder"
+        >
+          Dispatch Order
+        </button>
         </div>
       </form>
     </ng-template>

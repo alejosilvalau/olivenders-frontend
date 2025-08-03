@@ -125,18 +125,40 @@ export class OrdersManagementComponent implements OnInit {
   }
 
   editOrder(): void {
-    if (this.selectedOrder) {
-      const orderData = this.orderForm.value;
+    if (this.selectedOrder
+      && typeof this.selectedOrder?.wand === 'object'
+      && typeof this.selectedOrder.wizard === 'object'
+    ) {
+      const wandId = this.selectedOrder?.wand?.id;
+      const wizardId = this.selectedOrder?.wizard?.id;
+      const orderData = { ...this.orderForm.value, wand: wandId, wizard: wizardId };
       this.orderService.update(this.selectedOrder.id, orderData).subscribe({
         next: (response: OrderResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllOrders();
+          this.orderForm.reset();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          this.orderForm.reset();
         }
       });
-      this.orderForm.reset();
+    }
+  }
+
+  dispatchOrder(): void {
+    if (this.selectedOrder) {
+      this.orderService.dispatch(this.selectedOrder.id).subscribe({
+        next: (response: OrderResponse) => {
+          this.alertComponent.showAlert(response.message, AlertType.Success);
+          this.findAllOrders();
+          this.orderForm.reset();
+        },
+        error: (err: any) => {
+          this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          this.orderForm.reset();
+        }
+      });
     }
   }
 
@@ -146,12 +168,13 @@ export class OrdersManagementComponent implements OnInit {
         next: (response: OrderResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllOrders();
+          this.orderForm.reset();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          this.orderForm.reset();
         }
       });
-      this.orderForm.reset();
     }
   }
 }
