@@ -10,7 +10,7 @@ import { Core } from '../../../core/models/core.interface';
 import { Observable } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
-import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
+import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 @Component({
@@ -27,6 +27,7 @@ export class WandsManagementComponent implements OnInit {
   selectedWand: Wand | null = null;
   filteredWands: Wand[] = [];
   searchTerm: string = '';
+  DataTableFormat = DataTableFormat;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 

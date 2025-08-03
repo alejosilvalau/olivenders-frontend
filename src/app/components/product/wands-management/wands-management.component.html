@@ -22,14 +22,14 @@
   </div>
   <app-data-table
     [columns]="[
-      { key: 'id', label: 'ID' },
-      { key: 'name', label: 'Name' },
+      { key: 'id' ,label: 'ID' },
+      { key: 'name', format: DataTableFormat.TitleCase, label: 'Name' },
       { key: 'image', label: 'Image' },
       { key: 'length_inches', label: 'Lenght' },
       { key: 'description', label: 'Description' },
-      { key: 'status', label: 'Status' },
-      { key: 'profit', label: 'Profit' },
-      { key: 'total_price', label: 'Price' }
+      { key: 'status', format: DataTableFormat.TitleCase, label: 'Status' },
+      { key: 'profit', format: DataTableFormat.Currency, label: 'Profit' },
+      { key: 'total_price', format: DataTableFormat.Currency, label: 'Price' }
     ]"
     [data]="filteredWands"
     [emptyMessage]="'There are no wands available.'"

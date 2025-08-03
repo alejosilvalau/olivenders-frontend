@@ -24,7 +24,7 @@ export class OrdersManagementComponent implements OnInit {
   selectedOrder: Order | null = null;
   filteredOrders: Order[] = [];
   searchTerm: string = '';
-  public DataTableFormat = DataTableFormat;
+  DataTableFormat = DataTableFormat;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
