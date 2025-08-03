@@ -193,6 +193,7 @@ export class WandsManagementComponent implements OnInit {
         formData.append('timestamp', timestamp);
         formData.append('signature', signature);
         formData.append('upload_preset', environment.cloudinary.uploadPreset);
+        formData.append('folder', 'olivenders');
 
         fetch(
           `https://api.cloudinary.com/v1_1/${ environment.cloudinary.cloudName }/image/upload`,
