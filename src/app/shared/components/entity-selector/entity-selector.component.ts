@@ -21,7 +21,6 @@ export class EntitySelectorComponent implements OnInit {
   @Output() entitySelected = new EventEmitter<any>();
   @ViewChild('selectorRoot', { static: true }) selectorRoot!: ElementRef;
 
-  entities: any[] = [];
   filteredEntities: any[] = [];
   showDropdown: boolean = false;
   selectedEntityName: string = '';
@@ -35,6 +34,14 @@ export class EntitySelectorComponent implements OnInit {
         }
       });
     }
+
+    this.entityControl.valueChanges.subscribe(value => {
+      if (!value) {
+        this.selectedEntityName = '';
+        this.filteredEntities = [];
+        this.showDropdown = false;
+      }
+    });
   }
 
   onInput(event: Event): void {

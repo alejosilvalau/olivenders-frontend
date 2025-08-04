@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { WandService } from '../../../core/services/wand.service';
 import { WoodService } from '../../../core/services/wood.service';
 import { CoreService } from '../../../core/services/core.service';
 import { Wand, WandResponse, WandStatus } from '../../../core/models/wand.interface';
-import { Wood } from '../../../core/models/wood.interface';
-import { Core } from '../../../core/models/core.interface';
-import { Observable } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
@@ -16,11 +13,12 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
 import { environment } from '../../../../environments/environment.js';
 import { ImageService } from '../../../core/services/image.service.js';
 import { ImageResponse } from '../../../core/models/image.interface.js';
+import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
 
 @Component({
   selector: 'app-wands-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent, EntitySelectorComponent],
   templateUrl: './wands-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
@@ -41,18 +39,16 @@ export class WandsManagementComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private wandService: WandService,
-    private woodService: WoodService,
-    private coreService: CoreService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    public coreService: CoreService,
+    public woodService: WoodService
   ) {
     this.wandForm = this.fb.group({
       name: ['', Validators.required],
       length_inches: [0, Validators.required],
       description: ['', Validators.required],
-      status: [WandStatus.Available, Validators.required],
       image: ['', Validators.required],
       profit: [0, Validators.required],
-      total_price: [0, Validators.required],
       wood: ['', Validators.required],
       core: ['', Validators.required]
     });
@@ -60,6 +56,14 @@ export class WandsManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.findAllWands();
+  }
+
+  get woodFormControlField() {
+    return this.wandForm.get('wood') as FormControl;
+  }
+
+  get coreFormControlField() {
+    return this.wandForm.get('core') as FormControl;
   }
 
   onWandSelected(wand: Wand): void {
@@ -135,10 +139,11 @@ export class WandsManagementComponent implements OnInit {
     this.previewUrl = null;
   }
 
-  addWand(): void {
-    this.uploadImageToCloudinary(this.selectedImageFile!);
+  async addWand() {
+    await this.uploadImageToCloudinary(this.selectedImageFile!);
     if (this.wandForm.valid) {
       const wandData = this.wandForm.value;
+      console.log('Wand Data:', wandData);
       this.wandService.add(wandData).subscribe({
         next: (res: WandResponse) => {
           this.alertComponent.showAlert(res.message, AlertType.Success);
@@ -208,38 +213,46 @@ export class WandsManagementComponent implements OnInit {
     }
   }
 
-  uploadImageToCloudinary(file: File) {
-    this.imageService.sign().subscribe({
-      next: (res: ImageResponse) => {
-        const { timestamp, signature } = res.data!;
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('api_key', environment.cloudinary.apiKey);
-        formData.append('timestamp', timestamp);
-        formData.append('signature', signature);
-        formData.append('upload_preset', environment.cloudinary.uploadPreset);
-        formData.append('folder', 'olivenders');
+  uploadImageToCloudinary(file: File): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.imageService.sign().subscribe({
+        next: (res: ImageResponse) => {
+          const { timestamp, signature } = res.data!;
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('api_key', environment.cloudinary.apiKey);
+          formData.append('timestamp', timestamp);
+          formData.append('signature', signature);
+          formData.append('upload_preset', environment.cloudinary.uploadPreset);
+          formData.append('folder', 'olivenders');
 
-        fetch(
-          `https://api.cloudinary.com/v1_1/${ environment.cloudinary.cloudName }/image/upload`,
-          {
-            method: 'POST',
-            body: formData
-          }
-        )
-          .then(response => response.json())
-          .then(data => {
-            if (data.secure_url) {
-              this.wandForm.patchValue({ image: data.secure_url });
+          fetch(
+            `https://api.cloudinary.com/v1_1/${ environment.cloudinary.cloudName }/image/upload`,
+            {
+              method: 'POST',
+              body: formData
             }
-          })
-          .catch(error => {
-            this.alertComponent.showAlert('Image upload failed. Please try again.', AlertType.Error);
-          });
-      },
-      error: (err) => {
-        this.alertComponent.showAlert(err.error.message, AlertType.Error);
-      },
+          )
+            .then(response => response.json())
+            .then(data => {
+              if (data.secure_url) {
+                this.wandForm.patchValue({ image: data.secure_url });
+                resolve();
+              } else {
+                this.alertComponent.showAlert('Image upload failed. Please try again.', AlertType.Error);
+                reject();
+              }
+            })
+            .catch(error => {
+              this.alertComponent.showAlert('Image upload failed. Please try again.', AlertType.Error);
+              reject(error);
+            });
+        },
+        error: (err) => {
+          this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          reject(err);
+        },
+      });
     });
   }
 

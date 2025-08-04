@@ -93,12 +93,13 @@ export class CoresManagementComponent implements OnInit {
         next: (res: CoreResponse) => {
           this.alertComponent.showAlert(res.message, AlertType.Success);
           this.findAllCores();
+          this.coreForm.reset();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          this.coreForm.reset();
         }
       });
-      this.coreForm.reset();
     } else {
       this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
     }
