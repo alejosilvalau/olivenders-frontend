@@ -84,22 +84,40 @@ export class WandsManagementComponent implements OnInit {
     }
 
     const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
-    const search$: Observable<WandResponse<Wand>> = isObjectId
-      ? this.wandService.findOne(trimmedTerm)
-      : this.wandService.findOneByName(trimmedTerm);
+    let search$;
 
-    // Modify this to handle finding the wood and the core by name, calling the findAllByCore or findAllByWood.
-    // Previous to that, callind the findOneByName method on both.
-
-    search$.subscribe({
-      next: res => {
-        this.filteredWands = res.data ? [res.data] : [];
-      },
-      error: err => {
-        this.filteredWands = [];
-        this.alertComponent.showAlert(err.error.message, AlertType.Error);
-      }
-    });
+    if (isObjectId) {
+      search$ = this.wandService.findOne(trimmedTerm);
+    } else {
+      this.woodService.findOneByName(trimmedTerm).subscribe({
+        next: (woodResponse) => {
+          if (woodResponse.data) {
+            search$ = this.wandService.findAllByWood(woodResponse.data.id);
+          } else {
+            this.coreService.findOneByName(trimmedTerm).subscribe({
+              next: (coreResponse) => {
+                if (coreResponse.data) {
+                  search$ = this.wandService.findAllByCore(coreResponse.data!.id);
+                }
+                else {
+                  this.alertComponent.showAlert('No wand found with this search.', AlertType.Info);
+                  this.filteredWands = [];
+                  return;
+                }
+              }, error: (err) => {
+                this.alertComponent.showAlert(err.error.message, AlertType.Error);
+                this.filteredWands = [];
+                return;
+              }
+            });
+          }
+        }, error: (err) => {
+          this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          this.filteredWands = [];
+          return;
+        }
+      });
+    }
   }
 
   onSearch(filteredWands: Wand[]): void {
