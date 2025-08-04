@@ -46,7 +46,7 @@
       cancelButtonText: 'Cancel'
     }"
     (onSubmit)="addWand()"
-    (onCancel)="wandForm.reset()"
+    (onCancel)="resetWandForm()"
   >
     <ng-template #modalContent>
       <form [formGroup]="wandForm">
@@ -121,7 +121,7 @@
       cancelButtonText: 'Cancel'
     }"
     (onSubmit)="editWand()"
-    (onCancel)="wandForm.reset()"
+    (onCancel)="resetWandForm()"
   >
     <ng-template #modalContent>
       <form [formGroup]="wandForm">
@@ -174,7 +174,7 @@
       cancelButtonText: 'Cancel'
     }"
     (onSubmit)="removeWand()"
-    (onCancel)="wandForm.reset()"
+    (onCancel)="resetWandForm()"
   >
     <ng-template #modalContent>
       <div class="col-md-12">

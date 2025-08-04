@@ -32,6 +32,7 @@ export class WandsManagementComponent implements OnInit {
   filteredWands: Wand[] = [];
   searchTerm: string = '';
   wandStatusOptions = Object.values(WandStatus);
+  selectedImageFile: File | null = null;
   previewUrl: string | null = null;
   DataTableFormat = DataTableFormat;
 
@@ -109,18 +110,26 @@ export class WandsManagementComponent implements OnInit {
     this.searchWand(this.searchTerm);
   }
 
+  resetWandForm(): void {
+    this.wandForm.reset();
+    this.selectedWand = null;
+    this.selectedImageFile = null;
+    this.previewUrl = null;
+  }
+
   addWand(): void {
+    this.uploadImageToCloudinary(this.selectedImageFile!);
     if (this.wandForm.valid) {
       const wandData = this.wandForm.value;
       this.wandService.add(wandData).subscribe({
         next: (res: WandResponse) => {
           this.alertComponent.showAlert(res.message, AlertType.Success);
           this.findAllWands();
-          this.wandForm.reset();
+          this.resetWandForm();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
-          this.wandForm.reset();
+          this.resetWandForm();
         }
       });
     } else {
@@ -135,11 +144,11 @@ export class WandsManagementComponent implements OnInit {
         next: (response: WandResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllWands();
-          this.wandForm.reset();
+          this.resetWandForm();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
-          this.wandForm.reset();
+          this.resetWandForm();
         }
       });
     }
@@ -151,11 +160,9 @@ export class WandsManagementComponent implements OnInit {
         next: (response: WandResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllWands();
-          this.wandForm.reset();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
-          this.wandForm.reset();
         }
       });
     }
@@ -169,7 +176,7 @@ export class WandsManagementComponent implements OnInit {
     event.preventDefault();
     const file = event.dataTransfer?.files[0];
     if (file) {
-      this.uploadImageToCloudinary(file);
+      this.selectedImageFile = file;
       this.previewUrl = URL.createObjectURL(file);
     }
   }
@@ -178,12 +185,12 @@ export class WandsManagementComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      this.uploadImageToCloudinary(file);
+      this.selectedImageFile = file;
       this.previewUrl = URL.createObjectURL(file);
     }
   }
 
-  async uploadImageToCloudinary(file: File): Promise<void> {
+  uploadImageToCloudinary(file: File) {
     this.imageService.sign().subscribe({
       next: (res: ImageResponse) => {
         const { timestamp, signature } = res.data!;
