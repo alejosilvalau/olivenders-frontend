@@ -1,0 +1,36 @@
+<div class="review-list">
+  <div
+    *ngFor="let order of ordersWithReviews"
+    class="review-card d-flex align-items-center mb-3 p-3 border rounded"
+  >
+    <img
+      [src]="getReviewImage(order)"
+      alt="Wand Image"
+      class="wand-image me-3"
+      style="width: 80px; height: 80px; object-fit: cover"
+    />
+    <div class="flex-grow-1">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <span
+            *ngFor="let star of [].constructor(getRandomRating())"
+            class="text-warning"
+            >&#9733;</span
+          >
+          <span
+            *ngFor="let star of [].constructor(5 - getRandomRating())"
+            class="text-secondary"
+            >&#9734;</span
+          >
+        </div>
+        <button class="btn btn-info btn-sm ms-2" (click)="showWandInfo(order)">
+          <i class="bi bi-info-circle"></i>
+        </button>
+      </div>
+      <div class="mt-2">
+        <strong>Review:</strong>
+        <span>{{ order.review }}</span>
+      </div>
+    </div>
+  </div>
+</div>
