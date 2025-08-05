@@ -131,8 +131,8 @@
     (onCancel)="resetWandForm()"
   >
     <ng-template #modalContent>
-      <form [formGroup]="wandForm">
-        <!-- <div class="col-md-12">
+            <form [formGroup]="wandForm">
+        <div class="col-md-12">
           <label for="name">Name</label>
           <input
             type="text"
@@ -142,12 +142,12 @@
             class="form-control"
             required
           />
-          <label for="binomial_name">Binomial Name</label>
+          <label for="length_inches">Length on Inches</label>
           <input
-            type="text"
-            formControlName="binomial_name"
-            id="binomial_name"
-            name="binomial_name"
+            type="number"
+            formControlName="length_inches"
+            id="length_inches"
+            name="length_inches"
             class="form-control"
             required
           />
@@ -160,16 +160,43 @@
             rows="4"
             required
           ></textarea>
-          <label for="price">Price</label>
+          <label for="image">Image</label>
+          <div
+            class="image-drop-area border border-2 rounded d-flex flex-column align-items-center justify-content-center py-4 mb-3 pointer"
+            (drop)="onImageDrop($event)"
+            (dragover)="onImageDragOver($event)"
+            role="button"
+          >
+            <i class="bi bi-cloud-arrow-up display-4 text-primary mb-2"></i>
+            <p class="mb-2 fw-semibold text-secondary">Drag & drop an image here, or click to select</p>
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onImageSelected($event)"
+              style="display:none"
+              #imageInput
+            />
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="imageInput.click()">Choose Image</button>
+            <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" class="img-thumbnail mt-3" style="max-width: 120px;" />
+          </div>
+          <label for="profit">Profit</label>
           <input
             type="number"
-            formControlName="price"
-            id="price"
-            name="price"
+            formControlName="profit"
+            id="profit"
+            name="profit"
             class="form-control"
             required
           />
-        </div> -->
+          <app-entity-selector [entityControl]="woodFormControlField" [service]="woodService"
+          [findOneByString]="woodService.findOneByName" label="Wood">
+          <input type="hidden" formControlName="wood" />
+          </app-entity-selector>
+          <app-entity-selector [entityControl]="coreFormControlField" [service]="coreService"
+            [findOneByString]="coreService.findOneByName" label="Core">
+            <input type="hidden" formControlName="core" />
+          </app-entity-selector>
+        </div>
       </form>
     </ng-template>
   </app-modal>

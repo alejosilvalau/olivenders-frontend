@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { WandService } from '../../../core/services/wand.service';
 import { WoodService } from '../../../core/services/wood.service';
 import { CoreService } from '../../../core/services/core.service';
-import { Wand, WandResponse, WandStatus } from '../../../core/models/wand.interface';
+import { Wand, WandResponse } from '../../../core/models/wand.interface';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
@@ -29,7 +29,6 @@ export class WandsManagementComponent implements OnInit {
   selectedWand: Wand | null = null;
   filteredWands: Wand[] = [];
   searchTerm: string = '';
-  wandStatusOptions = Object.values(WandStatus);
   selectedImageFile: File | null = null;
   previewUrl: string | null = null;
   DataTableFormat = DataTableFormat;
@@ -68,9 +67,12 @@ export class WandsManagementComponent implements OnInit {
 
   onWandSelected(wand: Wand): void {
     this.selectedWand = wand;
-    if (wand) {
-      this.wandForm.patchValue({ ...wand });
-    }
+    this.wandForm.patchValue({
+      ...wand,
+      wood: typeof wand.wood === 'object' ? wand.wood.id : wand.wood,
+      core: typeof wand.core === 'object' ? wand.core.id : wand.core
+    });
+    this.previewUrl = wand.image;
   }
 
   findAllWands(): void {
@@ -104,7 +106,7 @@ export class WandsManagementComponent implements OnInit {
                   search$ = this.wandService.findAllByCore(coreResponse.data!.id);
                 }
                 else {
-                  this.alertComponent.showAlert('No wand found with this search.', AlertType.Info);
+                  this.alertComponent.showAlert('No wand found with this search', AlertType.Info);
                   this.filteredWands = [];
                   return;
                 }
@@ -143,7 +145,6 @@ export class WandsManagementComponent implements OnInit {
     await this.uploadImageToCloudinary(this.selectedImageFile!);
     if (this.wandForm.valid) {
       const wandData = this.wandForm.value;
-      console.log('Wand Data:', wandData);
       this.wandService.add(wandData).subscribe({
         next: (res: WandResponse) => {
           this.alertComponent.showAlert(res.message, AlertType.Success);
@@ -156,11 +157,12 @@ export class WandsManagementComponent implements OnInit {
         }
       });
     } else {
-      this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
+      this.alertComponent.showAlert('Please complete all required fields', AlertType.Error);
     }
   }
 
-  editWand(): void {
+  async editWand() {
+    await this.uploadImageToCloudinary(this.selectedImageFile!);
     if (this.selectedWand) {
       const wandData = this.wandForm.value;
       this.wandService.update(this.selectedWand.id, wandData).subscribe({
@@ -239,12 +241,12 @@ export class WandsManagementComponent implements OnInit {
                 this.wandForm.patchValue({ image: data.secure_url });
                 resolve();
               } else {
-                this.alertComponent.showAlert('Image upload failed. Please try again.', AlertType.Error);
+                this.alertComponent.showAlert('Image upload failed. Please try again', AlertType.Error);
                 reject();
               }
             })
             .catch(error => {
-              this.alertComponent.showAlert('Image upload failed. Please try again.', AlertType.Error);
+              this.alertComponent.showAlert('Image upload failed. Please try again', AlertType.Error);
               reject(error);
             });
         },

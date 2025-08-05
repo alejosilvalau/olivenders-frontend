@@ -26,20 +26,17 @@ export class EntitySelectorComponent implements OnInit {
   selectedEntityName: string = '';
 
   ngOnInit(): void {
-    const id = this.entityControl.value;
-    if (id) {
-      this.service.findOne(id).subscribe((res: any) => {
-        if (res.data) {
-          this.selectedEntityName = res.data[this.displayField];
-        }
-      });
-    }
-
     this.entityControl.valueChanges.subscribe(value => {
       if (!value) {
         this.selectedEntityName = '';
         this.filteredEntities = [];
         this.showDropdown = false;
+      } else {
+        this.service.findOne(value).subscribe((res: any) => {
+          if (res.data) {
+            this.selectedEntityName = res.data[this.displayField];
+          }
+        });
       }
     });
   }
