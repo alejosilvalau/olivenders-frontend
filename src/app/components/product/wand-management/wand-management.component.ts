@@ -14,11 +14,12 @@ import { environment } from '../../../../environments/environment.js';
 import { ImageService } from '../../../core/services/image.service.js';
 import { ImageResponse } from '../../../core/models/image.interface.js';
 import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
 
 @Component({
   selector: 'app-wand-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent, EntitySelectorComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent, EntitySelectorComponent, PaginationComponent],
   templateUrl: './wand-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
@@ -31,6 +32,9 @@ export class WandManagementComponent implements OnInit {
   searchTerm: string = '';
   selectedImageFile: File | null = null;
   previewUrl: string | null = null;
+  totalWands = 0;
+  currentPage = 1;
+  pageSize = 10;
   DataTableFormat = DataTableFormat;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
@@ -76,10 +80,21 @@ export class WandManagementComponent implements OnInit {
   }
 
   findAllWands(): void {
-    this.wandService.findAll().subscribe((wandResponse: WandResponse<Wand[]>) => {
+    this.wandService.findAll(this.currentPage, this.pageSize).subscribe((wandResponse: WandResponse<Wand[]>) => {
       this.wands = wandResponse.data!;
       this.filteredWands = wandResponse.data!;
     });
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.findAllWands();
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
+    this.findAllWands();
   }
 
   private searchWand(term: string): void {
