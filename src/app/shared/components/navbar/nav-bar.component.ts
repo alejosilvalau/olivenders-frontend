@@ -5,11 +5,11 @@ import { AuthService } from '../../../core/services/auth.service.js';
 import { Wizard, WizardRole } from '../../../core/models/wizard.interface.js';
 
 @Component({
-  selector: 'app-nav-bar',
+  selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css'
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css'
 })
 export class NavBarComponent {
   isLoggedIn: boolean = false;
