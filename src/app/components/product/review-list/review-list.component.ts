@@ -43,12 +43,12 @@ export class ReviewListComponent implements OnInit {
     this.orderService.findAll().subscribe((res: any) => {
       this.ordersWithReviews = (res.data || []).filter((order: Order) => !!order.review).map((order: Order) => ({
         ...order,
-        rating: Math.floor(Math.random() * 2) + 4, // 4 or 5
+        rating: this.getRandomRating()
       }));;
     });
   }
 
   getRandomRating(): number {
-    return Math.floor(Math.random() * 2) + 4;
+    return Math.floor(Math.random() * 2) + 4; // 4 or 5
   }
 }
