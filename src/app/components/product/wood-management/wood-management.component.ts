@@ -9,10 +9,11 @@ import { AlertComponent, AlertType } from '../../../shared/components/alert/aler
 import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
 @Component({
   selector: 'app-wood-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent, PaginationComponent],
   templateUrl: './wood-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
@@ -23,6 +24,9 @@ export class WoodManagementComponent implements OnInit {
   selectedWood: Wood | null = null;
   filteredWoods: Wood[] = [];
   searchTerm: string = '';
+  totalWoods = 0;
+  currentPage = 1;
+  pageSize = 10;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
@@ -50,10 +54,21 @@ export class WoodManagementComponent implements OnInit {
   }
 
   findAllWoods(): void {
-    this.woodService.findAll().subscribe((woodResponse: WoodResponse<Wood[]>) => {
+    this.woodService.findAll(this.currentPage, this.pageSize).subscribe((woodResponse: WoodResponse<Wood[]>) => {
       this.woods = woodResponse.data!;
       this.filteredWoods = woodResponse.data!;
     });
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.findAllWoods();
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
+    this.findAllWoods();
   }
 
   private searchWood(term: string): void {

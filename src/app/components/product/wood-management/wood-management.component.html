@@ -15,6 +15,13 @@
     ]" [data]="filteredWoods" [emptyMessage]="'There are no woods available.'" [editModalTarget]="'#editWood'"
     [removeModalTarget]="'#removeWood'" (selectedEntity)="onWoodSelected($event)">
   </app-data-table>
+  <app-pagination
+    [totalRecords]="totalWoods"
+    [currentPage]="currentPage"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </app-pagination>
   <app-modal [config]="{
       id: 'addWood',
       title: 'New Wood',
