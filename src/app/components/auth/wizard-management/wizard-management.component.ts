@@ -13,14 +13,14 @@ import { Wizard, WizardResponse, WizardRole } from '../../../core/models/wizard.
 import { WizardService } from '../../../core/services/wizard.service.js';
 
 @Component({
-  selector: 'app-wizards-management',
+  selector: 'app-wizard-management',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, ModalComponent],
-  templateUrl: './wizards-management.component.html',
+  templateUrl: './wizard-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
 
-export class WizardsManagementComponent implements OnInit {
+export class WizardManagementComponent implements OnInit {
   wizardForm: FormGroup = new FormGroup({});
   wizards: Wizard[] = [];
   selectedWizard: Wizard | null = null;

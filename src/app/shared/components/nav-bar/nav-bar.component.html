@@ -6,7 +6,6 @@
     <div class="d-flex align-items-center gap-4">
 
       <ng-container *ngIf="!isLoggedIn">
-        <a routerLink="/auth/register" class="nav-link nav-register text-light fs-4">Register</a>
         <a routerLink="/auth/login" class="nav-link nav-login text-light fs-4">Log In</a>
       </ng-container>
 
@@ -14,7 +13,7 @@
         <div class="dropdown position-relative">
           <button id="dropdownDefaultButton" (click)="toggleDropdown()"
             class="btn btn-primary rounded-3 px-4 py-2 d-inline-flex align-items-center" type="button">
-            {{ currentWizard?.name + ' ' + currentWizard?.last_name }}
+            {{ currentWizard?.name + ' ' + currentWizard?.last_name | titlecase}}
             <svg class="ms-3" style="width: 10px; height: 6px;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -26,8 +25,12 @@
             [ngClass]="{'d-none': !isDropdownOpen, 'd-block': isDropdownOpen}">
             <ul class="py-2 fs-6" aria-labelledby="dropdownDefaultButton">
               <li>
+                <a (click)="toggleDropdown()" routerLink="/auth/dashboard"
+                  class="dropdown-item custom-dropdown-item px-4 py-2">Settings</a>
+              </li>
+              <li>
                 <a (click)="toggleDropdown()" routerLink="/auth/profile"
-                  class="dropdown-item custom-dropdown-item px-4 py-2">Profile Settings</a>
+                  class="dropdown-item custom-dropdown-item px-4 py-2">Settings</a>
               </li>
               <li>
                 <a (click)="logout()" class="dropdown-item custom-dropdown-item px-4 py-2">Log Out</a>
@@ -44,23 +47,32 @@
   <div class="container-xxl py-2">
     <div class="d-flex align-items-center">
       <ul class="nav fw-medium gap-4 fs-6">
-        <ng-container *ngIf="wizardRole === 'user'">
+        <!-- <ng-container *ngIf="wizardRole === 'user'">
           <li class="nav-item">
             <a routerLink="/product/orders" class="nav-link custom-nav-link">My Orders</a>
           </li>
           <li class="nav-item">
             <a routerLink="/product/answers" class="nav-link custom-nav-link">My Quizzes</a>
           </li>
-        </ng-container>
-        <ng-container *ngIf="wizardRole === 'admin'">
+        </ng-container> -->
+        <ng-container *ngIf="wizardRole === WizardRole.Admin">
           <li class="nav-item">
-            <a routerLink="/product/wands" class="nav-link custom-nav-link">Wands</a>
+            <a routerLink="/product/wands" class="nav-link custom-nav-link">Cores</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/auth/wizards" class="nav-link custom-nav-link">Wizards</a>
+            <a routerLink="/auth/wizards" class="nav-link custom-nav-link">Woods</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Dashboard</a>
+            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Wands</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Schools</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Wizards</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Orders</a>
           </li>
         </ng-container>
       </ul>

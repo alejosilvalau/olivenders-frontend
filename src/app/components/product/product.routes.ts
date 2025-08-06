@@ -1,24 +1,22 @@
 import {Routes} from '@angular/router';
-import { SchoolsManagementComponent } from './schools-management/schools-management.component.js';
-import { CoresManagementComponent } from './cores-management/cores-management.component.js';
-import { WoodsManagementComponent } from './woods-management/woods-management.component.js';
-import { QuestionsManagementComponent } from './questions-management/questions-management.component.js';
+import { SchoolManagementComponent } from './school-management/school-management.component.js';
+import { CoreManagementComponent } from './core-management/core-management.component.js';
+import { WoodManagementComponent } from './woods-management/wood-management.component.js';
 import { WandCatalogComponent } from './wand-catalog/wand-catalog.component.js';
 import { PlaceOrderComponent } from './place-order/place-order.component.js';
-import { OrdersDashboardComponent } from './orders-dashboard/orders-dashboard.component.js';
-import { OrdersManagementComponent } from './orders-management/orders-management.component.js';
-import { WandsManagementComponent } from './wands-management/wands-management.component.js';
+import { OrderDashboardComponent } from './order-dashboard/order-dashboard.component.js';
+import { OrderManagementComponent } from './order-management/order-management.component.js';
+import { WandManagementComponent } from './wand-management/wand-management.component.js';
 import { ReviewListComponent } from './review-list/review-list.component.js';
 
 export const productRoutes: Routes = [
-  { path: 'schools', component: SchoolsManagementComponent },
-  { path: 'cores', component: CoresManagementComponent },
-  { path: 'woods', component: WoodsManagementComponent },
-  { path: 'questions', component: QuestionsManagementComponent },
-  { path: 'orders', component: OrdersManagementComponent },
-  { path: 'wands', component: WandsManagementComponent },
+  { path: 'schools', component: SchoolManagementComponent },
+  { path: 'cores', component: CoreManagementComponent },
+  { path: 'woods', component: WoodManagementComponent },
+  { path: 'orders', component: OrderManagementComponent },
+  { path: 'wands', component: WandManagementComponent },
   { path: 'order/:wandId', component: PlaceOrderComponent },
   { path: 'reviews', component: ReviewListComponent },
-  { path: 'dashboard', component: OrdersDashboardComponent },
+  { path: 'dashboard', component: OrderDashboardComponent },
   { path: '', component: WandCatalogComponent },
 ]

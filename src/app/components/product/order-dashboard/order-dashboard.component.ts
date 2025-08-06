@@ -11,13 +11,13 @@ import { Wand } from '../../../core/models/wand.interface.js';
 import { Core } from '../../../core/models/core.interface.js';
 
 @Component({
-  selector: 'app-orders-dashboard',
+  selector: 'app-order-dashboard',
   standalone: true,
   imports: [ModalComponent, CommonModule, FormsModule, AlertComponent],
-  templateUrl: './orders-dashboard.component.html',
-  styleUrl: './orders-dashboard.component.css',
+  templateUrl: './order-dashboard.component.html',
+  styleUrl: './order-dashboard.component.css',
 })
-export class OrdersDashboardComponent implements OnInit {
+export class OrderDashboardComponent implements OnInit {
   orders: Order[] = [];
   wizardId: string = '';
   selectedOrder: Order | null = null;
@@ -53,7 +53,7 @@ export class OrdersDashboardComponent implements OnInit {
     if (typeof order.wand !== 'string') {
       if (typeof order.wand.wood !== 'string') {
         return order.wand.wood;
-    }
+      }
     }
     return null;
   }

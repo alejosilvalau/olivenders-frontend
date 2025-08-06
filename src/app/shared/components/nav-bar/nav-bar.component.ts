@@ -14,8 +14,9 @@ import { Wizard, WizardRole } from '../../../core/models/wizard.interface.js';
 export class NavBarComponent {
   isLoggedIn: boolean = false;
   currentWizard: Wizard | null = null;
-  wizardRole: WizardRole | null = null;
+  wizardRole: WizardRole = WizardRole.User;
   isDropdownOpen = false;
+  WizardRole = WizardRole;
 
   constructor(private authService: AuthService) { }
 
@@ -33,7 +34,7 @@ export class NavBarComponent {
   logout(): void {
     this.authService.logout();
     this.isDropdownOpen = false;
-    this.wizardRole = null;
+    this.wizardRole = WizardRole.User;
   }
 
   toggleDropdown(): void {

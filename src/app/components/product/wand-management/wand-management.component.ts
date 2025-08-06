@@ -16,14 +16,14 @@ import { ImageResponse } from '../../../core/models/image.interface.js';
 import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
 
 @Component({
-  selector: 'app-wands-management',
+  selector: 'app-wand-management',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent, EntitySelectorComponent],
-  templateUrl: './wands-management.component.html',
+  templateUrl: './wand-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
 
-export class WandsManagementComponent implements OnInit {
+export class WandManagementComponent implements OnInit {
   wandForm: FormGroup = new FormGroup({});
   wands: Wand[] = [];
   selectedWand: Wand | null = null;

@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OrderService } from '../../../core/services/order.service';
 import { Order, OrderResponse } from '../../../core/models/order.interface';
-import { Observable } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
@@ -11,14 +10,14 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
 import { WandService } from '../../../core/services/wand.service.js';
 import { WizardService } from '../../../core/services/wizard.service.js';
 @Component({
-  selector: 'app-orders-management',
+  selector: 'app-order-management',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, ModalComponent],
-  templateUrl: './orders-management.component.html',
+  templateUrl: './order-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
 
-export class OrdersManagementComponent implements OnInit {
+export class OrderManagementComponent implements OnInit {
   orderForm: FormGroup = new FormGroup({});
   orders: Order[] = [];
   selectedOrder: Order | null = null;

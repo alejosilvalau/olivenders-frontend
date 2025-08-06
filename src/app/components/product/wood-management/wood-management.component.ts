@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CoreService } from '../../../core/services/core.service';
-import { Core, CoreResponse } from '../../../core/models/core.interface';
+import { WoodService } from '../../../core/services/wood.service';
+import { Wood, WoodResponse } from '../../../core/models/wood.interface';
 import { Observable } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
@@ -10,129 +10,129 @@ import { DataTableComponent } from '../../../shared/components/data-table/data-t
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 @Component({
-  selector: 'app-cores-management',
+  selector: 'app-wood-management',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent],
-  templateUrl: './cores-management.component.html',
+  templateUrl: './wood-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
 
-export class CoresManagementComponent implements OnInit {
-  coreForm: FormGroup = new FormGroup({});
-  cores: Core[] = [];
-  selectedCore: Core | null = null;
-  filteredCores: Core[] = [];
+export class WoodManagementComponent implements OnInit {
+  woodForm: FormGroup = new FormGroup({});
+  woods: Wood[] = [];
+  selectedWood: Wood | null = null;
+  filteredWoods: Wood[] = [];
   searchTerm: string = '';
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
   constructor(
     private fb: FormBuilder,
-    private coreService: CoreService
+    private woodService: WoodService
   ) {
-    this.coreForm = this.fb.group({
+    this.woodForm = this.fb.group({
       name: ['', Validators.required],
+      binomial_name: ['', Validators.required],
       description: ['', Validators.required],
       price: [0, Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.findAllCores();
+    this.findAllWoods();
   }
 
-  onCoreSelected(core: Core): void {
-    this.selectedCore = core;
-    if (core) {
-      this.coreForm.patchValue({ ...core });
+  onWoodSelected(wood: Wood): void {
+    this.selectedWood = wood;
+    if (wood) {
+      this.woodForm.patchValue({ ...wood });
     }
   }
 
-  findAllCores(): void {
-    this.coreService.findAll().subscribe((coreResponse: CoreResponse<Core[]>) => {
-      this.cores = coreResponse.data!;
-      this.filteredCores = coreResponse.data!;
+  findAllWoods(): void {
+    this.woodService.findAll().subscribe((woodResponse: WoodResponse<Wood[]>) => {
+      this.woods = woodResponse.data!;
+      this.filteredWoods = woodResponse.data!;
     });
   }
 
-  private searchCore(term: string): void {
+  private searchWood(term: string): void {
     const trimmedTerm = term.trim();
     if (!trimmedTerm) {
-      this.filteredCores = [];
+      this.filteredWoods = [];
       return;
     }
 
     const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
-    const search$: Observable<CoreResponse<Core>> = isObjectId
-      ? this.coreService.findOne(trimmedTerm)
-      : this.coreService.findOneByName(trimmedTerm);
+    const search$: Observable<WoodResponse<Wood>> = isObjectId
+      ? this.woodService.findOne(trimmedTerm)
+      : this.woodService.findOneByName(trimmedTerm);
 
     search$.subscribe({
       next: res => {
-        this.filteredCores = res.data ? [res.data] : [];
+        this.filteredWoods = res.data ? [res.data] : [];
       },
       error: err => {
-        this.filteredCores = [];
+        this.filteredWoods = [];
         this.alertComponent.showAlert(err.error.message, AlertType.Error);
       }
     });
   }
 
-  onSearch(filteredCores: Core[]): void {
-    if (filteredCores.length > 0) {
-      this.filteredCores = filteredCores;
+  onSearch(filteredWoods: Wood[]): void {
+    if (filteredWoods.length > 0) {
+      this.filteredWoods = filteredWoods;
       return;
     }
-    this.searchCore(this.searchTerm);
+    this.searchWood(this.searchTerm);
   }
 
-  addCore(): void {
-    if (this.coreForm.valid) {
-      const coreData = this.coreForm.value;
-      this.coreService.add(coreData).subscribe({
-        next: (res: CoreResponse) => {
+  addWood(): void {
+    if (this.woodForm.valid) {
+      const woodData = this.woodForm.value;
+      this.woodService.add(woodData).subscribe({
+        next: (res: WoodResponse) => {
           this.alertComponent.showAlert(res.message, AlertType.Success);
-          this.findAllCores();
-          this.coreForm.reset();
+          this.findAllWoods();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
-          this.coreForm.reset();
         }
       });
+      this.woodForm.reset();
     } else {
       this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
     }
   }
 
-  editCore(): void {
-    if (this.selectedCore) {
-      const coreData = this.coreForm.value;
-      this.coreService.update(this.selectedCore.id, coreData).subscribe({
-        next: (response: CoreResponse) => {
+  editWood(): void {
+    if (this.selectedWood) {
+      const woodData = this.woodForm.value;
+      this.woodService.update(this.selectedWood.id, woodData).subscribe({
+        next: (response: WoodResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
-          this.findAllCores();
+          this.findAllWoods();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
         }
       });
-      this.coreForm.reset();
+      this.woodForm.reset();
     }
   }
 
-  removeCore(): void {
-    if (this.selectedCore) {
-      this.coreService.remove(this.selectedCore.id).subscribe({
-        next: (response: CoreResponse) => {
+  removeWood(): void {
+    if (this.selectedWood) {
+      this.woodService.remove(this.selectedWood.id).subscribe({
+        next: (response: WoodResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
-          this.findAllCores();
+          this.findAllWoods();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
         }
       });
-      this.coreForm.reset();
+      this.woodForm.reset();
     }
   }
 }
