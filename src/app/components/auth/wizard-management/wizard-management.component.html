@@ -32,6 +32,13 @@
     (selectedEntity)="onWizardSelected($event)"
   >
   </app-data-table>
+  <app-pagination
+    [totalRecords]="totalWizards"
+    [currentPage]="currentPage"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </app-pagination>
   <app-modal
     [config]="{
       id: 'editWizard',

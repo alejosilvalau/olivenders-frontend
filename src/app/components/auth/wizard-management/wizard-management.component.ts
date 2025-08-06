@@ -11,11 +11,12 @@ import { AddButtonComponent } from '../../../shared/components/add-button/add-bu
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { Wizard, WizardResponse, WizardRole } from '../../../core/models/wizard.interface.js';
 import { WizardService } from '../../../core/services/wizard.service.js';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
 
 @Component({
   selector: 'app-wizard-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, ModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, ModalComponent, PaginationComponent],
   templateUrl: './wizard-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
@@ -26,7 +27,9 @@ export class WizardManagementComponent implements OnInit {
   selectedWizard: Wizard | null = null;
   filteredWizards: Wizard[] = [];
   searchTerm: string = '';
-  // public DataTableFormat = DataTableFormat;
+  totalWizards = 0;
+  currentPage = 1;
+  pageSize = 10;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
@@ -45,10 +48,21 @@ export class WizardManagementComponent implements OnInit {
   }
 
   findAllWizards(): void {
-    this.wizardService.findAll().subscribe((wizardResponse: WizardResponse<Wizard[]>) => {
+    this.wizardService.findAll(this.currentPage, this.pageSize).subscribe((wizardResponse: WizardResponse<Wizard[]>) => {
       this.wizards = wizardResponse.data!;
       this.filteredWizards = wizardResponse.data!;
     });
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.findAllWizards();
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
+    this.findAllWizards();
   }
 
   private searchWizard(term: string): void {
