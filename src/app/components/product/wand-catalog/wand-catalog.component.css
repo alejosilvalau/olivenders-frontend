@@ -53,25 +53,6 @@
   object-fit: contain;
 }
 
-.btn-details {
-  position: absolute;
-  top: 7px;
-  right: 7px;
-  background: rgba(255, 255, 255, 0.8);
-  border: none;
-  padding: 0.3rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.btn-details:hover {
-  background: rgba(255, 255, 255, 1);
-}
-
 .botonera {
   margin-top: auto;
   display: flex;

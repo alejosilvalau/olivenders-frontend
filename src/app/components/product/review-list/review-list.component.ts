@@ -3,23 +3,34 @@ import { OrderService } from '../../../core/services/order.service';
 import { WandService } from '../../../core/services/wand.service';
 import { Order } from '../../../core/models/order.interface';
 import { Wand } from '../../../core/models/wand.interface';
+import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button';
 import { CommonModule } from '@angular/common';
 
+interface OrderReview extends Order {
+  rating: number;
+}
 @Component({
   selector: 'app-review-list',
   standalone: true,
   templateUrl: './review-list.component.html',
   styleUrls: ['./review-list.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule, WandDetailsButtonComponent]
 })
 export class ReviewListComponent implements OnInit {
-  ordersWithReviews: Order[] = [];
+  ordersWithReviews: OrderReview[] = [];
 
   ngOnInit(): void {
     this.loadReviews();
   }
 
   constructor(private orderService: OrderService, private wandService: WandService) { }
+
+  getWand(order: Order): Wand | null {
+    if (order.wand && typeof order.wand === 'object') {
+      return order.wand;
+    }
+    return null;
+  }
 
   getReviewImage(order: Order): string {
     if (order.wand && typeof order.wand === 'object') {
@@ -30,21 +41,14 @@ export class ReviewListComponent implements OnInit {
 
   loadReviews(): void {
     this.orderService.findAll().subscribe((res: any) => {
-      // Filter orders with reviews
-      this.ordersWithReviews = (res.data || []).filter((order: Order) => !!order.review);
+      this.ordersWithReviews = (res.data || []).filter((order: Order) => !!order.review).map((order: Order) => ({
+        ...order,
+        rating: Math.floor(Math.random() * 2) + 4, // 4 or 5
+      }));;
     });
   }
 
   getRandomRating(): number {
-    return Math.floor(Math.random() * 5) + 1;
+    return Math.floor(Math.random() * 2) + 4;
   }
-
-  // ...existing code...
-  showWandInfo(order: Order): void {
-    if (order.wand && typeof order.wand === 'object') {
-      // You can use a modal or alert, similar to wand-catalog
-      alert(`Wand Info:\nName: ${ order.wand.name }\nDescription: ${ order.wand.description }`);
-    }
-  }
-  // ...existing code...
 }

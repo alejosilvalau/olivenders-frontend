@@ -36,12 +36,9 @@
               <h5 class="card-title text-center mt-2">
                 {{ wand.name | titlecase }}
               </h5>
-              <button
-                class="btn btn-light btn-details"
-                (click)="openWandDetails(wand)"
-              >
-                <span class="material-icons">info</span>
-              </button>
+              <app-wand-details-button
+                [wand]="wand"
+              ></app-wand-details-button>
             </div>
             <div class="card-body d-flex flex-column">
               <div class="mt-auto botonera flex flex-column">

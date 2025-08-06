@@ -6,16 +6,13 @@ import { Wizard } from '../../../core/models/wizard.interface';
 import { AuthService } from '../../../core/services/auth.service';
 import { FilterComponent } from '../../../shared/components/filter/filter.component';
 import { HostListener } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { BottomSheetComponent } from '../../../shared/components/bottom-sheet/bottom-sheet.component';
-import { BottomSheetConfig } from '../../../core/models/bottom-sheet.interface';
 import { CommonModule } from '@angular/common';
-import { Wood } from '../../../core/models/wood.interface.js';
+import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button.js';
 
 @Component({
   selector: 'app-wand-catalog',
   standalone: true,
-  imports: [CommonModule, RouterLink, FilterComponent],
+  imports: [CommonModule, RouterLink, FilterComponent, WandDetailsButtonComponent],
   templateUrl: './wand-catalog.component.html',
   styleUrl: './wand-catalog.component.css',
 })
@@ -29,8 +26,7 @@ export class WandCatalogComponent {
 
   constructor(
     private wandService: WandService,
-    private authService: AuthService,
-    private bottomSheet: MatBottomSheet
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -121,22 +117,7 @@ export class WandCatalogComponent {
     this.showFilter = !this.isMobile;
   }
 
-  openWandDetails(wand: Wand): void {
-    const config: BottomSheetConfig<Wand> = {
-      title: 'Wand Details',
-      fields: [
-        { key: 'name', label: 'Name' },
-        { key: 'length_inches', label: 'Length' },
-        { key: 'description', label: 'Description' },
-        { key: 'total_price', label: 'Price' },
-        { key: 'wood.name', label: 'Wood' },
-        { key: 'core.name', label: 'Core' },
-      ],
-      data: wand,
-    };
 
-    this.bottomSheet.open(BottomSheetComponent, { data: config });
-  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
