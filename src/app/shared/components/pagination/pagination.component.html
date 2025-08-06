@@ -1,0 +1,48 @@
+<div
+  class="d-flex flex-column flex-md-row align-items-center justify-content-between mt-3"
+>
+  <div>
+    <label>
+      Show
+      <select
+        [(ngModel)]="pageSize"
+        (change)="onPageSizeChange($event)"
+        class="form-select d-inline-block w-auto mx-1"
+      >
+        <option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </option>
+      </select>
+      entries
+    </label>
+  </div>
+  <nav>
+    <ul class="pagination mb-0">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button
+          class="page-link"
+          (click)="selectPage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+        >
+          &laquo;
+        </button>
+      </li>
+      <li
+        class="page-item"
+        *ngFor="let page of pages"
+        [class.active]="page === currentPage"
+      >
+        <button class="page-link" (click)="selectPage(page)">{{ page }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <button
+          class="page-link"
+          (click)="selectPage(currentPage + 1)"
+          [disabled]="currentPage === totalPages"
+        >
+          &raquo;
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>

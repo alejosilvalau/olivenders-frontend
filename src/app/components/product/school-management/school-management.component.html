@@ -15,6 +15,13 @@
     ]" [data]="filteredSchools" [emptyMessage]="'There are no schools available.'" [editModalTarget]="'#editSchool'"
     [removeModalTarget]="'#removeSchool'" (selectedEntity)="onSchoolSelected($event)">
   </app-data-table>
+  <app-pagination
+    [totalRecords]="totalSchools"
+    [currentPage]="currentPage"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </app-pagination>
   <app-modal [config]="{
       id: 'addSchool',
       title: 'New School',

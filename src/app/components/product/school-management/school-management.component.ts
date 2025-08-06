@@ -9,10 +9,11 @@ import { AlertComponent, AlertType } from '../../../shared/components/alert/aler
 import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
 @Component({
   selector: 'app-school-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent, PaginationComponent],
   templateUrl: './school-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
@@ -23,6 +24,9 @@ export class SchoolManagementComponent implements OnInit {
   selectedSchool: School | null = null;
   filteredSchools: School[] = [];
   searchTerm: string = '';
+  totalSchools = 0;
+  currentPage = 1;
+  pageSize = 10;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
@@ -50,10 +54,22 @@ export class SchoolManagementComponent implements OnInit {
   }
 
   findAllSchools(): void {
-    this.schoolService.findAll().subscribe((schoolResponse: SchoolResponse<School[]>) => {
+    this.schoolService.findAll(this.currentPage, this.pageSize).subscribe((schoolResponse: SchoolResponse<School[]>) => {
       this.schools = schoolResponse.data!;
       this.filteredSchools = schoolResponse.data!;
+      this.totalSchools = schoolResponse.total || 0;
     });
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.findAllSchools();
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
+    this.findAllSchools();
   }
 
   private searchSchool(term: string): void {
