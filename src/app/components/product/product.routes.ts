@@ -8,15 +8,17 @@ import { OrderDashboardComponent } from './order-dashboard/order-dashboard.compo
 import { OrderManagementComponent } from './order-management/order-management.component.js';
 import { WandManagementComponent } from './wand-management/wand-management.component.js';
 import { ReviewListComponent } from './review-list/review-list.component.js';
+import { isLoggedInGuard } from '../../guards/is-logged-in.guard';
+import { onlyAdmin } from '../../guards/only-admin.guard.js';
 
 export const productRoutes: Routes = [
-  { path: 'schools', component: SchoolManagementComponent },
-  { path: 'cores', component: CoreManagementComponent },
-  { path: 'woods', component: WoodManagementComponent },
-  { path: 'orders', component: OrderManagementComponent },
-  { path: 'wands', component: WandManagementComponent },
-  { path: 'order/:wandId', component: PlaceOrderComponent },
+  { path: 'schools', component: SchoolManagementComponent, canActivate: [onlyAdmin] },
+  { path: 'cores', component: CoreManagementComponent, canActivate: [onlyAdmin] },
+  { path: 'woods', component: WoodManagementComponent, canActivate: [onlyAdmin] },
+  { path: 'orders', component: OrderManagementComponent, canActivate: [onlyAdmin] },
+  { path: 'wands', component: WandManagementComponent, canActivate: [onlyAdmin] },
+  { path: 'order/:wandId', component: PlaceOrderComponent, canActivate: [isLoggedInGuard] },
   { path: 'reviews', component: ReviewListComponent },
-  { path: 'dashboard', component: OrderDashboardComponent },
+  { path: 'dashboard', component: OrderDashboardComponent, canActivate: [isLoggedInGuard] },
   { path: '', component: WandCatalogComponent },
 ]
