@@ -1,14 +1,21 @@
-<nav class="navbar navbar-light custom-navbar border-bottom">
-  <div class="container-xxl py-2">
-    <a href="/" class="navbar-brand shadow-none">
-      <img src="logo-white-transparent.png" class="logo me-3" alt="logo" />
+<nav class="navbar navbar-light custom-navbar">
+  <div class="container d-flex align-items-center">
+    <!-- Logo -->
+    <a href="/" class="navbar-brand shadow-none me-3">
+      <img src="logo-black-transparent.png" class="logo" alt="logo" />
     </a>
-    <div class="d-flex align-items-center gap-4">
 
+    <!-- Centered buttons -->
+    <div class="flex-grow-1 d-flex justify-content-center">
+      <a routerLink="./" class="btn btn-outline-primary mx-2">Store</a>
+      <a routerLink="product/reviews" class="btn btn-outline-primary mx-2">Reviews</a>
+    </div>
+
+    <!-- Login/User area -->
+    <div class="d-flex align-items-center gap-4 ms-3">
       <ng-container *ngIf="!isLoggedIn">
-        <a routerLink="/auth/login" class="nav-link nav-login text-light fs-4">Log In</a>
+        <a routerLink="/auth/login" class="nav-link nav-login text-black fs-4">Log In</a>
       </ng-container>
-
       <ng-container *ngIf="isLoggedIn">
         <div class="dropdown position-relative">
           <button id="dropdownDefaultButton" (click)="toggleDropdown()"
@@ -20,13 +27,12 @@
                 d="m1 1 4 4 4-4" />
             </svg>
           </button>
-
           <div id="dropdown" class="dropdown-menu custom-dropdown rounded-3 shadow"
             [ngClass]="{'d-none': !isDropdownOpen, 'd-block': isDropdownOpen}">
             <ul class="py-2 fs-6" aria-labelledby="dropdownDefaultButton">
               <li>
-                <a (click)="toggleDropdown()" routerLink="/auth/dashboard"
-                  class="dropdown-item custom-dropdown-item px-4 py-2">Settings</a>
+                <a (click)="toggleDropdown()" routerLink="/product/dashboard"
+                  class="dropdown-item custom-dropdown-item px-4 py-2">Dashboard</a>
               </li>
               <li>
                 <a (click)="toggleDropdown()" routerLink="/auth/profile"
@@ -44,9 +50,9 @@
 </nav>
 
 <nav class="navbar navbar-light custom-secondary-navbar">
-  <div class="container-xxl py-2">
+  <div class="container d-flex justify-content-center">
     <div class="d-flex align-items-center">
-      <ul class="nav fw-medium gap-4 fs-6">
+      <ul class="nav gap-4">
         <!-- <ng-container *ngIf="wizardRole === 'user'">
           <li class="nav-item">
             <a routerLink="/product/orders" class="nav-link custom-nav-link">My Orders</a>
@@ -57,22 +63,22 @@
         </ng-container> -->
         <ng-container *ngIf="wizardRole === WizardRole.Admin">
           <li class="nav-item">
-            <a routerLink="/product/wands" class="nav-link custom-nav-link">Cores</a>
+            <a routerLink="/product/cores" class="nav-link custom-nav-link">Cores</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/auth/wizards" class="nav-link custom-nav-link">Woods</a>
+            <a routerLink="/product/woods" class="nav-link custom-nav-link">Woods</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Wands</a>
+            <a routerLink="/product/wands" class="nav-link custom-nav-link">Wands</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Schools</a>
+            <a routerLink="/product/schools" class="nav-link custom-nav-link">Schools</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Wizards</a>
+            <a routerLink="/auth/wizards" class="nav-link custom-nav-link">Wizards</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/auth/dashboard" class="nav-link custom-nav-link">Orders</a>
+            <a routerLink="/product/orders" class="nav-link custom-nav-link">Orders</a>
           </li>
         </ng-container>
       </ul>

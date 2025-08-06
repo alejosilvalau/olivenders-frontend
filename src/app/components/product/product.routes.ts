@@ -1,7 +1,7 @@
 import {Routes} from '@angular/router';
 import { SchoolManagementComponent } from './school-management/school-management.component.js';
 import { CoreManagementComponent } from './core-management/core-management.component.js';
-import { WoodManagementComponent } from './woods-management/wood-management.component.js';
+import { WoodManagementComponent } from './wood-management/wood-management.component.js';
 import { WandCatalogComponent } from './wand-catalog/wand-catalog.component.js';
 import { PlaceOrderComponent } from './place-order/place-order.component.js';
 import { OrderDashboardComponent } from './order-dashboard/order-dashboard.component.js';
