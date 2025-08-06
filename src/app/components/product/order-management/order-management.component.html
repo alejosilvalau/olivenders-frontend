@@ -38,6 +38,13 @@
     (selectedEntity)="onOrderSelected($event)"
   >
   </app-data-table>
+    <app-pagination
+    [totalRecords]="totalOrders"
+    [currentPage]="currentPage"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </app-pagination>
   <app-modal
     [config]="{
       id: 'editOrder',

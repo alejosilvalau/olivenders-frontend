@@ -9,10 +9,11 @@ import { DataTableComponent, DataTableFormat } from '../../../shared/components/
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { WandService } from '../../../core/services/wand.service.js';
 import { WizardService } from '../../../core/services/wizard.service.js';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
 @Component({
   selector: 'app-order-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, ModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, ModalComponent, PaginationComponent],
   templateUrl: './order-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
@@ -23,6 +24,10 @@ export class OrderManagementComponent implements OnInit {
   selectedOrder: Order | null = null;
   filteredOrders: Order[] = [];
   searchTerm: string = '';
+  totalOrders = 0;
+  currentPage = 1;
+  pageSize = 10;
+
   DataTableFormat = DataTableFormat;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
@@ -54,10 +59,21 @@ export class OrderManagementComponent implements OnInit {
   }
 
   findAllOrders(): void {
-    this.orderService.findAll().subscribe((orderResponse: OrderResponse<Order[]>) => {
+    this.orderService.findAll(this.currentPage, this.pageSize).subscribe((orderResponse: OrderResponse<Order[]>) => {
       this.orders = orderResponse.data!;
       this.filteredOrders = orderResponse.data!;
     });
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.findAllOrders();
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
+    this.findAllOrders();
   }
 
   private searchOrder(term: string): void {
