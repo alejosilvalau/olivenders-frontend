@@ -9,10 +9,11 @@ import { AlertComponent, AlertType } from '../../../shared/components/alert/aler
 import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
 @Component({
   selector: 'app-core-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent, PaginationComponent],
   templateUrl: './core-management.component.html',
   styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
 })
@@ -23,6 +24,9 @@ export class CoreManagementComponent implements OnInit {
   selectedCore: Core | null = null;
   filteredCores: Core[] = [];
   searchTerm: string = '';
+  totalCores = 0;
+  currentPage = 1;
+  pageSize = 10;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
@@ -49,10 +53,22 @@ export class CoreManagementComponent implements OnInit {
   }
 
   findAllCores(): void {
-    this.coreService.findAll().subscribe((coreResponse: CoreResponse<Core[]>) => {
+    this.coreService.findAll(this.currentPage, this.pageSize).subscribe((coreResponse: CoreResponse<Core[]>) => {
       this.cores = coreResponse.data!;
       this.filteredCores = coreResponse.data!;
+      this.totalCores = coreResponse.total || 0;
     });
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.findAllCores();
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
+    this.findAllCores();
   }
 
   private searchCore(term: string): void {
