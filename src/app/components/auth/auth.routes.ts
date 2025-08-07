@@ -8,9 +8,9 @@ import { isLoggedInGuard } from '../../guards/is-logged-in.guard';
 import { onlyAdmin } from '../../guards/only-admin.guard.js';
 
 export const authRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'login', component: LoginComponent, data: { hideLayout: true } },
+  { path: 'register', component: RegisterComponent, data: { hideLayout: true } },
+  { path: 'forgot-password', component: ForgotPasswordComponent, data: { hideLayout: true } },
   { path: 'wizards', component: WizardManagementComponent, canActivate: [onlyAdmin] },
   { path: 'profile', component: ProfileComponent, canActivate: [isLoggedInGuard] },
 ];
