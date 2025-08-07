@@ -9,11 +9,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Wand } from '../../../core/models/wand.interface.js';
 import { Core } from '../../../core/models/core.interface.js';
+import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component.js';
 
 @Component({
   selector: 'app-order-dashboard',
   standalone: true,
-  imports: [ModalComponent, CommonModule, FormsModule, AlertComponent],
+  imports: [ModalComponent, CommonModule, FormsModule, AlertComponent, InfiniteScrollComponent],
   templateUrl: './order-dashboard.component.html',
   styleUrl: './order-dashboard.component.css',
 })
@@ -23,6 +24,12 @@ export class OrderDashboardComponent implements OnInit {
   selectedOrder: Order | null = null;
   reviewText: string = '';
 
+  // Pagination state
+  page = 1;
+  pageSize = 12;
+  loading = false;
+  allLoaded = false;
+
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
   constructor(private orderService: OrderService, private authService: AuthService) { }
@@ -30,16 +37,30 @@ export class OrderDashboardComponent implements OnInit {
   ngOnInit(): void {
     const wizard = this.authService.getCurrentWizard();
     this.wizardId = wizard ? wizard.id : '';
-    console.log('Wizard ID:', this.wizardId);
     if (this.wizardId) {
       this.loadOrders();
     }
   }
 
   loadOrders(): void {
-    this.orderService.findAllByWizard(this.wizardId).subscribe({
-      next: (res) => this.orders = res.data || [],
+    if (this.allLoaded || this.loading) return;
+    this.loading = true;
+    this.orderService.findAllByWizard(this.wizardId, this.page, this.pageSize).subscribe({
+      next: (res) => {
+        const newOrders = res.data || [];
+        if (newOrders.length < this.pageSize) this.allLoaded = true;
+        this.orders = [...this.orders, ...newOrders];
+        this.page++;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
     });
+  }
+
+  onScrollLoadMore() {
+    this.loadOrders();
   }
 
   getWandFromOrder(order: Order): Wand | null {
