@@ -16,7 +16,7 @@
       <ng-container *ngIf="isLoggedIn">
         <div class="dropdown position-relative">
           <button id="dropdownDefaultButton" (click)="toggleDropdown()"
-            class="btn btn-primary rounded-3 px-4 py-2 d-inline-flex align-items-center" type="button">
+            class="rounded-3 px-4 py-2 d-inline-flex align-items-center custom-dropdwon-button" type="button">
             {{ currentWizard?.name + ' ' + currentWizard?.last_name | titlecase}}
             <svg class="ms-3" style="width: 10px; height: 6px;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 10 6">
@@ -38,6 +38,36 @@
               <li>
                 <a (click)="logout()" class="dropdown-item custom-dropdown-item px-4 py-2">Log Out</a>
               </li>
+              <ng-container *ngIf="isMobile && wizardRole === WizardRole.Admin">
+                <li class="dropdown-divider custom-dropdown-divider"></li>
+                <li class="dropdown-header custom-dropdown-header">
+                  Management
+                </li>
+                <li>
+                  <a (click)="toggleDropdown()" routerLink="/product/cores"
+                    class="dropdown-item custom-dropdown-item px-4 py-2">Cores</a>
+                </li>
+                <li>
+                  <a (click)="toggleDropdown()" routerLink="/product/woods"
+                    class="dropdown-item custom-dropdown-item px-4 py-2">Woods</a>
+                </li>
+                <li>
+                  <a (click)="toggleDropdown()" routerLink="/product/wands"
+                    class="dropdown-item custom-dropdown-item px-4 py-2">Wands</a>
+                </li>
+                <li>
+                  <a (click)="toggleDropdown()" routerLink="/product/schools"
+                    class="dropdown-item custom-dropdown-item px-4 py-2">Schools</a>
+                </li>
+                <li>
+                  <a (click)="toggleDropdown()" routerLink="/auth/wizards"
+                    class="dropdown-item custom-dropdown-item px-4 py-2">Wizards</a>
+                </li>
+                <li>
+                  <a (click)="toggleDropdown()" routerLink="/product/orders"
+                    class="dropdown-item custom-dropdown-item px-4 py-2">Orders</a>
+                </li>
+              </ng-container>
             </ul>
           </div>
         </div>
@@ -49,7 +79,7 @@
   <div class="container d-flex justify-content-center">
     <div class="d-flex align-items-center">
       <ul class="nav gap-4">
-        <ng-container *ngIf="wizardRole === WizardRole.Admin">
+        <ng-container *ngIf="wizardRole === WizardRole.Admin && !isMobile">
           <li class="nav-item">
             <a routerLink="/product/cores" class="nav-link custom-nav-link">Cores</a>
           </li>

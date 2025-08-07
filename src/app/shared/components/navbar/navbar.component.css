@@ -1,3 +1,8 @@
+.navbar {
+  font-family: 'AvenirLTPro', 'Avenir LT Pro', Arial, sans-serif;
+  font-weight: 400;
+}
+
 .relative {
   position: relative;
 }
@@ -35,19 +40,38 @@
 }
 
 .custom-dropdown {
-  width: 11rem;
-  z-index: 10;
-  background-color: white;
+  min-width: 160px;
+  width: auto;
+  right: 0;
+  left: auto;
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+  background: #ededed;
   border: none;
+  position: absolute;
 }
 
 .custom-dropdown-item {
-  background-color: #f8f9fa;
-  color: #212529;
+  background: none;
+  color: #000000;
+  border: none;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-family: 'AvenirLTPro', 'Avenir LT Pro', Arial, sans-serif;
+  font-weight: 400;
+  display: block;
+  text-align: left;
 }
 
 .custom-dropdown-item:hover {
-  background-color: #e9ecef;
+  background-color: #f2f2f2;
+  color: #111;
+}
+
+#dropdown ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
 }
 
 .custom-nav-link {
@@ -94,8 +118,7 @@
 }
 
 .nav-middle {
-  font-family: 'AvenirLTPro', 'Avenir LT Pro', Arial, sans-serif;
-  font-weight: 400;
+
   font-size: 16px;
   color: #111;
   background: none;
@@ -168,6 +191,32 @@
   opacity: 1;
 }
 
+.custom-dropdwon-button {
+  background-color: #aa8855;
+  border: none;
+  color: #fff;
+}
+
+.custom-dropdwon-button:hover {
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: none;
+  border: 2px solid #aa8855;
+}
+
+.custom-dropdown-divider {
+  margin: 8px 0;
+  border-top: 1px solid #aa8855;
+}
+
+.custom-dropdown-header {
+  padding: 8px 24px;
+  font-weight: 600;
+  color: #888;
+  font-size: 14px;
+}
+
+
 @media (max-width: 767px) {
   .custom-navbar-layout {
     flex-direction: column;
@@ -187,7 +236,21 @@
 
   .navbar-login {
     justify-content: flex-end;
-    margin-right: 10px;
     margin-top: 10px;
+    margin-right: 10px
+  }
+
+  .navbar-center {
+    margin: 0;
+    justify-content: flex-start;
+  }
+
+  .custom-dropdown {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+    min-width: 200px;
+    width: 90vw;
+    top: 110%;
   }
 }
