@@ -2,9 +2,15 @@
   display: block;
 }
 
-button > img {
+button>img {
   width: 30px;
   height: 30px;
+}
+
+.custom-table-header th {
+  background-color: #000000;
+  color: #ffffff;
+  font-weight: normal;
 }
 
 .vertical-buttons {
@@ -17,6 +23,32 @@ button > img {
   flex-grow: inherit;
   height: 100%;
 }
+
+.custom-edit-button {
+  background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.custom-edit-button:hover {
+  background-color: var(--secondary-color);
+}
+
+.custom-delete-button {
+  background-color: var(--secondary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.custom-delete-button:hover {
+  background-color: black;
+  border: 2px solid black;
+}
+
+.custom-delete-button:hover img {
+  filter: brightness(0) invert(1);
+  -webkit-filter: brightness(0) invert(1);
+}
+
+
 
 @media (max-width: 768px) {
   .table thead {
@@ -47,6 +79,7 @@ button > img {
     border-bottom: 1px solid #f0f0f0;
     text-align: left;
   }
+
   .table td:last-child {
     border-bottom: none;
   }
@@ -56,7 +89,7 @@ button > img {
     display: block;
     font-weight: bold;
     margin-bottom: 0.25rem;
-    color: #495057;
+
   }
 
   .table thead tr {

@@ -6,7 +6,7 @@ import { Core, CoreResponse } from '../../../core/models/core.interface';
 import { Observable } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
-import { DataTableComponent } from '../../../shared/components/data-table/data-table.component.js';
+import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
@@ -27,6 +27,7 @@ export class CoreManagementComponent implements OnInit {
   totalCores = 0;
   currentPage = 1;
   pageSize = 10;
+  DataTableFormat = DataTableFormat;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
@@ -117,7 +118,7 @@ export class CoreManagementComponent implements OnInit {
         }
       });
     } else {
-      this.alertComponent.showAlert('Please complete all required fields.', AlertType.Error);
+      this.alertComponent.showAlert('Please complete all required fields', AlertType.Error);
     }
   }
 
@@ -128,12 +129,13 @@ export class CoreManagementComponent implements OnInit {
         next: (response: CoreResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllCores();
+          this.coreForm.reset();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          this.coreForm.reset();
         }
       });
-      this.coreForm.reset();
     }
   }
 
@@ -143,12 +145,13 @@ export class CoreManagementComponent implements OnInit {
         next: (response: CoreResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllCores();
+          this.coreForm.reset();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          this.coreForm.reset();
         }
       });
-      this.coreForm.reset();
     }
   }
 }

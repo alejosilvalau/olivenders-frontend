@@ -99,6 +99,11 @@
   font-style: normal;
 }
 
+:root {
+  --primary-color: #aa8855;
+  --secondary-color: #f5f5f5;
+}
+
 html,
 body {
   height: 100%;
@@ -109,11 +114,11 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'AvenirLTPro', Arial, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f5f5f5;
+  background-color: var(--secondary-color);
 }
 
 app-root {

@@ -8,10 +8,10 @@
   </div>
   <app-data-table [columns]="[
       { key: 'id', label: 'ID' },
-      { key: 'name', label: 'Name' },
+      { key: 'name', format: DataTableFormat.TitleCase, label: 'Name' },
       { key: 'description', label: 'Description' },
-      { key: 'price', label: 'Price' }
-    ]" [data]="filteredCores" [emptyMessage]="'There are no cores available.'" [editModalTarget]="'#editCore'"
+      { key: 'price', format: DataTableFormat.Currency, label: 'Price' }
+    ]" [data]="filteredCores" [emptyMessage]="'There are no cores available'" [editModalTarget]="'#editCore'"
     [removeModalTarget]="'#removeCore'" (selectedEntity)="onCoreSelected($event)">
   </app-data-table>
     <app-pagination

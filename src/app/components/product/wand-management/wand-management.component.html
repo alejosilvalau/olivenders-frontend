@@ -22,7 +22,7 @@
   </div>
   <app-data-table
     [columns]="[
-      { key: 'id' ,label: 'ID' },
+      { key: 'id', label: 'ID' },
       { key: 'name', format: DataTableFormat.TitleCase, label: 'Name' },
       { key: 'image', label: 'Image' },
       { key: 'length_inches', label: 'Lenght' },
@@ -88,7 +88,7 @@
             required
           ></textarea>
           <label for="image">Image</label>
-          <div
+          <!-- <div
             class="image-drop-area border border-2 rounded d-flex flex-column align-items-center justify-content-center py-4 mb-3 pointer"
             (drop)="onImageDrop($event)"
             (dragover)="onImageDragOver($event)"
@@ -105,7 +105,7 @@
             />
             <button type="button" class="btn btn-outline-primary btn-sm" (click)="imageInput.click()">Choose Image</button>
             <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" class="img-thumbnail mt-3" style="max-width: 120px;" />
-          </div>
+          </div> -->
           <label for="profit">Profit</label>
           <input
             type="number"
@@ -168,7 +168,7 @@
             required
           ></textarea>
           <label for="image">Image</label>
-          <div
+          <!-- <div
             class="image-drop-area border border-2 rounded d-flex flex-column align-items-center justify-content-center py-4 mb-3 pointer"
             (drop)="onImageDrop($event)"
             (dragover)="onImageDragOver($event)"
@@ -185,7 +185,7 @@
             />
             <button type="button" class="btn btn-outline-primary btn-sm" (click)="imageInput.click()">Choose Image</button>
             <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" class="img-thumbnail mt-3" style="max-width: 120px;" />
-          </div>
+          </div> -->
           <label for="profit">Profit</label>
           <input
             type="number"
