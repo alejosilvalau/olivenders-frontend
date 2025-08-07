@@ -193,7 +193,7 @@
 
 .custom-dropdwon-button {
   background-color: #aa8855;
-  border: none;
+  border: 2px solid #aa8855;
   color: #fff;
 }
 

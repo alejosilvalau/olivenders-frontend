@@ -85,6 +85,20 @@
   font-style: oblique;
 }
 
+@font-face {
+  font-family: 'NightGeorgiaDemo';
+  src: url('assets/fonts/night-georgia-demo.regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'WizardryNight';
+  src: url('assets/fonts/wizardry-night.regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body {
   height: 100%;
@@ -99,7 +113,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #ededed;
+  background-color: #f5f5f5;
 }
 
 app-root {
