@@ -24,6 +24,15 @@ export class AuthService {
   public currentWizard$ = this.currentWizardSubject.asObservable();
 
   constructor(private router: Router, private wizardService: WizardService) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded: any = jwtDecode(token);
+      if (!decoded.exp || Date.now() >= decoded.exp * 1000) {
+        this.logout();
+      } else {
+        this.setAutoLogout(token);
+      }
+    }
   }
 
   getCurrentWizard(): Wizard | null {
