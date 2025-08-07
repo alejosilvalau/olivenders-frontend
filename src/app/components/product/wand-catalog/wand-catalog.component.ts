@@ -8,11 +8,12 @@ import { FilterComponent } from '../../../shared/components/filter/filter.compon
 import { HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button.js';
+import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component.js';
 
 @Component({
   selector: 'app-wand-catalog',
   standalone: true,
-  imports: [CommonModule, RouterLink, FilterComponent, WandDetailsButtonComponent],
+  imports: [CommonModule, RouterLink, FilterComponent, WandDetailsButtonComponent, InfiniteScrollComponent],
   templateUrl: './wand-catalog.component.html',
   styleUrl: './wand-catalog.component.css',
 })
@@ -23,6 +24,12 @@ export class WandCatalogComponent {
   showFilter = false;
   isMobile = false;
   selectedWands: string | null = null;
+
+  // Pagination state
+  page = 1;
+  pageSize = 12;
+  loading = false;
+  allLoaded = false;
 
   constructor(
     private wandService: WandService,
@@ -36,12 +43,24 @@ export class WandCatalogComponent {
   }
 
   loadWands() {
-    this.wandService.findAll().subscribe({
+    if (this.allLoaded || this.loading) return;
+    this.loading = true;
+    this.wandService.findAll(this.page, this.pageSize).subscribe({
       next: (res) => {
-        this.wands = res.data!.filter((wand) => wand?.status == WandStatus.Available);
-        this.filteredWands = this.wands;
+        const newWands = (res.data || []).filter(wand => wand?.status == WandStatus.Available);
+        if (newWands.length < this.pageSize) this.allLoaded = true;
+        this.filteredWands = [...this.filteredWands, ...newWands];
+        this.page++;
+        this.loading = false;
       },
+      error: () => {
+        this.loading = false;
+      }
     });
+  }
+
+  onScrollLoadMore() {
+    this.loadWands();
   }
 
   isWandAvailable(wand: Wand): boolean {
@@ -53,28 +72,32 @@ export class WandCatalogComponent {
   }
 
   onFilterChanged(filters: any): void {
-    this.filteredWands = this.wands.filter((wand) => {
+    const hasFilters = Object.values(filters).some(filter => filter !== null && filter !== '' && filter !== undefined);
 
+    if (!hasFilters) {
+      this.page = 1;
+      this.allLoaded = false;
+      this.filteredWands = [];
+      this.loadWands();
+      return;
+    }
+
+    this.filteredWands = this.wands.filter((wand) => {
       if (filters.wood && typeof wand.wood === 'object') {
         if (wand.wood.name !== filters.wood) return false;
       }
-
       if (filters.core && typeof wand.core === 'object') {
         if (wand.core.name !== filters.core) return false;
       }
-
       if (filters.minPrice && wand.total_price < filters.minPrice) {
         return false;
       }
-
       if (filters.maxPrice && wand.total_price > filters.maxPrice) {
         return false;
       }
-
       if (filters.minlengthInches && wand.length_inches < filters.minlengthInches) {
         return false;
       }
-
       if (filters.maxlengthInches && wand.length_inches > filters.maxlengthInches) {
         return false;
       }
@@ -86,28 +109,43 @@ export class WandCatalogComponent {
 
   private fallbackBackendSearchIfEmpty(filters: any): void {
     if (this.filteredWands.length === 0) {
+      this.page = 1;
+      this.allLoaded = false;
+      this.loading = true;
+
       if (filters.wood) {
-        this.wandService.findAllByWood(filters.wood).subscribe({
+        this.wandService.findAllByWood(filters.wood, this.page, this.pageSize).subscribe({
           next: (res) => {
-            this.filteredWands = res.data || [];
+            const newWands = res.data || [];
+            this.filteredWands = newWands;
+            if (newWands.length < this.pageSize) this.allLoaded = true;
+            this.page++;
+            this.loading = false;
           },
           error: () => {
             this.filteredWands = [];
+            this.loading = false;
           }
         });
         return;
       }
       if (filters.core) {
-        this.wandService.findAllByCore(filters.core).subscribe({
+        this.wandService.findAllByCore(filters.core, this.page, this.pageSize).subscribe({
           next: (res) => {
-            this.filteredWands = res.data || [];
+            const newWands = res.data || [];
+            this.filteredWands = newWands;
+            if (newWands.length < this.pageSize) this.allLoaded = true;
+            this.page++;
+            this.loading = false;
           },
           error: () => {
             this.filteredWands = [];
+            this.loading = false;
           }
         });
         return;
       }
+      this.loading = false;
     }
   }
 
