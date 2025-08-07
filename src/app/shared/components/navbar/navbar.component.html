@@ -1,20 +1,17 @@
 <nav class="navbar navbar-light custom-navbar">
   <div class="container d-flex align-items-center">
-    <!-- Logo -->
-    <a href="/" class="navbar-brand shadow-none me-3">
-      <img src="logo-black-transparent.png" class="logo" alt="logo" />
-    </a>
-
-    <!-- Centered buttons -->
-    <div class="flex-grow-1 d-flex justify-content-center">
-      <a routerLink="./" class="btn btn-outline-primary mx-2">Store</a>
-      <a routerLink="product/reviews" class="btn btn-outline-primary mx-2">Reviews</a>
+    <div class="navbar-section navbar-logo">
+      <a href="/" class="navbar-brand shadow-none me-3 ms-3">
+        <img src="logo-black-transparent.png" class="logo" alt="logo" />
+      </a>
     </div>
-
-    <!-- Login/User area -->
-    <div class="d-flex align-items-center gap-4 ms-3">
+    <div class="navbar-section navbar-center">
+      <a routerLink="./" class="nav-middle">Store</a>
+      <a routerLink="product/reviews" class="nav-middle">Reviews</a>
+    </div>
+    <div class="navbar-section navbar-login">
       <ng-container *ngIf="!isLoggedIn">
-        <a routerLink="/auth/login" class="nav-link nav-login text-black fs-4">Log In</a>
+        <a routerLink="/auth/login" class="nav-link nav-login text-black fs-6 text-decoration-underline">Log In</a>
       </ng-container>
       <ng-container *ngIf="isLoggedIn">
         <div class="dropdown position-relative">
@@ -48,19 +45,10 @@
     </div>
   </div>
 </nav>
-
 <nav class="navbar navbar-light custom-secondary-navbar">
   <div class="container d-flex justify-content-center">
     <div class="d-flex align-items-center">
       <ul class="nav gap-4">
-        <!-- <ng-container *ngIf="wizardRole === 'user'">
-          <li class="nav-item">
-            <a routerLink="/product/orders" class="nav-link custom-nav-link">My Orders</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/product/answers" class="nav-link custom-nav-link">My Quizzes</a>
-          </li>
-        </ng-container> -->
         <ng-container *ngIf="wizardRole === WizardRole.Admin">
           <li class="nav-item">
             <a routerLink="/product/cores" class="nav-link custom-nav-link">Cores</a>
