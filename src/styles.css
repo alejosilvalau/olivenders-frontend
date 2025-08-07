@@ -1,6 +1,89 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProBlack.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProBlackOblique.otf') format('opentype');
+  font-weight: 900;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProHeavy.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProHeavyOblique.otf') format('opentype');
+  font-weight: 800;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProMedium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProMediumOblique.otf') format('opentype');
+  font-weight: 500;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProLight.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProLightOblique.otf') format('opentype');
+  font-weight: 300;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProOblique.otf') format('opentype');
+  font-weight: 400;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProRoman.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProBook.otf') format('opentype');
+  font-weight: 350;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AvenirLTPro';
+  src: url('assets/fonts/AvenirLTProBookOblique.otf') format('opentype');
+  font-weight: 350;
+  font-style: oblique;
+}
 
 html,
 body {
