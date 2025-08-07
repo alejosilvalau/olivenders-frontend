@@ -1,7 +1,7 @@
 <div class="container py-4">
   <app-alert></app-alert>
   <h2 class="mb-4">Order Dashboard</h2>
-  <div *ngIf="orders?.length; else noOrders">
+  <div *ngIf="(orders?.length ?? 0) > 0; else noOrders">
     <div class="row g-4">
       <app-infinite-scroll (scrolled)="onScrollLoadMore()" [disabled]="loading">
         <div class="col-12" *ngFor="let order of orders">
@@ -77,14 +77,14 @@
 
           </div>
         </div>
-        <div *ngIf="loading" class="text-center py-3">
-          <span class="spinner-border"></span>
-        </div>
       </app-infinite-scroll>
     </div>
   </div>
+  <div *ngIf="loading" class="text-center py-3">
+    <span class="spinner-border"></span>
+  </div>
   <ng-template #noOrders>
-    <div class="alert alert-info">No orders found.</div>
+    <div *ngIf="!loading" class="alert alert-info">No orders found.</div>
   </ng-template>
   <app-modal
     [config]="{

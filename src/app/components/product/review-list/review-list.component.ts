@@ -5,6 +5,7 @@ import { Order } from '../../../core/models/order.interface';
 import { Wand } from '../../../core/models/wand.interface';
 import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button';
 import { CommonModule } from '@angular/common';
+import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component.js';
 
 interface OrderReview extends Order {
   rating: number;
@@ -14,10 +15,16 @@ interface OrderReview extends Order {
   standalone: true,
   templateUrl: './review-list.component.html',
   styleUrls: ['./review-list.component.css'],
-  imports: [CommonModule, WandDetailsButtonComponent]
+  imports: [CommonModule, WandDetailsButtonComponent, InfiniteScrollComponent]
 })
 export class ReviewListComponent implements OnInit {
   ordersWithReviews: OrderReview[] = [];
+
+  // Pagination state
+  page = 1;
+  pageSize = 12;
+  loading = false;
+  allLoaded = false;
 
   ngOnInit(): void {
     this.loadReviews();
@@ -40,15 +47,32 @@ export class ReviewListComponent implements OnInit {
   }
 
   loadReviews(): void {
-    this.orderService.findAll().subscribe((res: any) => {
-      this.ordersWithReviews = (res.data || []).filter((order: Order) => !!order.review).map((order: Order) => ({
-        ...order,
-        rating: this.getRandomRating()
-      }));;
+    if (this.allLoaded || this.loading) return;
+    this.loading = true;
+    this.orderService.findAll(this.page, this.pageSize).subscribe({
+      next: (res) => {
+        const newOrders = (res.data || [])
+          .filter((order: Order) => !!order.review)
+          .map((order: Order) => ({
+            ...order,
+            rating: this.getRandomRating()
+          }));
+        if (newOrders.length < this.pageSize) this.allLoaded = true;
+        this.ordersWithReviews = [...this.ordersWithReviews, ...newOrders];
+        this.page++;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
     });
   }
 
   getRandomRating(): number {
     return Math.floor(Math.random() * 2) + 4; // 4 or 5
+  }
+
+  onScrollLoadMore() {
+    this.loadReviews();
   }
 }
