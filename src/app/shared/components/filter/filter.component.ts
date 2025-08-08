@@ -27,10 +27,10 @@ export class FilterComponent implements OnInit {
   private readonly defaultFilterFormControls = {
     wood: '',
     core: '',
-    minPrice: 0,
-    maxPrice: 0,
-    minlengthInches: 0,
-    maxLengthInches: 0,
+    minPrice: null,
+    maxPrice: null,
+    minlengthInches: null,
+    maxLengthInches: null,
   }
 
   constructor(

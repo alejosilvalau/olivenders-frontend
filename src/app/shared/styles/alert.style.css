@@ -5,6 +5,13 @@
   border: var(--form-border);
 }
 
+.custom-swal-title {
+  font-family: 'NightGeorgiaDemo', Arial, sans-serif;
+  font-size: 2.5rem;
+  font-weight: normal;
+  color: black;
+}
+
 .custom-swal-confirm {
   background-color: var(--primary-color);
   color: var(--secondary-color);
