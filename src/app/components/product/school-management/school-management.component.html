@@ -1,16 +1,17 @@
 <div class="container my-4">
-  <app-alert></app-alert>
+
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
     <h2 class="mb-3 mb-md-0">SCHOOLS MANAGEMENT</h2>
     <app-searcher [data]="schools" [filterAttributes]="['name', 'id', 'email']" (filteredData)="onSearch($event)"
       (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
     <app-add-button [modalTarget]="'#addSchool'" [buttonText]="'Add School'" />
   </div>
+  <app-alert></app-alert>
   <app-data-table [columns]="[
       { key: 'id', label: 'ID' },
-      { key: 'name', label: 'Name' },
+      { key: 'name', format: DataTableFormat.TitleCase, label: 'Name' },
       { key: 'email', label: 'Email' },
-      { key: 'address', label: 'Address' },
+      { key: 'address', format: DataTableFormat.TitleCase, label: 'Address' },
       { key: 'phone', label: 'Phone' }
     ]" [data]="filteredSchools" [emptyMessage]="'There are no schools available.'" [editModalTarget]="'#editSchool'"
     [removeModalTarget]="'#removeSchool'" (selectedEntity)="onSchoolSelected($event)">
@@ -72,8 +73,7 @@
     }" (onSubmit)="removeSchool()" (onCancel)="schoolForm.reset()">
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to remove the school?</p>
-        <p><strong>Name:</strong> {{ selectedSchool?.name | titlecase }}</p>
+        <p>Are you sure that you want to remove <strong>{{ selectedSchool?.name | titlecase }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>
