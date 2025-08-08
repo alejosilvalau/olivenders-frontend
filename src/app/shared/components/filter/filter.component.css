@@ -28,10 +28,15 @@
   gap: 1rem;
 }
 
+@media (max-width: 1080px) {
+  .filter-form {
+    max-width: 100%;
+    padding: 0.8rem;
+  }
 
-@media (max-width: 992px) {
   .grid-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }
 

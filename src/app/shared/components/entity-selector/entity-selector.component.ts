@@ -16,7 +16,7 @@ export class EntitySelectorComponent implements OnInit {
   @Input() label: string = 'Entity';
   @Input() placeholder: string = 'Search by name or ID';
   @Input() displayField: string = 'name';
-  @Input() pageSize: number = 100;
+  @Input() pageSize: number = Number.MAX_SAFE_INTEGER;
 
   @Output() entitySelected = new EventEmitter<any>();
   @ViewChild('selectorRoot', { static: true }) selectorRoot!: ElementRef;
@@ -45,7 +45,8 @@ export class EntitySelectorComponent implements OnInit {
     const term = (event.target as HTMLInputElement).value.trim();
     this.selectedEntityName = term;
     if (!term) {
-      this.service.findAll(1, this.pageSize).subscribe((res: any) => {
+      const page = 1;
+      this.service.findAll(page, this.pageSize).subscribe((res: any) => {
         this.filteredEntities = res.data || [];
         this.showDropdown = true;
       });

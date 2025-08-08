@@ -51,12 +51,19 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reloadProfile();
+    const page = 1;
+    this.schoolService.findAll(page, Number.MAX_SAFE_INTEGER).subscribe(() => {
+      this.reloadProfile();
+    });
   }
 
   reloadProfile(): void {
     this.wizard = this.authService.getCurrentWizard();
-    this.profileForm.patchValue({ ...this.wizard, password: '' });
+    this.profileForm.patchValue({
+      ...this.wizard,
+      school: typeof this.wizard!.school === 'object' ? this.wizard!.school.id : this.wizard!.school,
+      password: ''
+    });
     this.changePasswordForm.reset();
   }
 
