@@ -11,7 +11,7 @@
   margin: 2rem auto;
   padding: 1.5rem;
   background-color: white;
-  border: var(--form-border);
+  border: var(--form-border-focus);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   font-family: 'AvenirLTPro', Arial, sans-serif;
@@ -140,10 +140,5 @@ button {
 }
 
 input::placeholder {
-  font-style: italic;
-}
-
-.placeholder-option {
-  color: #aaa !important;
   font-style: italic;
 }

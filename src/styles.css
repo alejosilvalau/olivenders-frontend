@@ -112,6 +112,7 @@ html,
 body {
   height: 100%;
   overflow-x: hidden;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -119,7 +120,6 @@ body {
 body {
   margin: 0;
   font-family: 'AvenirLTPro', Arial, sans-serif;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: var(--secondary-color);

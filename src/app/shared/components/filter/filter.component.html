@@ -2,7 +2,7 @@
   <div class="grid-container">
     <div class="form-group">
       <label for="wood">Wood Type:</label>
-      <select id="wood" formControlName="wood" [ngClass]="{'placeholder-option': filterForm.get('wood')?.value === ''}">
+      <select id="wood" formControlName="wood">
         <option value="" disabled hidden>Select a Type of Wood</option>
         <option *ngFor="let wood of woods.data" [value]="wood.name">
           {{ wood.name | titlecase}}
@@ -22,7 +22,7 @@
 
     <div class="form-group">
       <label for="core">Core Type:</label>
-      <select id="core" formControlName="core" [ngClass]="{'placeholder-option': filterForm.get('core')?.value === ''}">
+      <select id="core" formControlName="core">
         <option value="" disabled hidden class="placeholder-option">Select a Type of Core</option>
         <option *ngFor="let core of cores.data" [value]="core.name">
           {{ core.name | titlecase}}
