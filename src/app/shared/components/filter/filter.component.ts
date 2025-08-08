@@ -45,19 +45,13 @@ export class FilterComponent implements OnInit {
     this.woodService.findAll(1, Number.MAX_SAFE_INTEGER).subscribe({
       next: (woods: WoodResponse<Wood[]>) => {
         this.woods = woods;
-      },
-      error: (err) => {
-        console.error('Error fetching woods: ', err);
-      },
+      }
     });
 
     this.coreService.findAll(1, Number.MAX_SAFE_INTEGER).subscribe({
       next: (cores: CoreResponse<Core[]>) => {
         this.cores = cores;
-      },
-      error: (err) => {
-        console.error('Error fetching cores: ', err);
-      },
+      }
     });
   }
 
