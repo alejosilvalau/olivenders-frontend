@@ -1,3 +1,28 @@
 .modal-footer {
   margin-top: 8px;
 }
+
+.custom-submit-button {
+  background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  color: white;
+}
+
+.custom-submit-button:hover,
+.custom-submit-button:focus {
+  background-color: white;
+  color: black;
+}
+
+.custom-cancel-button {
+  background-color: white;
+  border: var(--form-border-focus);
+  color: black;
+}
+
+.custom-cancel-button:hover,
+.custom-cancel-button:focus {
+  background-color: black;
+  color: white;
+  border-color: black;
+}

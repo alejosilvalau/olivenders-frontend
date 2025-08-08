@@ -1,4 +1,4 @@
-<div class="modal fade" [id]="config.id" tabindex="-1" [attr.aria-labelledby]="config.id + 'Label'" aria-hidden="true">
+<div class="modal fade " [id]="config.id" tabindex="-1" [attr.aria-labelledby]="config.id + 'Label'" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -9,9 +9,9 @@
         <ng-container *ngTemplateOutlet="modalContentTemplate"></ng-container>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="cancel()"> {{ config.cancelButtonText}}
+        <button type="button" class="btn custom-cancel-button" data-bs-dismiss="modal" (click)="cancel()"> {{ config.cancelButtonText}}
         </button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="submit()"> {{ config.submitButtonText }}
+        <button type="button" class="btn custom-submit-button" data-bs-dismiss="modal" (click)="submit()"> {{ config.submitButtonText }}
         </button>
       </div>
     </div>

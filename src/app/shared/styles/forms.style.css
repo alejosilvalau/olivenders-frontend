@@ -24,10 +24,11 @@ label {
 }
 
 .input input,
-.input .form-control {
+.input .form-control,
+.form-control {
   width: 100%;
   padding: 12px 15px;
-  border: 2px solid #00ff26;
+  border: var(--form-border);
   border-radius: 8px;
   box-sizing: border-box;
   font-size: 16px;
@@ -35,9 +36,13 @@ label {
 }
 
 .input input:focus,
-.input .form-control:focus {
-  border-color: #ff0000;
-  box-shadow: 0 0 0 4px rgba(149, 0, 32, 0.15);
+.input .form-control:focus,
+.input input:hover,
+.input .form-control:hover,
+.form-control:focus,
+.form-control:hover {
+  border-color: var(--primary-color);
+  box-shadow: none;
   outline: none;
 }
 
