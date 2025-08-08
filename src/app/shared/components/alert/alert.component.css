@@ -1,5 +1,6 @@
 .alert {
   position: relative;
+  font-family: 'AvenirLTPro', Arial, sans-serif;
 }
 
 .btn-close {
