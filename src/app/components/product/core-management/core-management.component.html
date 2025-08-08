@@ -69,8 +69,7 @@
     }" (onSubmit)="removeCore()" (onCancel)="coreForm.reset()">
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to remove the core?</p>
-        <p><strong>Name:</strong> {{ selectedCore?.name | titlecase }}</p>
+        <p>Are you sure that you want to remove <strong>{{ selectedCore?.name | titlecase }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>

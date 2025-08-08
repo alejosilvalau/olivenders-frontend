@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OrderService } from '../../../core/services/order.service';
-import { Order, OrderResponse } from '../../../core/models/order.interface';
+import { Order, OrderResponse, OrderStatus } from '../../../core/models/order.interface';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
@@ -100,7 +100,7 @@ export class OrderManagementComponent implements OnInit {
                   search$ = this.orderService.findAllByWizard(wizardResponse.data!.id);
                 }
                 else {
-                  this.alertComponent.showAlert('No order found with this search.', AlertType.Info);
+                  this.alertComponent.showAlert('No order found with this search', AlertType.Info);
                   this.filteredOrders = [];
                   return;
                 }
@@ -140,6 +140,9 @@ export class OrderManagementComponent implements OnInit {
   }
 
   editOrder(): void {
+    if (this.isOrderDispatched(this.selectedOrder!)) {
+      return;
+    }
     if (this.selectedOrder
       && typeof this.selectedOrder?.wand === 'object'
       && typeof this.selectedOrder.wizard === 'object'
@@ -175,6 +178,13 @@ export class OrderManagementComponent implements OnInit {
         }
       });
     }
+  }
+
+  isOrderDispatched(order: Order): boolean {
+    if (order.status == OrderStatus.Pending || order.status == OrderStatus.Paid) {
+      return false;
+    }
+    return true;
   }
 
   removeOrder(): void {
