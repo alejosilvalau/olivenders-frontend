@@ -1,0 +1,24 @@
+.custom-swal-popup {
+  font-family: 'AvenirLTPro', Arial, sans-serif;
+  background-color: var(--secondary-color);
+  color: black;
+  border: var(--form-border);
+}
+
+.custom-swal-confirm {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: var(--form-border-focus);
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+
+.custom-swal-confirm:hover,
+.custom-swal-confirm:focus {
+  background-color: white;
+  border: var(--form-border-focus);
+  color: black
+}
