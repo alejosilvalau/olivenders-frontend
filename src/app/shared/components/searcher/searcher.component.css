@@ -16,14 +16,14 @@
   padding: 1rem 1rem 1rem 3rem;
   font-size: 0.875rem;
   color: #000000;
-  border: 2px solid #d1d5db;
+  border: var(--form-border);
   border-radius: 0.5rem;
   background-color: #f9fafb;
 }
 
 .searcher-input:focus,
 .searcher-input:hover {
-  border: 2px solid var(--primary-color);
+  border: var(--form-border-focus);
   box-shadow: none;
   outline: none;
 }

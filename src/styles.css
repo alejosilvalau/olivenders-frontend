@@ -102,6 +102,10 @@
 :root {
   --primary-color: #aa8855;
   --secondary-color: #f5f5f5;
+  --form-hover-color: #d1d5db;
+
+  --form-border: 2px solid var(--form-hover-color);
+  --form-border-focus: 2px solid var(--primary-color);
 }
 
 html,

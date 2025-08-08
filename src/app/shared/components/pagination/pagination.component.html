@@ -7,7 +7,7 @@
       <select
         [(ngModel)]="pageSize"
         (change)="onPageSizeChange($event)"
-        class="form-select d-inline-block w-auto mx-1"
+        class="form-select d-inline-block w-auto mx-1 mb-4 custom-form-select"
       >
         <option *ngFor="let size of pageSizeOptions" [value]="size">
           {{ size }}
@@ -17,7 +17,7 @@
     </label>
   </div>
   <nav>
-    <ul class="pagination mb-0">
+    <ul class="pagination mb-0 custom-pagination">
       <li class="page-item" [class.disabled]="currentPage === 1">
         <button
           class="page-link"
@@ -28,7 +28,7 @@
         </button>
       </li>
       <li
-        class="page-item"
+        class="page-item custom-current-item"
         *ngFor="let page of pages"
         [class.active]="page === currentPage"
       >
