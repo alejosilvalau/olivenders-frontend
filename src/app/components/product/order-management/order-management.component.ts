@@ -30,6 +30,13 @@ export class OrderManagementComponent implements OnInit {
 
   DataTableFormat = DataTableFormat;
 
+  editOrderModalConfig = {
+    id: 'editOrder',
+    title: 'Edit Order',
+    submitButtonText: 'Save Changes',
+    cancelButtonText: 'Cancel'
+  };
+
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
   constructor(
@@ -56,6 +63,7 @@ export class OrderManagementComponent implements OnInit {
     if (order) {
       this.orderForm.patchValue({ ...order });
     }
+    this.updateEditOrderModalConfig();
   }
 
   findAllOrders(): void {
@@ -137,6 +145,12 @@ export class OrderManagementComponent implements OnInit {
       return;
     }
     this.searchOrder(this.searchTerm);
+  }
+
+  updateEditOrderModalConfig() {
+    this.editOrderModalConfig.submitButtonText = this.isOrderDispatched(this.selectedOrder!)
+      ? 'Return'
+      : 'Save Changes';
   }
 
   editOrder(): void {

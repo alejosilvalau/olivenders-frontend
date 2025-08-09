@@ -27,6 +27,7 @@
       { key: 'wand', subKey: 'total_price', format: DataTableFormat.Currency, label: 'Price' },
       { key: 'wand', subKey: 'profit', format: DataTableFormat.Currency, label: 'Profit' },
       { key: 'tracking_id', label: 'Tracking ID' },
+      { key: 'created_at', format: DataTableFormat.Date, label: 'Date' },
       { key: 'status', format: DataTableFormat.TitleCase, label: 'status' },
       { key: 'wizard', subKey: 'username', format: DataTableFormat.TitleCase, label: 'Username', },
       { key: 'wand', subKey: 'name', format: DataTableFormat.TitleCase, label: 'Name' }
@@ -46,12 +47,7 @@
     (pageSizeChange)="onPageSizeChange($event)">
   </app-pagination>
   <app-modal
-    [config]="{
-      id: 'editOrder',
-      title: 'Edit Order',
-      submitButtonText: 'Save Changes',
-      cancelButtonText: 'Cancel'
-    }"
+    [config]="editOrderModalConfig"
     (onSubmit)="editOrder()"
     (onCancel)="orderForm.reset()"
   >
