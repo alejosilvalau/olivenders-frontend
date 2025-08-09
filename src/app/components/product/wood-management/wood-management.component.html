@@ -1,18 +1,18 @@
 <div class="container my-4">
-  <app-alert></app-alert>
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
     <h2 class="mb-3 mb-md-0">WOODS MANAGEMENT</h2>
     <app-searcher [data]="woods" [filterAttributes]="['name', 'id', 'binomial_name']" (filteredData)="onSearch($event)"
       (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
     <app-add-button [modalTarget]="'#addWood'" [buttonText]="'Add Wood'" />
   </div>
+  <app-alert></app-alert>
   <app-data-table [columns]="[
       { key: 'id', label: 'ID' },
-      { key: 'name', label: 'Name' },
-      { key: 'binomial_name', label: 'Binomial Name' },
+      { key: 'name', format: DataTableFormat.TitleCase, label: 'Name' },
+      { key: 'binomial_name', format: DataTableFormat.TitleCase, label: 'Binomial Name' },
       { key: 'description', label: 'Description' },
-      { key: 'price', label: 'Price' }
-    ]" [data]="filteredWoods" [emptyMessage]="'There are no woods available.'" [editModalTarget]="'#editWood'"
+      { key: 'price', format: DataTableFormat.Currency, label: 'Price' }
+    ]" [data]="filteredWoods" [emptyMessage]="'There are no woods available'" [editModalTarget]="'#editWood'"
     [removeModalTarget]="'#removeWood'" (selectedEntity)="onWoodSelected($event)">
   </app-data-table>
   <app-pagination
@@ -40,7 +40,7 @@
           <textarea formControlName="description" id="description" name="description" class="form-control" rows="4"
             required></textarea>
           <label for="price">Price</label>
-          <input type="number" formControlName="price" id="price" name="price" class="form-control" required />
+          <input type="number" formControlName="price" id="price" name="price" class="form-control" onwheel="this.blur()" required />
         </div>
       </form>
     </ng-template>
@@ -63,7 +63,7 @@
           <textarea formControlName="description" id="description" name="description" class="form-control" rows="4"
             required></textarea>
           <label for="price">Price</label>
-          <input type="number" formControlName="price" id="price" name="price" class="form-control" required />
+          <input type="number" formControlName="price" id="price" name="price" class="form-control" onwheel="this.blur()" required />
         </div>
       </form>
     </ng-template>
@@ -76,8 +76,7 @@
     }" (onSubmit)="removeWood()" (onCancel)="woodForm.reset()">
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to remove the wood?</p>
-        <p><strong>Name:</strong> {{ selectedWood?.name | titlecase }}</p>
+        <p>Are you sure that you want to remove <strong>{{ selectedWood?.name | titlecase }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>

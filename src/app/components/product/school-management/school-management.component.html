@@ -13,7 +13,7 @@
       { key: 'email', label: 'Email' },
       { key: 'address', format: DataTableFormat.TitleCase, label: 'Address' },
       { key: 'phone', label: 'Phone' }
-    ]" [data]="filteredSchools" [emptyMessage]="'There are no schools available.'" [editModalTarget]="'#editSchool'"
+    ]" [data]="filteredSchools" [emptyMessage]="'There are no schools available'" [editModalTarget]="'#editSchool'"
     [removeModalTarget]="'#removeSchool'" (selectedEntity)="onSchoolSelected($event)">
   </app-data-table>
   <app-pagination
