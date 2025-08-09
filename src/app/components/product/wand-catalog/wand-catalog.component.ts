@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewChecked } from '@angular/core';
 import { Wand, WandStatus } from '../../../core/models/wand.interface';
 import { WandService } from '../../../core/services/wand.service';
 import { RouterLink } from '@angular/router';
@@ -17,20 +17,23 @@ import { InfiniteScrollComponent } from '../../../shared/components/infinite-scr
   templateUrl: './wand-catalog.component.html',
   styleUrl: './wand-catalog.component.css',
 })
-export class WandCatalogComponent {
+export class WandCatalogComponent implements AfterViewChecked {
   wands: Wand[] = [];
-  filteredWands: Wand[] = [];
   currentWizard: Wizard | null = null;
+  isMobile = false;
+
+  // Filter state
+  filteredWands: Wand[] = [];
   showFilter = false;
   activeFilters: any = {};
-  isMobile = false;
-  selectedWands: string | null = null;
+  private shouldScrollToTop = false;
 
   // Pagination state
   page = 1;
   pageSize = 12;
   loading = false;
   allLoaded = false;
+
 
   constructor(
     private wandService: WandService,
@@ -89,11 +92,15 @@ export class WandCatalogComponent {
       this.filteredWands = [];
       this.wands = [];
       this.loadWands();
+      this.shouldScrollToTop = true;
+      this.showFilter = false;
       return;
     }
 
     this.filteredWands = this.applyFilters(this.wands, filters);
     this.fallbackBackendSearchIfEmpty(filters);
+    this.shouldScrollToTop = true;
+    this.showFilter = false;
   }
 
   private applyFilters(wands: Wand[], filters: any): Wand[] {
@@ -176,4 +183,10 @@ export class WandCatalogComponent {
     this.checkScreenSize();
   }
 
+  ngAfterViewChecked() {
+    if (this.shouldScrollToTop) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      this.shouldScrollToTop = false;
+    }
+  }
 }

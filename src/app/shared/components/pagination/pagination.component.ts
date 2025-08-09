@@ -47,6 +47,7 @@ export class PaginationComponent implements AfterViewChecked {
   ngAfterViewChecked() {
     if (this.shouldScrollToTop) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      this.shouldScrollToTop = false;
     }
   }
 
