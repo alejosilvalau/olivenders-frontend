@@ -83,6 +83,7 @@ export class WandManagementComponent implements OnInit {
     this.wandService.findAll(this.currentPage, this.pageSize).subscribe((wandResponse: WandResponse<Wand[]>) => {
       this.wands = wandResponse.data!;
       this.filteredWands = wandResponse.data!;
+      this.totalWands = wandResponse.total || 0;
     });
   }
 
@@ -201,9 +202,11 @@ export class WandManagementComponent implements OnInit {
         next: (response: WandResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllWands();
+          this.resetWandForm();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          this.resetWandForm();
         }
       });
     }

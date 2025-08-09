@@ -70,6 +70,7 @@ export class OrderManagementComponent implements OnInit {
     this.orderService.findAll(this.currentPage, this.pageSize).subscribe((orderResponse: OrderResponse<Order[]>) => {
       this.orders = orderResponse.data!;
       this.filteredOrders = orderResponse.data!;
+      this.totalOrders = orderResponse.total || 0;
     });
   }
 

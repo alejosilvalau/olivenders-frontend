@@ -53,6 +53,7 @@ export class WizardManagementComponent implements OnInit {
     this.wizardService.findAll(this.currentPage, this.pageSize).subscribe((wizardResponse: WizardResponse<Wizard[]>) => {
       this.wizards = wizardResponse.data!;
       this.filteredWizards = wizardResponse.data!;
+      this.totalWizards = wizardResponse.total || 0;
     });
   }
 

@@ -3,7 +3,7 @@ import { Component, Output, EventEmitter, Input, HostListener } from '@angular/c
 @Component({
   selector: 'app-infinite-scroll',
   standalone: true,
-  template: `<ng-content></ng-content>`,
+  template: ``,
 })
 export class InfiniteScrollComponent {
   @Input() threshold: number = 300; // px from bottom to trigger

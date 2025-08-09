@@ -1,3 +1,22 @@
+.wand-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: flex-start;
+}
+
+.wand-card {
+  flex: 1 1 220px;
+  max-width: 300px;
+  min-width: 220px;
+  display: flex;
+}
+
+.card-title {
+  min-height: 3.5em;
+}
+
 .filter {
   background: var(--secondary-color);
   border-radius: 12px;

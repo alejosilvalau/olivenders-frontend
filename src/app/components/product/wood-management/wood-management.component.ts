@@ -59,6 +59,7 @@ export class WoodManagementComponent implements OnInit {
     this.woodService.findAll(this.currentPage, this.pageSize).subscribe((woodResponse: WoodResponse<Wood[]>) => {
       this.woods = woodResponse.data!;
       this.filteredWoods = woodResponse.data!;
+      this.totalWoods = woodResponse.total || 0;
     });
   }
 
