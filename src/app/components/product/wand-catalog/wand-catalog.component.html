@@ -1,4 +1,5 @@
 <div class="container-fluid mb-4">
+
   <button class="btn d-lg-none mt-2 w-100 filter-button" (click)="toggleFilter()">
     {{ showFilter ? "Hide Filters" : "Show Filters" }}
   </button>
@@ -64,8 +65,8 @@
           >
             No wands found with the selected filters
           </p>
-        </div>
-        <app-infinite-scroll (scrolled)="onScrollLoadMore()" [disabled]="loading" />
+      </div>
     </div>
   </div>
+  <app-infinite-scroll (scrolled)="onScrollLoadMore()" [disabled]="loading" />
 </div>

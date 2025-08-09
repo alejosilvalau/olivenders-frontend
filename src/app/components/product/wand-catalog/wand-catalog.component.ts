@@ -8,7 +8,7 @@ import { FilterComponent } from '../../../shared/components/filter/filter.compon
 import { HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button.js';
-import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component.js';
+import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component';
 
 @Component({
   selector: 'app-wand-catalog',
@@ -158,10 +158,9 @@ export class WandCatalogComponent {
     this.showFilter = !this.isMobile;
   }
 
-
-
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.checkScreenSize();
   }
+
 }

@@ -10,11 +10,11 @@ export class InfiniteScrollComponent {
   @Input() disabled: boolean = false;
   @Output() scrolled = new EventEmitter<void>();
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(event: Event): void {
     if (this.disabled) return;
     const scrollPosition = window.innerHeight + window.scrollY;
-    const bottomPosition = document.body.offsetHeight - this.threshold;
+    const bottomPosition = document.documentElement.scrollHeight - this.threshold;
     if (scrollPosition >= bottomPosition) {
       this.scrolled.emit();
     }
