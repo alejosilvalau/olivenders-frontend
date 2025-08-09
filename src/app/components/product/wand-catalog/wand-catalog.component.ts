@@ -22,6 +22,7 @@ export class WandCatalogComponent {
   filteredWands: Wand[] = [];
   currentWizard: Wizard | null = null;
   showFilter = false;
+  activeFilters: any = {};
   isMobile = false;
   selectedWands: string | null = null;
 
@@ -47,9 +48,15 @@ export class WandCatalogComponent {
     this.loading = true;
     this.wandService.findAll(this.page, this.pageSize).subscribe({
       next: (res) => {
-        const newWands = (res.data || []).filter(wand => wand?.status == WandStatus.Available);
+        let newWands = (res.data || []).filter(wand => wand?.status == WandStatus.Available);
+
+        this.wands = [...this.wands, ...newWands];
+        const filteredNewWands = this.applyFilters(newWands, this.activeFilters);
+
+        this.filteredWands = [...this.filteredWands, ...filteredNewWands];
+
         if (newWands.length < this.pageSize) this.allLoaded = true;
-        this.filteredWands = [...this.filteredWands, ...newWands];
+
         this.page++;
         this.loading = false;
       },
@@ -74,15 +81,23 @@ export class WandCatalogComponent {
   onFilterChanged(filters: any): void {
     const hasFilters = Object.values(filters).some(filter => filter !== null && filter !== '' && filter !== undefined);
 
+    this.activeFilters = filters;
+
     if (!hasFilters) {
       this.page = 1;
       this.allLoaded = false;
       this.filteredWands = [];
+      this.wands = [];
       this.loadWands();
       return;
     }
 
-    this.filteredWands = this.wands.filter((wand) => {
+    this.filteredWands = this.applyFilters(this.wands, filters);
+    this.fallbackBackendSearchIfEmpty(filters);
+  }
+
+  private applyFilters(wands: Wand[], filters: any): Wand[] {
+    return wands.filter((wand) => {
       if (filters.wood && typeof wand.wood === 'object') {
         if (wand.wood.name !== filters.wood) return false;
       }
@@ -95,16 +110,14 @@ export class WandCatalogComponent {
       if (filters.maxPrice && wand.total_price > filters.maxPrice) {
         return false;
       }
-      if (filters.minlengthInches && wand.length_inches < filters.minlengthInches) {
+      if (filters.minLengthInches && wand.length_inches < filters.minLengthInches) {
         return false;
       }
-      if (filters.maxlengthInches && wand.length_inches > filters.maxlengthInches) {
+      if (filters.maxLengthInches && wand.length_inches > filters.maxLengthInches) {
         return false;
       }
       return true;
     });
-
-    this.fallbackBackendSearchIfEmpty(filters);
   }
 
   private fallbackBackendSearchIfEmpty(filters: any): void {

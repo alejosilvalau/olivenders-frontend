@@ -29,7 +29,7 @@ export class FilterComponent implements OnInit {
     core: '',
     minPrice: null,
     maxPrice: null,
-    minlengthInches: null,
+    minLengthInches: null,
     maxLengthInches: null,
   }
 
