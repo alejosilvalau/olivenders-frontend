@@ -121,13 +121,15 @@ export class WandCatalogComponent {
             if (newWands.length < this.pageSize) this.allLoaded = true;
             this.page++;
             this.loading = false;
+            return;
           },
           error: () => {
             this.filteredWands = [];
             this.loading = false;
+            return;
           }
         });
-        return;
+
       }
       if (filters.core) {
         this.wandService.findAllByCore(filters.core, this.page, this.pageSize).subscribe({
@@ -137,13 +139,14 @@ export class WandCatalogComponent {
             if (newWands.length < this.pageSize) this.allLoaded = true;
             this.page++;
             this.loading = false;
+            return;
           },
           error: () => {
             this.filteredWands = [];
             this.loading = false;
+            return;
           }
         });
-        return;
       }
       this.loading = false;
     }

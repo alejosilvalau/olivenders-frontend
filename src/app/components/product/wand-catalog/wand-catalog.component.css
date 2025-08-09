@@ -1,10 +1,4 @@
-:root {
-  --primary-color: #2a3b4d;
-  --secondary-color: #f8f9fa;
-  --accent-color: #ffc107;
-}
-
-.filtro {
+.filter {
   background: var(--secondary-color);
   border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -23,9 +17,22 @@
   font-weight: 400;
 }
 
-.filtro.d-none {
+.filter.d-none {
   opacity: 0;
   transform: translateX(-100%);
+}
+
+.filter-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: var(--form-border-focus);
+}
+
+.filter-button:hover,
+.filter-button:focus {
+  background-color: white;
+  color: black;
+  border: var(--form-border-focus);
 }
 
 .card {
@@ -33,6 +40,7 @@
   flex-direction: column;
   height: 100%;
   transition: transform 0.3s;
+  border: var(--form-border);
 }
 
 .card-body {
@@ -52,12 +60,25 @@
   object-fit: contain;
 }
 
-.botonera {
+.custom-button-container {
   margin-top: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
+.custom-buy-button {
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+}
+
+.custom-buy-button:hover,
+.custom-buy-button:focus {
+  background-color: var(--secondary-color);
+  color: black;
+}
+
 
 .card-text:empty,
 .price-product:empty {
