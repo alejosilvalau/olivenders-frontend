@@ -118,7 +118,7 @@ body {
 }
 
 body {
-  margin: 0;
+  min-height: 100vh;
   font-family: 'AvenirLTPro', Arial, sans-serif;
   display: flex;
   flex-direction: column;
@@ -133,4 +133,16 @@ app-root {
 
 .main-content {
   flex: 1 0 auto;
+}
+
+.app-root,
+.main-content {
+  min-height: calc(100vh - 50vh);
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-10 {
+  width: 100%;
+  margin-top: auto;
 }

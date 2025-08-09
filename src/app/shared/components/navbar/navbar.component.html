@@ -11,7 +11,10 @@
     </div>
     <div class="navbar-section navbar-login">
       <ng-container *ngIf="!isLoggedIn">
-        <a routerLink="/auth/login" class="nav-link nav-login text-black fs-6 text-decoration-underline">Log In</a>
+        <a routerLink="/auth/login" class="nav-link nav-login text-black fs-6 text-decoration-underline">
+          <span class="login-text d-none d-md-inline">Log In</span>
+          <i class="bi bi-person-fill d-inline d-md-none" style="font-size: 1.8rem;"></i>
+        </a>
       </ng-container>
       <ng-container *ngIf="isLoggedIn">
         <div class="dropdown position-relative">
