@@ -1,0 +1,65 @@
+.image-preview-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 220px;
+  height: 220px;
+}
+
+.custom-image-drop-area {
+  border: var(--form-border);
+}
+
+.custom-image-drop-area:hover,
+.custom-image-drop-area:focus {
+  border: var(--form-border-focus);
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: none;
+  padding: 0;
+}
+
+.image-remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  line-height: 1;
+  border: 2px solid black;
+}
+
+.image-remove-btn:hover,
+.image-remove-btn:focus {
+  background-color: var(--secondary-color);
+  color: black;
+}
+
+.bi-cloud-arrow-up {
+  color: var(--primary-color) !important;
+}
+
+.image-drop-area .btn-outline-primary {
+  color: white;
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.image-drop-area .btn-outline-primary:hover,
+.image-drop-area .btn-outline-primary:focus {
+  color: black;
+  background-color: var(--secondary-color);
+}

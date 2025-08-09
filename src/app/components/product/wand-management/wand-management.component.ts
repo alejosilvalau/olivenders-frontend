@@ -21,7 +21,7 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SearcherComponent, AlertComponent, DataTableComponent, AddButtonComponent, ModalComponent, EntitySelectorComponent, PaginationComponent],
   templateUrl: './wand-management.component.html',
-  styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css']
+  styleUrls: ['../../../shared/styles/management.style.css', '../../../shared/styles/forms.style.css', './wand-management.component.css']
 })
 
 export class WandManagementComponent implements OnInit {
@@ -152,8 +152,7 @@ export class WandManagementComponent implements OnInit {
   resetWandForm(): void {
     this.wandForm.reset();
     this.selectedWand = null;
-    this.selectedImageFile = null;
-    this.previewUrl = null;
+    this.removePreviewImage();
   }
 
   async addWand() {
@@ -177,7 +176,9 @@ export class WandManagementComponent implements OnInit {
   }
 
   async editWand() {
-    await this.uploadImageToCloudinary(this.selectedImageFile!);
+    if (this.selectedImageFile) {
+      await this.uploadImageToCloudinary(this.selectedImageFile);
+    }
     if (this.selectedWand) {
       const wandData = this.wandForm.value;
       this.wandService.update(this.selectedWand.id, wandData).subscribe({
@@ -230,8 +231,19 @@ export class WandManagementComponent implements OnInit {
     }
   }
 
+  removePreviewImage() {
+    this.previewUrl = null;
+    this.selectedImageFile = null;
+    this.wandForm.get('image')?.setValue('');
+  }
+
   uploadImageToCloudinary(file: File): Promise<void> {
     return new Promise((resolve, reject) => {
+      if (!file) {
+        this.alertComponent.showAlert('Please select an image file', AlertType.Error);
+        reject('No file provided');
+        return;
+      }
       this.imageService.sign().subscribe({
         next: (res: ImageResponse) => {
           const { timestamp, signature } = res.data!;

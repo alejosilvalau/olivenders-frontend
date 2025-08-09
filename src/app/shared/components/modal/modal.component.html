@@ -1,5 +1,5 @@
-<div class="modal fade " [id]="config.id" tabindex="-1" [attr.aria-labelledby]="config.id + 'Label'" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade " [id]="config.id" tabindex="-1" [attr.aria-labelledby]="config.id + 'Label'" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" [id]="config.id + 'Label'"> {{ config.title }} </h1>

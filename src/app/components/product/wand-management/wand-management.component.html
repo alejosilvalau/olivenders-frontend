@@ -1,5 +1,4 @@
 <div class="container my-4">
-  <app-alert></app-alert>
   <div
     class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4"
   >
@@ -20,14 +19,15 @@
     ></app-searcher>
     <app-add-button [modalTarget]="'#addWand'" [buttonText]="'Add Wand'" />
   </div>
+  <app-alert></app-alert>
   <app-data-table
     [columns]="[
       { key: 'id', label: 'ID' },
       { key: 'name', format: DataTableFormat.TitleCase, label: 'Name' },
       { key: 'image', label: 'Image' },
       { key: 'length_inches', label: 'Lenght' },
-      { key: 'wood',subKey: 'name', format: DataTableFormat.TitleCase, label: 'Wood' },
-      { key: 'core',subKey: 'name', format: DataTableFormat.TitleCase, label: 'Core' },
+      { key: 'wood', subKey: 'name', format: DataTableFormat.TitleCase, label: 'Wood' },
+      { key: 'core', subKey: 'name', format: DataTableFormat.TitleCase, label: 'Core' },
       { key: 'description', label: 'Description' },
       { key: 'status', format: DataTableFormat.TitleCase, label: 'Status' },
       { key: 'profit', format: DataTableFormat.Currency, label: 'Profit' },
@@ -76,6 +76,7 @@
             id="length_inches"
             name="length_inches"
             class="form-control"
+            onwheel="this.blur()"
             required
           />
           <label for="description">Description</label>
@@ -89,13 +90,13 @@
           ></textarea>
           <label for="image">Image</label>
           <div
-            class="image-drop-area border border-2 rounded d-flex flex-column align-items-center justify-content-center py-4 mb-3 pointer"
+            class="image-drop-area custom-image-drop-area rounded d-flex flex-column align-items-center justify-content-center py-3 mb-3 pointer position-relative"
             (drop)="onImageDrop($event)"
             (dragover)="onImageDragOver($event)"
             role="button"
           >
-            <i class="bi bi-cloud-arrow-up display-4 text-primary mb-2"></i>
-            <p class="mb-2 fw-semibold text-secondary">Drag & drop an image here, or click to select</p>
+            <i class="bi bi-cloud-arrow-up display-4 text-primary" *ngIf="!previewUrl"></i>
+            <p class="fw-medium text-secondary" *ngIf="!previewUrl">Drag & drop an image here, or click to select</p>
             <input
               type="file"
               accept="image/*"
@@ -103,8 +104,13 @@
               style="display:none"
               #imageInput
             />
-            <button type="button" class="btn btn-outline-primary btn-sm" (click)="imageInput.click()">Choose Image</button>
-            <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" class="img-thumbnail mt-3" style="max-width: 120px;" />
+            <button type="button" class="btn btn-outline-primary btn-lg" (click)="imageInput.click()" *ngIf="!previewUrl">Choose Image</button>
+            <button type="button" class="btn btn-dark image-remove-btn" *ngIf="previewUrl" (click)="removePreviewImage()">
+              <i class="bi bi-x"></i>
+            </button>
+            <div class="image-preview-wrapper" *ngIf="previewUrl">
+              <img [src]="previewUrl" alt="Preview" class="img-thumbnail image-preview" />
+            </div>
           </div>
           <label for="profit">Profit</label>
           <input
@@ -113,6 +119,7 @@
             id="profit"
             name="profit"
             class="form-control"
+            onwheel="this.blur()"
             required
           />
           <app-entity-selector [entityControl]="woodFormControlField" [service]="woodService"
@@ -156,6 +163,7 @@
             id="length_inches"
             name="length_inches"
             class="form-control"
+            onwheel="this.blur()"
             required
           />
           <label for="description">Description</label>
@@ -169,13 +177,13 @@
           ></textarea>
           <label for="image">Image</label>
           <div
-            class="image-drop-area border border-2 rounded d-flex flex-column align-items-center justify-content-center py-4 mb-3 pointer"
+            class="image-drop-area custom-image-drop-area rounded d-flex flex-column align-items-center justify-content-center py-3 mb-3 pointer position-relative"
             (drop)="onImageDrop($event)"
             (dragover)="onImageDragOver($event)"
             role="button"
           >
-            <i class="bi bi-cloud-arrow-up display-4 text-primary mb-2"></i>
-            <p class="mb-2 fw-semibold text-secondary">Drag & drop an image here, or click to select</p>
+            <i class="bi bi-cloud-arrow-up display-4 text-primary" *ngIf="!previewUrl"></i>
+            <p class="fw-medium text-secondary" *ngIf="!previewUrl">Drag & drop an image here, or click to select</p>
             <input
               type="file"
               accept="image/*"
@@ -183,8 +191,13 @@
               style="display:none"
               #imageInput
             />
-            <button type="button" class="btn btn-outline-primary btn-sm" (click)="imageInput.click()">Choose Image</button>
-            <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" class="img-thumbnail mt-3" style="max-width: 120px;" />
+            <button type="button" class="btn btn-outline-primary btn-lg" (click)="imageInput.click()" *ngIf="!previewUrl">Choose Image</button>
+            <button type="button" class="btn btn-dark image-remove-btn" *ngIf="previewUrl" (click)="removePreviewImage()">
+              <i class="bi bi-x"></i>
+            </button>
+            <div class="image-preview-wrapper" *ngIf="previewUrl">
+              <img [src]="previewUrl" alt="Preview" class="img-thumbnail image-preview" />
+            </div>
           </div>
           <label for="profit">Profit</label>
           <input
@@ -193,6 +206,7 @@
             id="profit"
             name="profit"
             class="form-control"
+            onwheel="this.blur()"
             required
           />
           <app-entity-selector [entityControl]="woodFormControlField" [service]="woodService"
@@ -219,8 +233,7 @@
   >
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to remove the wand?</p>
-        <p><strong>Name:</strong> {{ selectedWand?.name | titlecase }}</p>
+        <p>Are you sure that you want to remove <strong>{{ selectedWand?.name | titlecase }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>
