@@ -6,6 +6,7 @@ export enum DataTableFormat {
   TitleCase = 'titlecase',
   Currency = 'currency',
   Date = 'date',
+  Boolean = 'boolean'
 }
 
 @Component({
@@ -37,14 +38,16 @@ export class DataTableComponent<T extends Record<string, any>> {
   }
 
   formatValue(value: any, format?: string): any {
-    if (!value) return '';
+    if (value === null || value === undefined) return '';
     switch (format) {
-      case 'titlecase':
+      case DataTableFormat.TitleCase:
         return this.titlecasePipe.transform(value);
-      case 'currency':
+      case DataTableFormat.Currency:
         return this.currencyPipe.transform(value);
-      case 'date':
+      case DataTableFormat.Date:
         return this.datePipe.transform(value, 'medium');
+      case DataTableFormat.Boolean:
+        return value ? 'Yes' : 'No';
       default:
         return value;
     }

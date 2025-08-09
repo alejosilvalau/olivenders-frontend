@@ -31,6 +31,8 @@ export class WizardManagementComponent implements OnInit {
   currentPage = 1;
   pageSize = 10;
 
+  DataTableFormat = DataTableFormat;
+
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
   constructor(
@@ -111,13 +113,13 @@ export class WizardManagementComponent implements OnInit {
     request$.subscribe({
       next: (res) => {
         this.alertComponent.showAlert(
-          `Role changed to ${ isCurrentlyAdmin ? 'user' : 'admin' }`,
-          AlertType.Success
-        );
+          `Role changed to ${ isCurrentlyAdmin ? WizardRole.User : WizardRole.Admin }`, AlertType.Success);
         this.ngOnInit();
+        this.wizardForm.reset();
       },
       error: (err) => {
         this.alertComponent.showAlert(err.error.message, AlertType.Error);
+        this.wizardForm.reset();
       }
     });
   }
@@ -128,12 +130,13 @@ export class WizardManagementComponent implements OnInit {
         next: (response: WizardResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);
           this.findAllWizards();
+          this.wizardForm.reset();
         },
         error: (err: any) => {
           this.alertComponent.showAlert(err.error.message, AlertType.Error);
+          this.wizardForm.reset();
         }
       });
-      this.wizardForm.reset();
     }
   }
 }

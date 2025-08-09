@@ -1,5 +1,4 @@
 <div class="container my-4">
-  <app-alert></app-alert>
   <div
     class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4"
   >
@@ -12,21 +11,22 @@
       class="searcher"
     ></app-searcher>
   </div>
+  <app-alert></app-alert>
   <app-data-table
     [columns]="[
       { key: 'id', label: 'ID' },
       { key: 'username', label: 'Username' },
-      { key: 'name', label: 'Name' },
-      { key: 'last_name', label: 'Last Name' },
+      { key: 'name', format: DataTableFormat.TitleCase, label: 'Name' },
+      { key: 'last_name', format: DataTableFormat.TitleCase, label: 'Last Name' },
       { key: 'email', label: 'Email' },
-      { key: 'address', label: 'Address' },
+      { key: 'address', format: DataTableFormat.TitleCase, label: 'Address' },
       { key: 'phone', label: 'Phone' },
-      { key: 'role', label: 'Role' },
-      { key: 'deactivated', label: 'Deactivated' },
-      { key: 'school', subKey: 'name', label: 'School' }
+      { key: 'role', format: DataTableFormat.TitleCase, label: 'Role' },
+      { key: 'deactivated', format: DataTableFormat.Boolean, label: 'Deactivated' },
+      { key: 'school', subKey: 'name', format: DataTableFormat.TitleCase, label: 'School' }
     ]"
     [data]="filteredWizards"
-    [emptyMessage]="'There are no wizards available.'"
+    [emptyMessage]="'There are no wizards available'"
     [editModalTarget]="'#editWizard'"
     [removeModalTarget]="'#removeWizard'"
     (selectedEntity)="onWizardSelected($event)"
@@ -50,12 +50,8 @@
   >
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to change the wizard's role?</p>
-        <p>
-          <strong>Username:</strong> {{ selectedWizard?.username | titlecase
-          }}<br />
-          <strong>Role:</strong> {{ selectedWizard?.role | titlecase }}
-        </p>
+        <p>Are you sure that you want to change <strong>{{ selectedWizard?.username
+          }}</strong> to <strong>{{ selectedWizard?.role | titlecase }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>
@@ -70,10 +66,7 @@
   >
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to remove the wizard?</p>
-        <p>
-          <strong>Username:</strong> {{ selectedWizard?.username | titlecase }}
-        </p>
+        <p>Are you sure that you want to remove <strong>{{ selectedWizard?.username }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>
