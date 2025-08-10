@@ -16,7 +16,7 @@ export class SchoolService {
     this.authToken = new AuthToken();
   }
 
-  findAll(page: number = 1, pageSize: number = 5): Observable<SchoolResponse<School[]>> {
+  findAll(page: number = 1, pageSize: number = Number.MAX_SAFE_INTEGER): Observable<SchoolResponse<School[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<SchoolResponse<School[]>>(this.apiUrl, { params });
   }

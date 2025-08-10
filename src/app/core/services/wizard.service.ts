@@ -16,12 +16,12 @@ export class WizardService {
     this.authToken = new AuthToken();
   }
 
-  findAll(page: number = 1, pageSize: number = 5): Observable<WizardResponse<Wizard[]>> {
+  findAll(page: number = 1, pageSize: number = Number.MAX_SAFE_INTEGER): Observable<WizardResponse<Wizard[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<WizardResponse<Wizard[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() },);
   }
 
-  findAllBySchool(schoolId: string, page: number = 1, pageSize: number = 5): Observable<WizardResponse<Wizard[]>> {
+  findAllBySchool(schoolId: string, page: number = 1, pageSize: number = Number.MAX_SAFE_INTEGER): Observable<WizardResponse<Wizard[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<WizardResponse<Wizard[]>>(`${ this.apiUrl }/school/${ schoolId }`, { params, headers: this.authToken.getAuthHeaders() });
   }

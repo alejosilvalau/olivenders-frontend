@@ -16,17 +16,17 @@ export class OrderService {
     this.authToken = new AuthToken();
   }
 
-  findAll(page: number = 1, pageSize: number = 5): Observable<OrderResponse<Order[]>> {
+  findAll(page: number = 1, pageSize: number = Number.MAX_SAFE_INTEGER): Observable<OrderResponse<Order[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<OrderResponse<Order[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
   }
 
-  findAllByWizard(wizardId: string, page: number = 1, pageSize: number = 5): Observable<OrderResponse<Order[]>> {
+  findAllByWizard(wizardId: string, page: number = 1, pageSize: number = Number.MAX_SAFE_INTEGER): Observable<OrderResponse<Order[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<OrderResponse<Order[]>>(`${ this.apiUrl }/wizard/${ wizardId }`, { params, headers: this.authToken.getAuthHeaders() });
   }
 
-  findAllByWand(wandId: string, page: number = 1, pageSize: number = 5): Observable<OrderResponse<Order[]>> {
+  findAllByWand(wandId: string, page: number = 1, pageSize: number = Number.MAX_SAFE_INTEGER): Observable<OrderResponse<Order[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
     return this.http.get<OrderResponse<Order[]>>(`${ this.apiUrl }/wand/${ wandId }`, { params, headers: this.authToken.getAuthHeaders() });
   }
