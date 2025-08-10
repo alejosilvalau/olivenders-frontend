@@ -1,25 +1,24 @@
 <div class="container py-4">
-  <div class="card shadow mb-4">
+  <div class="card shadow mb-4 order-box">
     <div class="card-header bg-white border-bottom">
-      <h1 class="text-center h3 my-3">Place Order</h1>
+      <h1 class="text-center h3 my-3 order-title">Place Order</h1>
     </div>
     <div class="card-body p-4" *ngIf="wand">
-      <div class="row mb-4">
-        <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center justify-content-center">
+      <div class="row mb-4 justify-content-between">
+        <div class="col-sm-6 col-md-5 mb-3 mb-md-0 d-flex align-items-center justify-content-center order-image-container">
           <img
             [src]="wand.image"
             alt="wand-image"
-            class="img-fluid rounded"
-            style="max-height: 250px; object-fit: cover;"
+            class="img-fluid rounded order-image"
           />
         </div>
-        <div class="col-md-8">
-          <h2 class="h4 mb-3 fw-bold mb-4">{{ wand.name | titlecase }}</h2>
-          <div class="card bg-light mb-3">
+        <div class="col-sm-8 col-md-7 d-flex align-items-center justify-content-center flex-column order-details">
+          <h2 class="h4 mb-3 fw-normal mb-4 text-center">{{ wand.name | titlecase }}</h2>
+          <div class="card bg-light mb-3 order-info">
             <div class="card-header py-2">
-              <h3 class="h6 mb-0">More Info</h3>
+              <h3 class="h6 mb-0 mt-1 py-1">More Info</h3>
             </div>
-            <div class="card-body py-2">
+            <div class="card-body">
               <div class="row">
                 <div class="col-sm-6 mb-2">
                   <span class="text-muted fw-bold">Wood: </span>
@@ -43,7 +42,7 @@
       <form [formGroup]="placeOrderForm" class="mt-4">
         <div class="row g-3">
           <div class="col-md-6 mb-3">
-            <label for="shipping_address" class="form-label">Shipping Address</label>
+            <label for="shipping_address" class="form-label fs-5">Shipping Address</label>
             <input
               id="shipping_address"
               formControlName="shipping_address"
@@ -58,7 +57,7 @@
             </div>
           </div>
           <div class="col-md-6 mb-3">
-            <label for="payment_provider" class="form-label">Payment Method</label>
+            <label for="payment_provider" class="form-label fs-5">Payment Method</label>
             <select
               id="payment_provider"
               formControlName="payment_provider"
@@ -84,7 +83,7 @@
       </form>
       <button
         type="button"
-        class="btn btn-primary btn-lg w-100 mb-2 mt-2"
+        class="btn btn-lg w-100 mb-2 mt-3 order-button"
         [disabled]="placeOrderForm.invalid"
         data-bs-toggle="modal"
         data-bs-target="#confirmOrder"
@@ -102,7 +101,7 @@
       >
         <ng-template #modalContent>
           <div class="col-12">
-            <p>Are you sure you want to place this order?</p>
+            <p>Do you want to finalize and place this order?</p>
             <div class="card mb-3">
               <div class="card-body bg-light p-3">
                 <p class="mb-2">

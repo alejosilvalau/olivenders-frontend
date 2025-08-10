@@ -17,19 +17,20 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule, ModalComponent],
   templateUrl: 'place-order.component.html',
-  styleUrl: './place-order.component.css',
+  styleUrls: ['./place-order.component.css', './../../../shared/styles/forms.style.css'],
 })
 
 export class PlaceOrderComponent implements OnInit {
+  // Form to place an order
   placeOrderForm: FormGroup = new FormGroup({});
-  orders: Order[] = [];
   selectedOrder: Order | null = null;
+
+  // Properties to hold the order, wizard, and wand details
   order: Order | null = null;
+  orders: Order[] = [];
   wizard: Wizard | null = null;
   wand: Wand | null = null;
   wandId: string = '';
-  currentSlideIndex = 0;
-  lightboxActive: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -122,7 +123,7 @@ export class PlaceOrderComponent implements OnInit {
   }
 
   simulatePayment(orderRes: OrderResponse): void {
-    const delay = 10000; // 10 seconds
+    const delay = 2000; // 2 seconds
 
     setTimeout(() => {
       this.orderService.pay(orderRes.data!.id).subscribe({
