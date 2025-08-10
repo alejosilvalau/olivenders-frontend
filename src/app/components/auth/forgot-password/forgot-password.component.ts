@@ -47,11 +47,13 @@ export class ForgotPasswordComponent implements OnInit {
             this.newPasswordForm.get('newPassword')?.enable();
             this.newPasswordForm.get('confirmNewPassword')?.enable();
           } else {
-            alertMethod(res.message, 'Account not found.', AlertType.Error);
+            alertMethod(res.message, 'Account not found', AlertType.Error);
+            this.verificationForm.reset();
           }
         },
         error: (err) => {
-          alertMethod(err.error.message, 'Please try again.', AlertType.Error);
+          alertMethod(err.error.message, 'Please try again', AlertType.Error);
+          this.verificationForm.reset();
         }
       });
     }
@@ -65,24 +67,25 @@ export class ForgotPasswordComponent implements OnInit {
 
   changePassword(): void {
     if (!this.passwordMatchValidator(this.newPasswordForm)) {
-      alertMethod('Passwords do not match', 'Please re-enter your password.', AlertType.Error);
+      alertMethod('Passwords do not match', 'Please re-enter your password', AlertType.Error);
       this.newPasswordForm.reset();
       return;
     }
 
     if (!this.newPasswordForm.valid) {
-      alertMethod('Form is invalid', 'Please fill in all required fields.', AlertType.Error);
+      alertMethod('Form is invalid', 'Please fill in all required fields', AlertType.Error);
       return;
     }
 
     const newPasswordObject = { password: this.newPasswordForm.value.newPassword.trim() };
     this.wizardService.changePasswordWithoutToken(this.wizardId, newPasswordObject).subscribe({
       next: (res) => {
-        alertMethod(res.message, 'Password changed successfully.', AlertType.Success);
+        alertMethod(res.message, 'Password changed successfully', AlertType.Success);
         this.router.navigate(['/auth/login']);
       },
       error: (err) => {
-        alertMethod(err.error.message, 'Please try again.', AlertType.Error);
+        alertMethod(err.error.message, 'Please try again', AlertType.Error);
+        this.newPasswordForm.reset();
       }
     });
   }

@@ -10,7 +10,7 @@ import { onlyAdmin } from '../../guards/only-admin.guard.js';
 export const authRoutes: Routes = [
   { path: 'login', component: LoginComponent, data: { hideLayout: true } },
   { path: 'register', component: RegisterComponent, data: { hideLayout: true } },
-  { path: 'forgot-password', component: ForgotPasswordComponent, data: { hideLayout: true } },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'wizards', component: WizardManagementComponent, canActivate: [onlyAdmin] },
   { path: 'profile', component: ProfileComponent, canActivate: [isLoggedInGuard] },
 ];

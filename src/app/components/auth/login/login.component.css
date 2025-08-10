@@ -145,7 +145,11 @@ button:hover {
 
   .login-box {
     width: 95%;
+  }
 
+  .login-box h2 {
+    font-size: 35px;
+    margin-bottom: 35px;
   }
 
   @media (max-width: 360px) {
