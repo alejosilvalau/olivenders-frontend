@@ -1,11 +1,11 @@
 .login-container {
-  margin: 0;
+  margin: auto;
   padding: 20px 10px;
   background: #f0f4f8;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 65vh;
+  min-height: 100vh;
   box-sizing: border-box;
 }
 
