@@ -10,6 +10,8 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
 import { WandService } from '../../../core/services/wand.service.js';
 import { WizardService } from '../../../core/services/wizard.service.js';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
+import { switchMap, throwError } from 'rxjs';
+import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
 @Component({
   selector: 'app-order-management',
   standalone: true,
@@ -19,11 +21,17 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
 })
 
 export class OrderManagementComponent implements OnInit {
-  orderForm: FormGroup = new FormGroup({});
   orders: Order[] = [];
+
+  // Form properties
+  orderForm: FormGroup = new FormGroup({});
   selectedOrder: Order | null = null;
+
+  // Search properties
   filteredOrders: Order[] = [];
   searchTerm: string = '';
+
+  // Pagination properties
   totalOrders = 0;
   currentPage = 1;
   pageSize = 10;
@@ -86,58 +94,30 @@ export class OrderManagementComponent implements OnInit {
   }
 
   private searchOrder(term: string): void {
-    const trimmedTerm = term.trim();
-    if (!trimmedTerm) {
-      this.filteredOrders = [];
-      return;
-    }
+    const searchChain = [
+      (t: string) => this.wandService.findOneByName(t).pipe(
+        switchMap(wandRes => wandRes.data
+          ? this.orderService.findAllByWand(wandRes.data.id)
+          : throwError(() => null)
+        )
+      ),
+      (t: string) => this.wizardService.findOneByUsername(t).pipe(
+        switchMap(wizardRes => wizardRes.data
+          ? this.orderService.findAllByWizard(wizardRes.data.id)
+          : throwError(() => null)
+        )
+      ),
+      (t: string) => this.wandService.findOne(t)
+    ];
 
-    const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
-    let search$;
-
-    if (isObjectId) {
-      search$ = this.orderService.findOne(trimmedTerm);
-    } else {
-      this.wandService.findOneByName(trimmedTerm).subscribe({
-        next: (wandResponse) => {
-          if (wandResponse.data) {
-            search$ = this.orderService.findAllByWand(wandResponse.data.id);
-          } else {
-            this.wizardService.findOneByUsername(trimmedTerm).subscribe({
-              next: (wizardResponse) => {
-                if (wizardResponse.data) {
-                  search$ = this.orderService.findAllByWizard(wizardResponse.data!.id);
-                }
-                else {
-                  this.alertComponent.showAlert('No order found with this search', AlertType.Info);
-                  this.filteredOrders = [];
-                  return;
-                }
-              }, error: (err) => {
-                this.alertComponent.showAlert(err.error.message, AlertType.Error);
-                this.filteredOrders = [];
-                return;
-              }
-            });
-          }
-        }, error: (err) => {
-          this.alertComponent.showAlert(err.error.message, AlertType.Error);
-          this.filteredOrders = [];
-          return;
-        }
-      });
-    }
-
-
-    search$!.subscribe({
-      next: res => {
-        this.filteredOrders = res.data ? [res.data] : [];
-      },
-      error: err => {
-        this.filteredOrders = [];
-        this.alertComponent.showAlert(err.error.message, AlertType.Error);
-      }
-    });
+    const notFoundMessage = 'No order found with this search';
+    chainedEntitySearch(
+      term,
+      searchChain,
+      (results: Order[]) => this.filteredOrders = results,
+      this.alertComponent,
+      notFoundMessage
+    );
   }
 
   onSearch(filteredOrders: Order[]): void {
@@ -165,6 +145,7 @@ export class OrderManagementComponent implements OnInit {
       const wandId = this.selectedOrder?.wand?.id;
       const wizardId = this.selectedOrder?.wizard?.id;
       const orderData = { ...this.orderForm.value, wand: wandId, wizard: wizardId };
+      console.log(orderData);
       this.orderService.update(this.selectedOrder.id, orderData).subscribe({
         next: (response: OrderResponse) => {
           this.alertComponent.showAlert(response.message, AlertType.Success);

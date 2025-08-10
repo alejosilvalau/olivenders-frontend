@@ -6,12 +6,16 @@
     <app-searcher
       [data]="orders"
       [filterAttributes]="[
+        'id',
         'payment_provider',
         'shipping_address',
+        'price',
+        'profit',
         'tracking_id',
-        'status',
         'created_at',
-        'id'
+        'status',
+        'wizard.username',
+        'wand.name'
       ]"
       (filteredData)="onSearch($event)"
       (searchTermChange)="searchTerm = $event"
