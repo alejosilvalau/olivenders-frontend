@@ -34,19 +34,19 @@ export class LoginComponent implements OnInit {
 
   loginWizard(): void {
     if (this.loginForm.invalid) {
-      alertMethod('Form is invalid', 'Please fill in all required fields.', AlertType.Error);
+      alertMethod('Form is invalid', 'Please fill in all required fields', AlertType.Error);
       return;
     }
     this.authService.login(this.loginForm.value).subscribe({
       next: (loginResponse) => {
         this.isLoggedIn = true
         this.router.navigate(['/']);
+        this.loginForm.reset();
       },
       error: (err: any) => {
-        alertMethod(err.error.message, 'Please check your credentials and try again.', AlertType.Error);
+        alertMethod(err.error.message, 'Please check your credentials and try again', AlertType.Error);
+        this.loginForm.reset();
       }
     });
-    this.loginForm.reset();
   }
-
 }
