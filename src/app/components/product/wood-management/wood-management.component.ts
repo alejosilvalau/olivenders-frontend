@@ -10,6 +10,7 @@ import { DataTableComponent, DataTableFormat } from '../../../shared/components/
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
+import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
 @Component({
   selector: 'app-wood-management',
   standalone: true,
@@ -75,26 +76,18 @@ export class WoodManagementComponent implements OnInit {
   }
 
   private searchWood(term: string): void {
-    const trimmedTerm = term.trim();
-    if (!trimmedTerm) {
-      this.filteredWoods = [];
-      return;
-    }
+    const searchChain = [
+      (t: string) => this.woodService.findOneByName(t),
+      (t: string) => this.woodService.findOne(t)
+    ];
 
-    const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
-    const search$: Observable<WoodResponse<Wood>> = isObjectId
-      ? this.woodService.findOne(trimmedTerm)
-      : this.woodService.findOneByName(trimmedTerm);
-
-    search$.subscribe({
-      next: res => {
-        this.filteredWoods = res.data ? [res.data] : [];
-      },
-      error: err => {
-        this.filteredWoods = [];
-        this.alertComponent.showAlert(err.error.message, AlertType.Error);
-      }
-    });
+    const notFoundMessage = 'No wood found with this search';
+    chainedEntitySearch(
+      term, searchChain,
+      (results: Wood[]) => this.filteredWoods = results,
+      this.alertComponent,
+      notFoundMessage
+    );
   }
 
   onSearch(filteredWoods: Wood[]): void {
