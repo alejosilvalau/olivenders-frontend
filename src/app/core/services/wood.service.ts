@@ -18,7 +18,7 @@ export class WoodService {
 
   findAll(page: number = 1, pageSize: number = Number.MAX_SAFE_INTEGER): Observable<WoodResponse<Wood[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
-    return this.http.get<WoodResponse<Wood[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
+    return this.http.get<WoodResponse<Wood[]>>(this.apiUrl, { params });
   }
 
   findOne(id: string): Observable<WoodResponse> {

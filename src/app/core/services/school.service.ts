@@ -22,11 +22,11 @@ export class SchoolService {
   }
 
   findOne(id: string): Observable<SchoolResponse> {
-    return this.http.get<SchoolResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
+    return this.http.get<SchoolResponse>(`${ this.apiUrl }/${ id }`);
   }
 
   findOneByName(name: string): Observable<SchoolResponse> {
-    return this.http.get<SchoolResponse>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
+    return this.http.get<SchoolResponse>(`${ this.apiUrl }/name/${ name }`);
   }
 
   add(schoolData: SchoolRequest): Observable<SchoolResponse> {

@@ -32,11 +32,11 @@ export class WandService {
   }
 
   findOne(id: string): Observable<WandResponse> {
-    return this.http.get<WandResponse>(`${ this.apiUrl }/${ id }`, {});
+    return this.http.get<WandResponse>(`${ this.apiUrl }/${ id }`);
   }
 
   findOneByName(name: string): Observable<WandResponse> {
-    return this.http.get<WandResponse>(`${ this.apiUrl }/name/${ name }`);
+    return this.http.get<WandResponse>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   add(formData: FormData): Observable<WandResponse> {
@@ -47,20 +47,7 @@ export class WandService {
     return this.http.put<WandResponse>(`${ this.apiUrl }/${ id }`, formData, { headers: this.authToken.getAuthHeaders() });
   }
 
-  markAsAvailable(id: string): Observable<WandResponse> {
-    return this.http.patch<WandResponse>(`${ this.apiUrl }/${ id }/available`, {}, { headers: this.authToken.getAuthHeaders() });
-  }
-
-  markAsSold(id: string): Observable<WandResponse> {
-    return this.http.patch<WandResponse>(`${ this.apiUrl }/${ id }/sold`, {}, { headers: this.authToken.getAuthHeaders() });
-  }
-
-  deactivate(id: string): Observable<WandResponse> {
-    return this.http.patch<WandResponse>(`${ this.apiUrl }/${ id }/deactivate`, {}, { headers: this.authToken.getAuthHeaders() });
-  }
-
   remove(id: string): Observable<WandResponse> {
     return this.http.delete<WandResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
-
 }
