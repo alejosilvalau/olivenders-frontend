@@ -35,7 +35,7 @@ export class WizardService {
   }
 
   findOneByUsername(username: string): Observable<WizardResponse> {
-    return this.http.get<WizardResponse>(`${ this.apiUrl }/username/${ username }`);
+    return this.http.get<WizardResponse>(`${ this.apiUrl }/username/${ username }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   isUsernameAvailable(username: string): Observable<WizardResponse<boolean>> {
@@ -55,7 +55,7 @@ export class WizardService {
   }
 
   validatePassword(id: string, wizardData: WizardRequest): Observable<WizardResponse<boolean>> {
-    return this.http.post<WizardResponse<boolean>>(`${ this.apiUrl }/validate/${ id }`, wizardData);
+    return this.http.post<WizardResponse<boolean>>(`${ this.apiUrl }/validate/${ id }`, wizardData, { headers: this.authToken.getAuthHeaders() });
   }
 
   update(id: string, wizardData: WizardRequest): Observable<WizardResponse> {

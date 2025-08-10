@@ -18,7 +18,7 @@ export class OrderService {
 
   findAll(page: number = 1, pageSize: number = Number.MAX_SAFE_INTEGER): Observable<OrderResponse<Order[]>> {
     const params = new HttpParams().set('page', page).set('pageSize', pageSize);
-    return this.http.get<OrderResponse<Order[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() });
+    return this.http.get<OrderResponse<Order[]>>(this.apiUrl, { params });
   }
 
   findAllByWizard(wizardId: string, page: number = 1, pageSize: number = Number.MAX_SAFE_INTEGER): Observable<OrderResponse<Order[]>> {
