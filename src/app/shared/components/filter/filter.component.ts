@@ -42,13 +42,13 @@ export class FilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.woodService.findAll(1, Number.MAX_SAFE_INTEGER).subscribe({
+    this.woodService.findAll().subscribe({
       next: (woods: WoodResponse<Wood[]>) => {
         this.woods = woods;
       }
     });
 
-    this.coreService.findAll(1, Number.MAX_SAFE_INTEGER).subscribe({
+    this.coreService.findAll().subscribe({
       next: (cores: CoreResponse<Core[]>) => {
         this.cores = cores;
       }
