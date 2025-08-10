@@ -10,6 +10,7 @@ import { DataTableComponent, DataTableFormat } from '../../../shared/components/
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
+import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
 @Component({
   selector: 'app-school-management',
   standalone: true,
@@ -75,26 +76,18 @@ export class SchoolManagementComponent implements OnInit {
   }
 
   private searchSchool(term: string): void {
-    const trimmedTerm = term.trim();
-    if (!trimmedTerm) {
-      this.filteredSchools = [];
-      return;
-    }
+    const searchChain = [
+      (t: string) => this.schoolService.findOneByName(t),
+      (t: string) => this.schoolService.findOne(t)
+    ];
 
-    const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
-    const search$: Observable<SchoolResponse<School>> = isObjectId
-      ? this.schoolService.findOne(trimmedTerm)
-      : this.schoolService.findOneByName(trimmedTerm);
-
-    search$.subscribe({
-      next: res => {
-        this.filteredSchools = res.data ? [res.data] : [];
-      },
-      error: err => {
-        this.filteredSchools = [];
-        this.alertComponent.showAlert(err.error.message, AlertType.Error);
-      }
-    });
+    const notFoundMessage = 'No school found with this search';
+    chainedEntitySearch(
+      term, searchChain,
+      (results: School[]) => this.filteredSchools = results,
+      this.alertComponent,
+      notFoundMessage
+    );
   }
 
   onSearch(filteredSchools: School[]): void {

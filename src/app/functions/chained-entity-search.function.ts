@@ -23,7 +23,6 @@ export function chainedEntitySearch(
 
   chain(trimmedTerm).subscribe({
     next: res => {
-      console.log('Search result:', res);
       const results = res.data
         ? (Array.isArray(res.data) ? res.data : [res.data])
         : [];
