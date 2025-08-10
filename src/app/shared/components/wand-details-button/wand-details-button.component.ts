@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Wand } from '../../../core/models/wand.interface';
 import { BottomSheetConfig } from '../../../core/models/bottom-sheet.interface.js';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { BottomSheetComponent } from '../../../shared/components/bottom-sheet/bottom-sheet.component';
+import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-wand-details-button',

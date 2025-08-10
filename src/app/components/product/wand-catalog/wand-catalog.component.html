@@ -1,6 +1,6 @@
 <div class="container-fluid mb-4">
 
-  <button class="btn d-lg-none mt-2 w-100 filter-button" (click)="toggleFilter()">
+  <button class="btn d-lg-none mt-3 w-100 filter-button" (click)="toggleFilter()">
     {{ showFilter ? "Hide Filters" : "Show Filters" }}
   </button>
 
@@ -9,32 +9,33 @@
       class="col-12 col-lg-3 filter"
       [class.d-none]="!showFilter && isMobile"
     >
-      <div class="py-2 sticky-lg-top">
+      <div class="py-md-2 sticky-lg-top">
         <app-filter
           (filterChanged)="onFilterChanged($event)"
         ></app-filter>
       </div>
     </div>
-    <div class="col-12 col-lg-9 mt-5">
+    <div class="col-12 col-lg-9 mt-4 mt-md-5">
       <div class="row g-3">
           <div
             *ngFor="let wand of filteredWands"
             class="col-12 col-sm-6 col-md-4 col-xl-3"
           >
             <div class="card h-100">
-              <div class="position-relative h-100">
+              <div class="position-relative h-100 d-flex flex-column align-items-center justify-content-center">
+                <app-wand-details-button
+                  [wand]="wand"
+                  class="position-absolute top-0 end-0"
+                ></app-wand-details-button>
                 <img
                   id="wand-image"
                   class="card-img-top img-fluid"
                   [src]="wand.image"
                   alt="wand-image"
                 />
-                <app-wand-details-button
-                  [wand]="wand"
-                ></app-wand-details-button>
               </div>
               <div class="card-body d-flex flex-column">
-                <h5 class="card-title text-start fw-normal">
+                <h5 class="card-title fw-normal">
                   {{ wand.name | titlecase }}
                 </h5>
                 <div class="mt-auto custom-button-container flex flex-column">

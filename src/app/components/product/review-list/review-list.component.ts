@@ -3,7 +3,7 @@ import { OrderService } from '../../../core/services/order.service';
 import { WandService } from '../../../core/services/wand.service';
 import { Order } from '../../../core/models/order.interface';
 import { Wand } from '../../../core/models/wand.interface';
-import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button';
+import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button.component';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component.js';
 

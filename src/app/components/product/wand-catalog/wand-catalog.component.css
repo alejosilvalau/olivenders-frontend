@@ -13,8 +13,25 @@
   display: flex;
 }
 
+.card-img-top {
+  max-width: 90%;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+}
+
 .card-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 3.5em;
+  text-align: center;
+  word-break: break-word;
 }
 
 .filter {
@@ -71,12 +88,6 @@
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-}
-
-.card-img-top {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
 }
 
 .custom-button-container {
