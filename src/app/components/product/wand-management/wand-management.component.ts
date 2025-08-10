@@ -15,6 +15,9 @@ import { ImageService } from '../../../core/services/image.service.js';
 import { ImageResponse } from '../../../core/models/image.interface.js';
 import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
+import { throwError } from 'rxjs/internal/observable/throwError';
+import { switchMap } from 'rxjs';
+import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
 
 @Component({
   selector: 'app-wand-management',
@@ -27,14 +30,21 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
 export class WandManagementComponent implements OnInit {
   wandForm: FormGroup = new FormGroup({});
   wands: Wand[] = [];
-  selectedWand: Wand | null = null;
+
+  // Search properties
   filteredWands: Wand[] = [];
   searchTerm: string = '';
+
+  // Form properties
+  selectedWand: Wand | null = null;
   selectedImageFile: File | null = null;
   previewUrl: string | null = null;
+
+  // Pagination properties
   totalWands = 0;
   currentPage = 1;
   pageSize = 10;
+
   DataTableFormat = DataTableFormat;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
@@ -98,49 +108,33 @@ export class WandManagementComponent implements OnInit {
     this.findAllWands();
   }
 
-  private searchWand(term: string): void {
-    const trimmedTerm = term.trim();
-    if (!trimmedTerm) {
-      this.filteredWands = [];
-      return;
-    }
+  searchWand(term: string): void {
+    const searchChain = [
+      (t: string) => this.woodService.findOneByName(t).pipe(
+        switchMap(woodRes => woodRes.data
+          ? this.wandService.findAllByWood(woodRes.data.id)
+          : throwError(() => null)
+        )
+      ),
+      (t: string) => this.coreService.findOneByName(t).pipe(
+        switchMap(coreRes => coreRes.data
+          ? this.wandService.findAllByCore(coreRes.data.id)
+          : throwError(() => null)
+        )
+      ),
+      (t: string) => this.wandService.findOne(t)
+    ];
 
-    const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
-    let search$;
-
-    if (isObjectId) {
-      search$ = this.wandService.findOne(trimmedTerm);
-    } else {
-      this.woodService.findOneByName(trimmedTerm).subscribe({
-        next: (woodResponse) => {
-          if (woodResponse.data) {
-            search$ = this.wandService.findAllByWood(woodResponse.data.id);
-          } else {
-            this.coreService.findOneByName(trimmedTerm).subscribe({
-              next: (coreResponse) => {
-                if (coreResponse.data) {
-                  search$ = this.wandService.findAllByCore(coreResponse.data!.id);
-                }
-                else {
-                  this.alertComponent.showAlert('No wand found with this search', AlertType.Info);
-                  this.filteredWands = [];
-                  return;
-                }
-              }, error: (err) => {
-                this.alertComponent.showAlert(err.error.message, AlertType.Error);
-                this.filteredWands = [];
-                return;
-              }
-            });
-          }
-        }, error: (err) => {
-          this.alertComponent.showAlert(err.error.message, AlertType.Error);
-          this.filteredWands = [];
-          return;
-        }
-      });
-    }
+    const notFoundMessage = 'No wand found with this search';
+    chainedEntitySearch(
+      term,
+      searchChain,
+      (results: Wand[]) => this.filteredWands = results,
+      this.alertComponent,
+      notFoundMessage
+    );
   }
+
 
   onSearch(filteredWands: Wand[]): void {
     if (filteredWands.length > 0) {

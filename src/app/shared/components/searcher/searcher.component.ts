@@ -23,9 +23,12 @@ export class SearcherComponent {
       return;
     }
 
+    const getNestedValue = (obj: any, path: string) =>
+      path.split('.').reduce((acc, part) => acc && acc[part], obj);
+
     const filtered = this.data.filter(item =>
       this.filterAttributes.some(attr =>
-        item[attr]?.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+        getNestedValue(item, attr)?.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
       )
     );
 

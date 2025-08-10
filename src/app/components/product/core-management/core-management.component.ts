@@ -10,6 +10,7 @@ import { DataTableComponent, DataTableFormat } from '../../../shared/components/
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
+import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
 @Component({
   selector: 'app-core-management',
   standalone: true,
@@ -21,9 +22,13 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
 export class CoreManagementComponent implements OnInit {
   coreForm: FormGroup = new FormGroup({});
   cores: Core[] = [];
+
+  // Search properties
   selectedCore: Core | null = null;
   filteredCores: Core[] = [];
   searchTerm: string = '';
+
+  // Pagination properties
   totalCores = 0;
   currentPage = 1;
   pageSize = 10;
@@ -74,26 +79,18 @@ export class CoreManagementComponent implements OnInit {
   }
 
   private searchCore(term: string): void {
-    const trimmedTerm = term.trim();
-    if (!trimmedTerm) {
-      this.filteredCores = [];
-      return;
-    }
+    const searchChain = [
+      (t: string) => this.coreService.findOneByName(t),
+      (t: string) => this.coreService.findOne(t)
+    ];
 
-    const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
-    const search$: Observable<CoreResponse<Core>> = isObjectId
-      ? this.coreService.findOne(trimmedTerm)
-      : this.coreService.findOneByName(trimmedTerm);
-
-    search$.subscribe({
-      next: res => {
-        this.filteredCores = res.data ? [res.data] : [];
-      },
-      error: err => {
-        this.filteredCores = [];
-        this.alertComponent.showAlert(err.error.message, AlertType.Error);
-      }
-    });
+    const notFoundMessage = 'No core found with this search';
+    chainedEntitySearch(
+      term, searchChain,
+      (results: Core[]) => this.filteredCores = results,
+      this.alertComponent,
+      notFoundMessage
+    );
   }
 
   onSearch(filteredCores: Core[]): void {
