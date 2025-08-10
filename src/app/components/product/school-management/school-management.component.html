@@ -2,7 +2,7 @@
 
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
     <h2 class="mb-3 mb-md-0">SCHOOLS MANAGEMENT</h2>
-    <app-searcher [data]="schools" [filterAttributes]="['name', 'id', 'email']" (filteredData)="onSearch($event)"
+    <app-searcher [data]="schools" [filterAttributes]="['id', 'name', 'email', 'address', 'phone']" (filteredData)="onSearch($event)"
       (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
     <app-add-button [modalTarget]="'#addSchool'" [buttonText]="'Add School'" />
   </div>

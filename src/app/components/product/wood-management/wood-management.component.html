@@ -1,7 +1,7 @@
 <div class="container my-4">
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
     <h2 class="mb-3 mb-md-0">WOODS MANAGEMENT</h2>
-    <app-searcher [data]="woods" [filterAttributes]="['name', 'id', 'binomial_name']" (filteredData)="onSearch($event)"
+    <app-searcher [data]="woods" [filterAttributes]="['id', 'name', 'binomial_name', 'price']" (filteredData)="onSearch($event)"
       (searchTermChange)="searchTerm = $event" class="searcher"></app-searcher>
     <app-add-button [modalTarget]="'#addWood'" [buttonText]="'Add Wood'" />
   </div>
