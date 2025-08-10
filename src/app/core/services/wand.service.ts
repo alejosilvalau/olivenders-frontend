@@ -32,7 +32,7 @@ export class WandService {
   }
 
   findOne(id: string): Observable<WandResponse> {
-    return this.http.get<WandResponse>(`${ this.apiUrl }/${ id }`);
+    return this.http.get<WandResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   findOneByName(name: string): Observable<WandResponse> {
