@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CoreService } from '../../../core/services/core.service';
 import { Core, CoreResponse } from '../../../core/models/core.interface';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, throwError } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
@@ -12,6 +12,8 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
 import { Wizard, WizardResponse, WizardRole } from '../../../core/models/wizard.interface.js';
 import { WizardService } from '../../../core/services/wizard.service.js';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
+import { SchoolService } from '../../../core/services/school.service.js';
+import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
 
 @Component({
   selector: 'app-wizard-management',
@@ -22,11 +24,17 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
 })
 
 export class WizardManagementComponent implements OnInit {
-  wizardForm: FormGroup = new FormGroup({});
   wizards: Wizard[] = [];
+
+  // Form properties
+  wizardForm: FormGroup = new FormGroup({});
   selectedWizard: Wizard | null = null;
+
+  // Search properties
   filteredWizards: Wizard[] = [];
   searchTerm: string = '';
+
+  // Pagination properties
   totalWizards = 0;
   currentPage = 1;
   pageSize = 10;
@@ -37,7 +45,8 @@ export class WizardManagementComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private wizardService: WizardService
+    private wizardService: WizardService,
+    private schoolService: SchoolService
   ) { }
 
 
@@ -69,32 +78,26 @@ export class WizardManagementComponent implements OnInit {
   }
 
   private searchWizard(term: string): void {
-    const trimmedTerm = term.trim();
-    if (!trimmedTerm) {
-      this.filteredWizards = [];
-      return;
-    }
+    const searchChain = [
+      (t: string) => this.wizardService.findOneByUsername(t),
+      (t: string) => this.wizardService.findOneByEmail(t),
+      (t: string) => this.schoolService.findOneByName(t).pipe(
+        switchMap(schoolRes => schoolRes.data
+          ? this.wizardService.findAllBySchool(schoolRes.data.id)
+          : throwError(() => null)
+        )
+      ),
+      (t: string) => this.wizardService.findOne(t)
+    ];
 
-    const isObjectId = /^[a-f\d]{24}$/i.test(trimmedTerm);
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedTerm);
-    let search$: Observable<CoreResponse<Wizard>>;
-    if (isObjectId) {
-      search$ = this.wizardService.findOne(trimmedTerm);
-    } else if (isEmail) {
-      search$ = this.wizardService.findOneByEmail(trimmedTerm);
-    } else {
-      search$ = this.wizardService.findOneByUsername(trimmedTerm);
-    }
-
-    search$.subscribe({
-      next: res => {
-        this.filteredWizards = res.data ? [res.data] : [];
-      },
-      error: err => {
-        this.filteredWizards = [];
-        this.alertComponent.showAlert(err.error.message, AlertType.Error);
-      }
-    });
+    const notFoundMessage = 'No wizard found with this search';
+    chainedEntitySearch(
+      term,
+      searchChain,
+      (results: Wizard[]) => this.filteredWizards = results,
+      this.alertComponent,
+      notFoundMessage
+    );
   }
 
   onSearch(filteredWizards: Wizard[]): void {

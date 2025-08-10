@@ -5,7 +5,7 @@
     <h2 class="mb-3 mb-md-0">WIZARDS MANAGEMENT</h2>
     <app-searcher
       [data]="wizards"
-      [filterAttributes]="['username', 'email', 'id']"
+      [filterAttributes]="['id', 'username', 'name', 'last_name', 'email', 'address', 'phone', 'role', 'deactivated', 'school.name']"
       (filteredData)="onSearch($event)"
       (searchTermChange)="searchTerm = $event"
       class="searcher"

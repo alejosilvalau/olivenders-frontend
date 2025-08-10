@@ -20,11 +20,13 @@ import { chainedEntitySearch } from '../../../functions/chained-entity-search.fu
 })
 
 export class CoreManagementComponent implements OnInit {
-  coreForm: FormGroup = new FormGroup({});
   cores: Core[] = [];
 
-  // Search properties
+  // Form properties
+  coreForm: FormGroup = new FormGroup({});
   selectedCore: Core | null = null;
+
+  // Search properties
   filteredCores: Core[] = [];
   searchTerm: string = '';
 

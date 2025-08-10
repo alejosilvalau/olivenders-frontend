@@ -20,11 +20,17 @@ import { chainedEntitySearch } from '../../../functions/chained-entity-search.fu
 })
 
 export class WoodManagementComponent implements OnInit {
-  woodForm: FormGroup = new FormGroup({});
   woods: Wood[] = [];
+
+  // Form properties
+  woodForm: FormGroup = new FormGroup({});
   selectedWood: Wood | null = null;
+
+  // Search properties
   filteredWoods: Wood[] = [];
   searchTerm: string = '';
+
+  // Pagination properties
   totalWoods = 0;
   currentPage = 1;
   pageSize = 10;

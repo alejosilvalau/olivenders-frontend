@@ -28,17 +28,17 @@ import { chainedEntitySearch } from '../../../functions/chained-entity-search.fu
 })
 
 export class WandManagementComponent implements OnInit {
-  wandForm: FormGroup = new FormGroup({});
   wands: Wand[] = [];
+
+  // Form properties
+  wandForm: FormGroup = new FormGroup({});
+  selectedWand: Wand | null = null;
+  selectedImageFile: File | null = null;
+  previewUrl: string | null = null;
 
   // Search properties
   filteredWands: Wand[] = [];
   searchTerm: string = '';
-
-  // Form properties
-  selectedWand: Wand | null = null;
-  selectedImageFile: File | null = null;
-  previewUrl: string | null = null;
 
   // Pagination properties
   totalWands = 0;

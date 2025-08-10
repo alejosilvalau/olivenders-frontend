@@ -21,6 +21,11 @@ export class WizardService {
     return this.http.get<WizardResponse<Wizard[]>>(this.apiUrl, { params, headers: this.authToken.getAuthHeaders() },);
   }
 
+  findAllBySchool(schoolId: string, page: number = 1, pageSize: number = 5): Observable<WizardResponse<Wizard[]>> {
+    const params = new HttpParams().set('page', page).set('pageSize', pageSize);
+    return this.http.get<WizardResponse<Wizard[]>>(`${ this.apiUrl }/school/${ schoolId }`, { params, headers: this.authToken.getAuthHeaders() });
+  }
+
   findOne(id: string): Observable<WizardResponse> {
     return this.http.get<WizardResponse>(`${ this.apiUrl }/${ id }`, { headers: this.authToken.getAuthHeaders() });
   }

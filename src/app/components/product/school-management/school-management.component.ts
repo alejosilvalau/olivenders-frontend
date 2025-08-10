@@ -20,11 +20,17 @@ import { chainedEntitySearch } from '../../../functions/chained-entity-search.fu
 })
 
 export class SchoolManagementComponent implements OnInit {
-  schoolForm: FormGroup = new FormGroup({});
   schools: School[] = [];
+
+  // Form properties
+  schoolForm: FormGroup = new FormGroup({});
   selectedSchool: School | null = null;
+
+  // Search properties
   filteredSchools: School[] = [];
   searchTerm: string = '';
+
+  // Pagination properties
   totalSchools = 0;
   currentPage = 1;
   pageSize = 10;

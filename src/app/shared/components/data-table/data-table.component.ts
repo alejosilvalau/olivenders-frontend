@@ -47,7 +47,7 @@ export class DataTableComponent<T extends Record<string, any>> {
       case DataTableFormat.Date:
         return this.datePipe.transform(value, 'medium');
       case DataTableFormat.Boolean:
-        return value ? 'Yes' : 'No';
+        return value ? 'True' : 'False';
       default:
         return value;
     }
