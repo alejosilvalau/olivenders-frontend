@@ -58,7 +58,8 @@ button>img {
   .table,
   .table tbody,
   .table tr,
-  .table td {
+  .table td,
+  tfoot {
     display: block;
     width: 100%;
   }

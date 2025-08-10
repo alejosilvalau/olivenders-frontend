@@ -43,9 +43,9 @@
         </td>
       </tr>
     </tbody>
-    <tfoot *ngIf="data.length === 0">
+    <tfoot *ngIf="data.length === 0" class="">
       <tr>
-        <td [attr.colspan]="columns.length + 1" class="text-center py-5 text-muted">
+        <td [attr.colspan]="columns.length + 5" class="text-center py-5 text-muted">
           <i class="bi bi-people display-6 d-block mb-2"></i> {{ emptyMessage }}
         </td>
       </tr>
