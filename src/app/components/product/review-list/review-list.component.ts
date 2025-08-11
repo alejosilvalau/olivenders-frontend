@@ -46,6 +46,21 @@ export class ReviewListComponent implements OnInit {
     return './default-wand.jpg';
   }
 
+  getOrderDate(order: Order): string {
+    return new Date(order.created_at).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+
+  gerOrderUser(order: Order): string {
+    if (typeof order.wizard == 'object') {
+      return `${ order.wizard.name } ${ order.wizard.last_name }`;
+    }
+    return 'Unknown User';
+  }
+
   loadReviews(): void {
     if (this.allLoaded || this.loading) return;
     this.loading = true;
@@ -69,6 +84,7 @@ export class ReviewListComponent implements OnInit {
   }
 
   getRandomRating(): number {
+    return 3;
     return Math.floor(Math.random() * 2) + 4; // 4 or 5
   }
 

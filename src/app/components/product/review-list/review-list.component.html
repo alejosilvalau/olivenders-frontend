@@ -1,32 +1,40 @@
 <div class="review-list container">
+  <div
+    *ngFor="let order of ordersWithReviews"
+    class="review-card d-flex align-items-center mb-4 p-3 shadow-sm"
+  >
+    <img
+      [src]="getReviewImage(order)"
+      alt="Wand Image"
+      class="wand-image me-md-4"
+    />
+    <app-wand-details-button
+      [wand]="getWand(order)"
+      class="wand-details-btn"
+    ></app-wand-details-button>
     <div
-      *ngFor="let order of ordersWithReviews"
-      class="review-card d-flex align-items-center mb-4 p-3 border rounded shadow-sm"
+      class="flex-grow-1 review-content-card position-relative d-flex flex-column h-100"
     >
-      <img
-        [src]="getReviewImage(order)"
-        alt="Wand Image"
-        class="wand-image me-4"
-      />
-      <div class="flex-grow-1">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <div class="review-stars">
-            <ng-container *ngFor="let star of [0,1,2,3,4]; let i = index">
-              <span [ngClass]="i < order.rating ? 'text-warning' : 'text-secondary'">&#9733;</span>
-            </ng-container>
-          </div>
-
+      <div class="review-stars">
+        <ng-container *ngFor="let star of [0, 1, 2, 3, 4]; let i = index">
+          <span [ngClass]="i < order.rating ? 'text-warning' : 'text-secondary'"
+            >&#9733;</span
+          >
+        </ng-container>
+      </div>
+      <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+        <div class="review-text text-center fs-4">
+          <span>{{ order.review }}</span>
         </div>
-        <div class="review-text">
-          <span>"{{ order.review }}"</span>
-        </div>
-        <app-wand-details-button
-          [wand]="getWand(order)"
-        ></app-wand-details-button>
+      </div>
+      <div class="review-meta d-flex justify-content-between align-items-center mb-2">
+        <span class="review-user fw-normal">{{ gerOrderUser(order) | titlecase}}</span>
+        <span class="review-date text-muted">{{ getOrderDate(order) }}</span>
       </div>
     </div>
-    <div *ngIf="loading" class="text-center py-3">
-      <span class="spinner-border"></span>
-    </div>
+  </div>
+  <div *ngIf="loading" class="text-center py-3">
+    <span class="spinner-border"></span>
+  </div>
   <app-infinite-scroll (scrolled)="onScrollLoadMore()" [disabled]="loading" />
 </div>
