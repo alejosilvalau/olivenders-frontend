@@ -44,7 +44,6 @@ export class OrderDashboardComponent implements OnInit {
 
   loadOrders(): void {
     if (this.allLoaded || this.loading) return;
-    console.log('Loading orders for wizard:', this.wizardId, 'Page:', this.page);
     this.loading = true;
     this.orderService.findAllByWizard(this.wizardId, this.page, this.pageSize).subscribe({
       next: (res) => {

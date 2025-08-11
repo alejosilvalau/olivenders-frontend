@@ -22,7 +22,7 @@ export class ReviewListComponent implements OnInit {
 
   // Pagination state
   page = 1;
-  pageSize = 12;
+  pageSize = 5;
   loading = false;
   allLoaded = false;
 
@@ -66,13 +66,14 @@ export class ReviewListComponent implements OnInit {
     this.loading = true;
     this.orderService.findAll(this.page, this.pageSize).subscribe({
       next: (res) => {
-        const newOrders = (res.data || [])
+        const allOrders = res.data || [];
+        const newOrders = allOrders
           .filter((order: Order) => !!order.review)
           .map((order: Order) => ({
             ...order,
             rating: this.getRandomRating()
           }));
-        if (newOrders.length < this.pageSize) this.allLoaded = true;
+        if (allOrders.length < this.pageSize) this.allLoaded = true;
         this.ordersWithReviews = [...this.ordersWithReviews, ...newOrders];
         this.page++;
         this.loading = false;

@@ -16,7 +16,7 @@ export class InfiniteScrollComponent implements OnInit {
     } else if (window.innerWidth < 1025) {
       this.threshold = 600;
     } else {
-      this.threshold = 300;
+      this.threshold = 400;
     }
   }
 
