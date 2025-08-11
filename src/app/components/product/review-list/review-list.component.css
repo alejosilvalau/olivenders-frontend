@@ -44,12 +44,6 @@
   filter: none;
 }
 
-.review-stars .text-warning,
-.review-stars .text-secondary {
-  color: inherit !important;
-  filter: none;
-}
-
 .review-text {
   margin: 3rem 0;
   color: black;

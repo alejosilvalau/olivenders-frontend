@@ -84,7 +84,6 @@ export class ReviewListComponent implements OnInit {
   }
 
   getRandomRating(): number {
-    return 3;
     return Math.floor(Math.random() * 2) + 4; // 4 or 5
   }
 
