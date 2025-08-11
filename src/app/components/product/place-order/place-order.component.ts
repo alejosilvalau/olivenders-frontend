@@ -129,7 +129,7 @@ export class PlaceOrderComponent implements OnInit {
       this.orderService.pay(orderRes.data!.id).subscribe({
         next: (paymentRes) => {
           alertMethod(paymentRes.message, 'Payment processed successfully!', AlertType.Success);
-          this.router.navigate(['/orders']);
+          this.router.navigate(['/']);
         },
         error: (err) => {
           alertMethod(err.error.message, 'Error processing payment, please try again', AlertType.Error);

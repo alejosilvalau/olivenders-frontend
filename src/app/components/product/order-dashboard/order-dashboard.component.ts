@@ -26,7 +26,7 @@ export class OrderDashboardComponent implements OnInit {
 
   // Pagination state
   page = 1;
-  pageSize = 12;
+  pageSize = 5;
   loading = false;
   allLoaded = false;
 
@@ -44,6 +44,7 @@ export class OrderDashboardComponent implements OnInit {
 
   loadOrders(): void {
     if (this.allLoaded || this.loading) return;
+    console.log('Loading orders for wizard:', this.wizardId, 'Page:', this.page);
     this.loading = true;
     this.orderService.findAllByWizard(this.wizardId, this.page, this.pageSize).subscribe({
       next: (res) => {
@@ -57,6 +58,19 @@ export class OrderDashboardComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  statusColor(status: string): string {
+    switch (status) {
+      case OrderStatus.Pending: return '#f7c948';
+      case OrderStatus.Paid: return '#36b37e';
+      case OrderStatus.Dispatched: return '#00b8d9';
+      case OrderStatus.Delivered: return '#0052cc';
+      case OrderStatus.Completed: return '#01bc2cff';
+      case OrderStatus.Cancelled: return '#e74c3c';
+      case OrderStatus.Refunded: return '#8e44ad';
+      default: return '#cccccc';
+    }
   }
 
   onScrollLoadMore() {
@@ -109,6 +123,7 @@ export class OrderDashboardComponent implements OnInit {
       next: (res) => {
         this.alertComponent.showAlert(res.message, AlertType.Success);
         this.resetOrders();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       },
       error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
@@ -126,6 +141,7 @@ export class OrderDashboardComponent implements OnInit {
       next: (res) => {
         this.alertComponent.showAlert(res.message, AlertType.Success);
         this.resetOrders();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       },
       error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
@@ -143,6 +159,7 @@ export class OrderDashboardComponent implements OnInit {
       next: (res) => {
         this.alertComponent.showAlert(res.message, AlertType.Success);
         this.resetOrders();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       },
       error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
@@ -162,6 +179,7 @@ export class OrderDashboardComponent implements OnInit {
       next: (res) => {
         this.alertComponent.showAlert(res.message, AlertType.Success);
         this.resetOrders();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       },
       error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });

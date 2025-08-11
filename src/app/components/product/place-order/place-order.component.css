@@ -16,7 +16,6 @@
 .order-image {
   max-height: 275px;
   object-fit: fill;
-  box-shadow: 0 8px 20px rgba(19, 19, 19, 0.249);
   border-radius: 13px;
 }
 
