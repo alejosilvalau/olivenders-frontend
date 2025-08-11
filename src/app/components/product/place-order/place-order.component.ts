@@ -123,7 +123,7 @@ export class PlaceOrderComponent implements OnInit {
   }
 
   simulatePayment(orderRes: OrderResponse): void {
-    const delay = 2000; // 2 seconds
+    const delay = 1000; // 1 second
 
     setTimeout(() => {
       this.orderService.pay(orderRes.data!.id).subscribe({

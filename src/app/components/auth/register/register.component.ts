@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
       phone: ['', [Validators.required]],
       school: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirm_password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
   }
 
   private passwordMatchValidator(form: FormGroup) {
-    return form.get('password')?.value === form.get('confirmPassword')?.value
+    return form.get('password')?.value === form.get('confirm_password')?.value
       ? true
       : false;
   }
@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
     if (!this.passwordMatchValidator(this.registerForm)) {
       alertMethod('Passwords do not match', 'Please re-enter your password', AlertType.Error);
       this.registerForm.get('password')?.reset();
-      this.registerForm.get('confirmPassword')?.reset();
+      this.registerForm.get('confirm_password')?.reset();
       return;
     }
 
@@ -87,7 +87,7 @@ export class RegisterComponent implements OnInit {
             this.wizardService.add(userData).subscribe({
               next: (addResponse) => {
                 alertMethod(addResponse.message, 'You can now log in with your credentials', AlertType.Success);
-                this.router.navigate(['/login']);
+                this.router.navigate(['auth/login']);
               },
               error: (err: any) => {
                 alertMethod(err.error.message, 'Please try again', AlertType.Error);

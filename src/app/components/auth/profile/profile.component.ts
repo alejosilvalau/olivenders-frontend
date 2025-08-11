@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 import { WizardService } from '../../../core/services/wizard.service.js';
 import { AuthService } from '../../../core/services/auth.service';
 import { Wizard, WizardRequest } from '../../../core/models/wizard.interface.js';
@@ -24,7 +22,6 @@ import { SchoolService } from '../../../core/services/school.service.js';
 export class ProfileComponent implements OnInit {
   wizard: Wizard | null = null;
   profileForm: FormGroup = new FormGroup({});
-  currentPassword: string = '';
   changePasswordForm: FormGroup = new FormGroup({});
 
   constructor(
@@ -44,15 +41,14 @@ export class ProfileComponent implements OnInit {
       school: ['', Validators.required],
     });
     this.changePasswordForm = this.fb.group({
-      currentPassword: ['', [Validators.required, Validators.minLength(6)]],
-      newPassword: ['', [Validators.required, Validators.minLength(6)]],
-      confirmNewPassword: ['', [Validators.required, Validators.minLength(6)]],
+      current_password: ['', [Validators.required, Validators.minLength(6)]],
+      new_password: ['', [Validators.required, Validators.minLength(6)]],
+      confirm_new_password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   ngOnInit(): void {
-    const page = 1;
-    this.schoolService.findAll(page, Number.MAX_SAFE_INTEGER).subscribe(() => {
+    this.schoolService.findAll().subscribe(() => {
       this.reloadProfile();
     });
   }
@@ -68,13 +64,17 @@ export class ProfileComponent implements OnInit {
   }
 
   private newPasswordMatchValidator(form: FormGroup) {
-    return form.get('newPassword')?.value === form.get('confirmNewPassword')?.value
+    return form.get('new_password')?.value === form.get('confirm_new_password')?.value
       ? true
       : false;
   }
 
   get profileFormControl() {
     return this.profileForm.get('school') as FormControl;
+  }
+
+  resetPasswordOnProfileForm() {
+    this.profileForm.get('password')?.reset();
   }
 
   async updateProfile() {
@@ -108,7 +108,7 @@ export class ProfileComponent implements OnInit {
 
   changePassword(): void {
     if (this.wizard?.id) {
-      this.wizardService.validatePassword(this.wizard.id, { password: this.changePasswordForm.value.currentPassword })
+      this.wizardService.validatePassword(this.wizard.id, { password: this.changePasswordForm.value.current_password })
         .subscribe({
           next: (res) => {
             if (!res.data) {
@@ -123,13 +123,13 @@ export class ProfileComponent implements OnInit {
 
             if (!this.newPasswordMatchValidator(this.changePasswordForm)) {
               alertMethod('Passwords do not match', 'Please re-enter your password', AlertType.Error);
-              this.changePasswordForm.get('newPassword')?.reset();
-              this.changePasswordForm.get('confirmNewPassword')?.reset();
+              this.changePasswordForm.get('new_password')?.reset();
+              this.changePasswordForm.get('confirm_new_password')?.reset();
               return;
             }
 
-            const newPassword: WizardRequest = { password: this.changePasswordForm.value.newPassword.trim() };
-            this.wizardService.changePasswordWithoutToken(this.wizard!.id, newPassword)
+            const new_password: WizardRequest = { password: this.changePasswordForm.value.new_password.trim() };
+            this.wizardService.changePasswordWithoutToken(this.wizard!.id, new_password)
               .subscribe({
                 next: (res) => {
                   alertMethod(res.message, 'Password changed successfully', AlertType.Success);
@@ -139,6 +139,7 @@ export class ProfileComponent implements OnInit {
           },
           error: (err) => {
             alertMethod(err.error.message, 'Please try again later', AlertType.Error);
+            this.changePasswordForm.reset();
           }
         });
     }

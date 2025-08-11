@@ -3,7 +3,6 @@
   <h2 class="mb-4">Order Dashboard</h2>
   <div *ngIf="(orders?.length ?? 0) > 0; else noOrders">
     <div class="row g-4">
-      <app-infinite-scroll (scrolled)="onScrollLoadMore()" [disabled]="loading">
         <div class="col-12" *ngFor="let order of orders">
           <div class="card shadow border-0 mb-2">
             <div class="row g-0 align-items-center">
@@ -77,8 +76,8 @@
 
           </div>
         </div>
-      </app-infinite-scroll>
     </div>
+    <app-infinite-scroll (scrolled)="onScrollLoadMore()" [disabled]="loading" />
   </div>
   <div *ngIf="loading" class="text-center py-3">
     <span class="spinner-border"></span>

@@ -45,6 +45,7 @@ export class EntitySelectorComponent implements OnInit {
     const term = (event.target as HTMLInputElement).value.trim();
     this.selectedEntityName = term;
     if (!term) {
+      this.entityControl.setValue('');
       this.service.findAll().subscribe((res: any) => {
         this.filteredEntities = res.data || [];
         this.showDropdown = true;

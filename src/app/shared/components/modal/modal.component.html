@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title custom-modal-title" [id]="config.id + 'Label'"> {{ config.title }} </h1>
-        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close custom-btn-close" (click)="cancel()" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <ng-container *ngTemplateOutlet="modalContentTemplate"></ng-container>

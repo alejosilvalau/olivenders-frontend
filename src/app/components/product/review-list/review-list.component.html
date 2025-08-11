@@ -1,5 +1,4 @@
 <div class="review-list container">
-  <app-infinite-scroll (scrolled)="onScrollLoadMore()" [disabled]="loading">
     <div
       *ngFor="let order of ordersWithReviews"
       class="review-card d-flex align-items-center mb-4 p-3 border rounded shadow-sm"
@@ -29,5 +28,5 @@
     <div *ngIf="loading" class="text-center py-3">
       <span class="spinner-border"></span>
     </div>
-  </app-infinite-scroll>
+  <app-infinite-scroll (scrolled)="onScrollLoadMore()" [disabled]="loading" />
 </div>

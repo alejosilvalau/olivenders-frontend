@@ -1,10 +1,9 @@
 <div class="container my-4">
+  <h2 class="mb-4 mt-5">Profile Settings</h2>
   <form [formGroup]="profileForm" class="two-column-form mb-lg-5">
     <div class="row g-3 m-auto">
       <div class="col-md-6">
-        <label for="username" class="form-label text-primary fw-medium"
-          >Username</label
-        >
+        <label for="username" class="form-label fw-medium">Username</label>
         <input
           type="text"
           id="username"
@@ -16,25 +15,14 @@
           class="text-danger"
           *ngIf="
             profileForm.get('username')?.touched &&
-            profileForm.get('username')?.hasError('usernameTaken')
-          "
-        >
-          The username is already taken
-        </small>
-        <small
-          class="text-danger"
-          *ngIf="
-            profileForm.get('usuario')?.touched &&
-            profileForm.get('usuario')?.hasError('required')
+            profileForm.get('username')?.hasError('required')
           "
         >
           Username is required
         </small>
       </div>
       <div class="col-md-6">
-        <label for="name" class="form-label text-primary fw-medium mb-1"
-          >Name</label
-        >
+        <label for="name" class="form-label fw-medium mb-1">Name</label>
         <input
           type="text"
           id="name"
@@ -42,9 +30,18 @@
           placeholder="Name"
           class="form-control"
         />
+        <small
+          class="text-danger"
+          *ngIf="
+            profileForm.get('name')?.touched &&
+            profileForm.get('name')?.hasError('required')
+          "
+        >
+          Name is required
+        </small>
       </div>
       <div class="col-md-6">
-        <label for="last_name" class="form-label text-primary fw-medium mb-1"
+        <label for="last_name" class="form-label fw-medium mb-1"
           >Last Name</label
         >
         <input
@@ -54,11 +51,18 @@
           placeholder="Last Name"
           class="form-control"
         />
+        <small
+          class="text-danger"
+          *ngIf="
+            profileForm.get('last_name')?.touched &&
+            profileForm.get('last_name')?.hasError('required')
+          "
+        >
+          Last Name is required
+        </small>
       </div>
       <div class="col-md-6">
-        <label for="email" class="form-label text-primary fw-medium"
-          >Email</label
-        >
+        <label for="email" class="form-label fw-medium">Email</label>
         <input
           type="email"
           id="email"
@@ -66,15 +70,6 @@
           class="form-control"
           placeholder="name.last_name@hogwarts.edu"
         />
-        <small
-          class="text-danger"
-          *ngIf="
-            profileForm.get('email')?.touched &&
-            profileForm.get('email')?.hasError('emailTaken')
-          "
-        >
-          Email is already taken
-        </small>
         <small
           class="text-danger"
           *ngIf="
@@ -95,9 +90,7 @@
         </small>
       </div>
       <div class="col-md-6">
-        <label for="address" class="form-label text-primary fw-medium mb-1"
-          >Address</label
-        >
+        <label for="address" class="form-label fw-medium mb-1">Address</label>
         <input
           type="text"
           id="address"
@@ -105,11 +98,18 @@
           placeholder="Weasleys' Wizard Wheezes, Diagon Alley"
           class="form-control"
         />
+        <small
+          class="text-danger"
+          *ngIf="
+            profileForm.get('address')?.touched &&
+            profileForm.get('address')?.hasError('required')
+          "
+        >
+          Address is required
+        </small>
       </div>
       <div class="col-md-6">
-        <label for="phone" class="form-label text-primary fw-medium mb-1"
-          >Phone</label
-        >
+        <label for="phone" class="form-label fw-medium mb-1">Phone</label>
         <input
           type="text"
           id="phone"
@@ -117,8 +117,17 @@
           placeholder="443456789"
           class="form-control"
         />
+        <small
+          class="text-danger"
+          *ngIf="
+            profileForm.get('phone')?.touched &&
+            profileForm.get('phone')?.hasError('required')
+          "
+        >
+          Phone is required
+        </small>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 entity-selector-container">
         <app-entity-selector
           [entityControl]="profileFormControl"
           [service]="schoolService"
@@ -128,27 +137,26 @@
           <input type="hidden" formControlName="school" />
         </app-entity-selector>
       </div>
-      <div class="mt-4 d-flex justify-content-center gap-3 w-50 align-items-center">
-
+      <div
+        class="mt-4 d-flex justify-content-center gap-3 align-items-center save-changes-button-container"
+      >
         <button
           type="submit"
-          class="btn btn-primary flex-grow-1"
+          class="btn save-changes-button"
           [attr.data-bs-toggle]="'modal'"
           [attr.data-bs-target]="'#updateProfile'"
         >
           Save Changes
         </button>
-
       </div>
       <div>
-        <h2>More Options</h2>
+        <h2 class="mb-4 mt-4 mb-md-5">More Options</h2>
         <div class="d-flex flex-column flex-md-row gap-3">
           <button
             type="button"
             [attr.data-bs-toggle]="'modal'"
             [attr.data-bs-target]="'#changePassword'"
-            class="btn btn-secondary text-white flex-grow-1"
-
+            class="btn flex-grow-1 change-password-button"
           >
             Change Password
           </button>
@@ -156,8 +164,7 @@
             type="button"
             [attr.data-bs-toggle]="'modal'"
             [attr.data-bs-target]="'#deactivateAccount'"
-            class="btn btn-danger text-white flex-grow-1"
-
+            class="btn flex-grow-1 disable-account-button"
           >
             Disable Account
           </button>
@@ -173,7 +180,7 @@
       cancelButtonText: 'Cancel'
     }"
     (onSubmit)="updateProfile()"
-
+    (onCancel)="this.resetPasswordOnProfileForm()"
   >
     <ng-template #modalContent>
       <form [formGroup]="profileForm">
@@ -188,6 +195,24 @@
             required
           />
         </div>
+        <small
+          class="text-danger"
+          *ngIf="
+            profileForm.get('password')?.touched &&
+            profileForm.get('password')?.hasError('required')
+          "
+        >
+          Password is required
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="
+            changePasswordForm.get('password')?.touched &&
+            changePasswordForm.get('password')?.invalid
+          "
+        >
+          Minimum 6 characters
+        </small>
       </form>
     </ng-template>
   </app-modal>
@@ -199,84 +224,121 @@
       cancelButtonText: 'Cancel'
     }"
     (onSubmit)="changePassword()"
-
+    (onCancel)="this.changePasswordForm.reset()"
   >
     <ng-template #modalContent>
       <form [formGroup]="changePasswordForm">
         <div class="col-12">
           <div class="mb-4">
-            <label
-              for="currentPassword"
-              class="form-label fw-medium text-primary mb-1"
+            <label for="current_password" class="form-label fw-medium mb-1"
               >Current Password</label
             >
             <input
               type="password"
-              id="currentPassword"
-              formControlName="currentPassword"
+              id="current_password"
+              formControlName="current_password"
               placeholder="Current password"
               class="form-control"
             />
             <small
               class="text-danger"
               *ngIf="
-                changePasswordForm.get('currentPassword')?.touched &&
-                changePasswordForm.get('currentPassword')?.hasError('required')
+                profileForm.get('current_password')?.touched &&
+                profileForm.get('current_password')?.hasError('required')
               "
             >
-              Current password is required
+              Current Password is required
+            </small>
+            <small
+              class="text-danger"
+              *ngIf="
+                changePasswordForm.get('current_password')?.touched &&
+                changePasswordForm.get('current_password')?.invalid
+              "
+            >
+              Minimum 6 characters
             </small>
           </div>
           <div class="mb-4">
-            <label
-              for="newPassword"
-              class="form-label fw-medium text-primary mb-1"
+            <label for="new_password" class="form-label fw-medium mb-1"
               >New Password</label
             >
             <input
               type="password"
-              id="newPassword"
-              formControlName="newPassword"
+              id="new_password"
+              formControlName="new_password"
               placeholder="New password"
               class="form-control"
             />
             <small
               class="text-danger"
               *ngIf="
-                changePasswordForm.get('newPassword')?.touched &&
-                changePasswordForm.get('newPassword')?.invalid
+                profileForm.get('new_password')?.touched &&
+                profileForm.get('new_password')?.hasError('required')
               "
-              >Minimum 6 characters</small
             >
+              New Password is required
+            </small>
+            <small
+              class="text-danger"
+              *ngIf="
+                changePasswordForm.get('new_password')?.touched &&
+                changePasswordForm.get('new_password')?.invalid
+              "
+            >
+              Minimum 6 characters
+            </small>
           </div>
           <div class="mb-4">
-            <label
-              for="confirmNewPassword"
-              class="form-label fw-medium text-primary mb-1"
+            <label for="confirm_new_password" class="form-label fw-medium mb-1"
               >Confirm New Password</label
             >
             <input
               type="password"
-              id="confirmNewPassword"
-              formControlName="confirmNewPassword"
+              id="confirm_new_password"
+              formControlName="confirm_new_password"
               placeholder="Confirm your new password"
               class="form-control"
             />
+            <small
+                class="text-danger"
+                *ngIf="
+                  profileForm.get('confirm_new_password')?.touched &&
+                  profileForm.get('confirm_new_password')?.hasError('required')
+                "
+              >
+                Confirm New Password is required
+              </small>
+              <small
+                class="text-danger"
+                *ngIf="
+                  changePasswordForm.get('confirm_new_password')?.touched &&
+                  changePasswordForm.get('confirm_new_password')?.invalid
+                "
+              >
+                Minimum 6 characters
+              </small>
           </div>
         </div>
       </form>
     </ng-template>
   </app-modal>
-    <app-modal [config]="{
+  <app-modal
+    [config]="{
       id: 'deactivateAccount',
       title: 'Disable Account',
       submitButtonText: 'Confirm Disable',
       cancelButtonText: 'Cancel'
-    }" (onSubmit)="deactivateAccount()">
+    }"
+    (onSubmit)="deactivateAccount()"
+  >
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to disable the account?</p>
-        <p><strong>Username:</strong> {{ this.wizard?.username | titlecase }}</p>
+        <p>
+          Are you sure that you want to disable
+          <strong>{{ this.wizard?.username | titlecase }}</strong
+          >?
+        </p>
       </div>
     </ng-template>
   </app-modal>
