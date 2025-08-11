@@ -25,7 +25,8 @@ button {
 }
 
 .save-changes-button {
-  width: 100%
+  width: 100%;
+  margin-top: 27px;
 }
 
 .save-changes-button:hover,
@@ -33,10 +34,6 @@ button {
   background-color: white;
   border-color: var(--primary-color);
   color: black;
-}
-
-.save-changes-button-container {
-  width: 50%;
 }
 
 .change-password-button {
@@ -64,12 +61,17 @@ button {
   color: white;
 }
 
-.entity-selector-container {
-  margin-top: 13px;
+.school-selector-container {
+  margin-bottom: 0;
+}
+
+.school-selector-container ::ng-deep label {
+  margin-bottom: 4px;
 }
 
 @media (max-width: 769px) {
-  .save-changes-button-container {
+  .save-changes-button {
     width: 100%;
+    margin-top: 15px;
   }
 }

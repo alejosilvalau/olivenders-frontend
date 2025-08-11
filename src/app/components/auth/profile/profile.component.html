@@ -3,7 +3,7 @@
   <form [formGroup]="profileForm" class="two-column-form mb-lg-5">
     <div class="row g-3 m-auto">
       <div class="col-md-6">
-        <label for="username" class="form-label fw-medium">Username</label>
+        <label for="username" class="form-label fw-medium mb-1">Username</label>
         <input
           type="text"
           id="username"
@@ -62,7 +62,7 @@
         </small>
       </div>
       <div class="col-md-6">
-        <label for="email" class="form-label fw-medium">Email</label>
+        <label for="email" class="form-label fw-medium mb-1">Email</label>
         <input
           type="email"
           id="email"
@@ -127,7 +127,7 @@
           Phone is required
         </small>
       </div>
-      <div class="col-md-6 entity-selector-container">
+      <div class="col-md-6 school-selector-container">
         <app-entity-selector
           [entityControl]="profileFormControl"
           [service]="schoolService"
@@ -137,9 +137,7 @@
           <input type="hidden" formControlName="school" />
         </app-entity-selector>
       </div>
-      <div
-        class="mt-4 d-flex justify-content-center gap-3 align-items-center save-changes-button-container"
-      >
+      <div class="col-md-6">
         <button
           type="submit"
           class="btn save-changes-button"
