@@ -128,8 +128,15 @@ export class ProfileComponent implements OnInit {
               return;
             }
 
-            const new_password: WizardRequest = { password: this.changePasswordForm.value.new_password.trim() };
-            this.wizardService.changePasswordWithoutToken(this.wizard!.id, new_password)
+            if (this.changePasswordForm.value.current_password === this.changePasswordForm.value.new_password) {
+              alertMethod('New password must be different from current password', 'Please choose a different password!', AlertType.Error);
+              this.changePasswordForm.get('new_password')?.reset();
+              this.changePasswordForm.get('confirm_new_password')?.reset();
+              return;
+            }
+
+            const newPassword: WizardRequest = { password: this.changePasswordForm.value.new_password.trim() };
+            this.wizardService.changePasswordWithoutToken(this.wizard!.id, newPassword)
               .subscribe({
                 next: (res) => {
                   alertMethod(res.message, 'Password changed successfully', AlertType.Success);

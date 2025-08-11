@@ -1,7 +1,7 @@
 <div class="container py-4">
+  <h2 class="my-4">Order Dashboard</h2>
   <app-alert></app-alert>
-  <h2 class="mb-4">Order Dashboard</h2>
-  <div *ngIf="(orders?.length ?? 0) > 0; else noOrders">
+  <div class="mt-5" *ngIf="(orders?.length ?? 0) > 0; else noOrders">
     <div class="row g-4">
         <div class="col-12" *ngFor="let order of orders">
           <div class="card shadow border-0 mb-2">
@@ -10,13 +10,13 @@
                 <img
                   [src]="getWandFromOrder(order)?.image"
                   alt="Wand Photo"
-                  class="img-fluid rounded"
+                  class="img-fluid rounded mt-4 mx-md-1"
                   style="max-height: 220px; object-fit: contain;"
                 />
               </div>
-              <div class="col-md-8 p-4">
-                <h5 class="card-title mb-3"><strong>Order</strong> #{{ order.id }}</h5>
-                <ul class="list-unstyled mb-2 bg-light border p-3">
+              <div class="col-md-8 p-3 order-info-card">
+                <h5 class="card-title my-4 text-center"><strong>Order #{{ order.id }}</strong></h5>
+                <ul class="list-unstyled mb-2 bg-light p-3 rounded">
                   <li><strong>Status: </strong><span class="badge bg-warning text-black"> {{ order.status | titlecase }}</span></li>
                   <li><strong>Payment Provider:</strong> {{ order.payment_provider | titlecase}}</li>
                   <li><strong>Payment Reference:</strong> {{ order.payment_reference }}</li>
@@ -26,36 +26,34 @@
                   <li><strong>Wand Price:</strong> {{ getWandFromOrder(order)?.total_price | currency }}</li>
                 </ul>
               </div>
-              <div *ngIf="order.review" class="card col-md-11 shadow-sm ms-5">
-              <div class="card-body bg-light">
+              <div *ngIf="order.review" class="card col-md-8 shadow-sm review-card">
                 <h6 class="card-title fw-bold mb-2">Review</h6>
                 <p class="mb-0">{{ order.review }}</p>
               </div>
             </div>
-            </div>
-            <div class="card-footer bg-white border-0 pt-3 gap-3 m-3">
+            <div class="card-footer bg-white border-0 pt-1 gap-3 mb-4">
               <div class="row g-2">
-                <div *ngIf="canComplete(order)" class="col">
-                  <button
-                    class="btn btn-lg btn-primary w-100"
-                    (click)="onSelectedEntity(order)"
-                    [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#completeOrder'"
-                  >
-                    Complete
-                  </button>
-                </div>
                 <div *ngIf="canCancel(order)" class="col">
                   <button
-                    class="btn btn-lg btn-danger w-100"
+                    class="btn btn-lg w-100 cancel-button"
                     (click)="onSelectedEntity(order)"
                     [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#cancelOrder'"
                   >
                     Cancel
                   </button>
                 </div>
+                <div *ngIf="canComplete(order)" class="col">
+                  <button
+                    class="btn btn-lg w-100 complete-button"
+                    (click)="onSelectedEntity(order)"
+                    [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#completeOrder'"
+                  >
+                    Complete
+                  </button>
+                </div>
                 <div *ngIf="canRefund(order)" class="col">
                   <button
-                    class="btn btn-lg btn-secondary w-100"
+                    class="btn btn-lg btn-secondary w-100 refund-button"
                     (click)="onSelectedEntity(order)"
                     [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#refundOrder'"
                   >
@@ -64,7 +62,7 @@
                 </div>
                 <div *ngIf="canReview(order)" class="col">
                   <button
-                    class="btn btn-lg btn-primary w-100"
+                    class="btn btn-lg btn-primary w-100 review-button"
                     (click)="onSelectedEntity(order)"
                     [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#reviewOrder'"
                   >
@@ -83,7 +81,7 @@
     <span class="spinner-border"></span>
   </div>
   <ng-template #noOrders>
-    <div *ngIf="!loading" class="alert alert-info">No orders found.</div>
+    <div *ngIf="!loading" class="alert alert-info">No orders found</div>
   </ng-template>
   <app-modal
     [config]="{
@@ -96,8 +94,7 @@
   >
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to complete the order?</p>
-        <p><strong>Order </strong> #{{ selectedOrder?.id | titlecase }}</p>
+        <p>Are you sure that you want to complete <strong>Order #{{ selectedOrder?.id | titlecase }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>
@@ -112,8 +109,7 @@
   >
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to cancel the order?</p>
-        <p><strong>Order </strong> #{{ selectedOrder?.id | titlecase }}</p>
+        <p>Are you sure that you want to cancel <strong>Order #{{ selectedOrder?.id | titlecase }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>
@@ -128,8 +124,7 @@
   >
     <ng-template #modalContent>
       <div class="col-md-12">
-        <p>Are you sure that you want to refund the order?</p>
-        <p><strong>Order </strong> #{{ selectedOrder?.id | titlecase }}</p>
+        <p>Are you sure that you want to refund <strong>Order #{{ selectedOrder?.id | titlecase }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>
@@ -153,6 +148,4 @@
       </div>
     </ng-template>
   </app-modal>
-
-
 </div>

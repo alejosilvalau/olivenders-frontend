@@ -17,7 +17,7 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule, ModalComponent],
   templateUrl: 'place-order.component.html',
-  styleUrls: ['./place-order.component.css', './../../../shared/styles/forms.style.css'],
+  styleUrls: ['./../../../shared/styles/forms.style.css', './place-order.component.css'],
 })
 
 export class PlaceOrderComponent implements OnInit {

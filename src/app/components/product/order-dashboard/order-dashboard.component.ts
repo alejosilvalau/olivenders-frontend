@@ -16,7 +16,7 @@ import { InfiniteScrollComponent } from '../../../shared/components/infinite-scr
   standalone: true,
   imports: [ModalComponent, CommonModule, FormsModule, AlertComponent, InfiniteScrollComponent],
   templateUrl: './order-dashboard.component.html',
-  styleUrl: './order-dashboard.component.css',
+  styleUrls: ['./order-dashboard.component.css', './../../../shared/styles/forms.style.css']
 })
 export class OrderDashboardComponent implements OnInit {
   orders: Order[] = [];
@@ -63,6 +63,13 @@ export class OrderDashboardComponent implements OnInit {
     this.loadOrders();
   }
 
+  resetOrders(): void {
+    this.orders = [];
+    this.page = 1;
+    this.allLoaded = false;
+    this.loadOrders();
+  }
+
   getWandFromOrder(order: Order): Wand | null {
     if (typeof order.wand !== 'string') {
       return order.wand;
@@ -101,7 +108,7 @@ export class OrderDashboardComponent implements OnInit {
     this.orderService.complete(order.id).subscribe({
       next: (res) => {
         this.alertComponent.showAlert(res.message, AlertType.Success);
-        this.loadOrders();
+        this.resetOrders();
       },
       error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
@@ -118,7 +125,7 @@ export class OrderDashboardComponent implements OnInit {
     this.orderService.cancel(order.id).subscribe({
       next: (res) => {
         this.alertComponent.showAlert(res.message, AlertType.Success);
-        this.loadOrders();
+        this.resetOrders();
       },
       error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
@@ -135,7 +142,7 @@ export class OrderDashboardComponent implements OnInit {
     this.orderService.refund(order.id).subscribe({
       next: (res) => {
         this.alertComponent.showAlert(res.message, AlertType.Success);
-        this.loadOrders();
+        this.resetOrders();
       },
       error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
@@ -151,11 +158,10 @@ export class OrderDashboardComponent implements OnInit {
   review(): void {
     if (!this.selectedOrder) return;
     const reviewData = { review: this.reviewText.trim() };
-    console.log('Selected Order:', this.selectedOrder);
     this.orderService.review(this.selectedOrder.id, reviewData).subscribe({
       next: (res) => {
         this.alertComponent.showAlert(res.message, AlertType.Success);
-        this.loadOrders();
+        this.resetOrders();
       },
       error: (err) => this.alertComponent.showAlert(err.error.message, AlertType.Error),
     });
