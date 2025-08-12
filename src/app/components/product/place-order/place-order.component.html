@@ -10,6 +10,7 @@
             [src]="wand.image"
             alt="wand-image"
             class="img-fluid rounded order-image"
+            (error)="onImgError($event)"
           />
         </div>
         <div class="col-sm-8 col-md-7 d-flex align-items-center justify-content-center flex-column order-details">

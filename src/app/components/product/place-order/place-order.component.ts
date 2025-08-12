@@ -11,6 +11,7 @@ import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { alertMethod } from '../../../functions/alert.function';
 import { AlertType } from '../../../shared/components/alert/alert.component';
 import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
 
 @Component({
   selector: 'app-place-order',
@@ -31,6 +32,8 @@ export class PlaceOrderComponent implements OnInit {
   wizard: Wizard | null = null;
   wand: Wand | null = null;
   wandId: string = '';
+
+  onImgError = fallbackOnImgError;
 
   constructor(
     private fb: FormBuilder,

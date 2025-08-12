@@ -29,9 +29,10 @@
                 ></app-wand-details-button>
                 <img
                   id="wand-image"
-                  class="card-img-top img-fluid"
+                  class="card-img-top img-fluid rounded"
                   [src]="wand.image"
                   alt="wand-image"
+                  (error)="onImgError($event)"
                 />
               </div>
               <div class="card-body d-flex flex-column">

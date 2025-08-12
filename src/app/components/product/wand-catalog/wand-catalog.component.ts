@@ -9,6 +9,7 @@ import { HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button.component.js';
 import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
 
 @Component({
   selector: 'app-wand-catalog',
@@ -33,6 +34,8 @@ export class WandCatalogComponent implements AfterViewChecked {
   pageSize = 12;
   loading = false;
   allLoaded = false;
+
+  onImgError = fallbackOnImgError;
 
 
   constructor(
