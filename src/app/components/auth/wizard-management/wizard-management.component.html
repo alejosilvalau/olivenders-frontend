@@ -51,7 +51,11 @@
     <ng-template #modalContent>
       <div class="col-md-12">
         <p>Are you sure that you want to change <strong>{{ selectedWizard?.username
-          }}</strong> to <strong>{{ selectedWizard?.role | titlecase }}</strong> ?</p>
+          }}</strong> to <strong>    {{
+            selectedWizard?.role === WizardRole.Admin
+              ? WizardRole.User
+              : WizardRole.Admin
+          | titlecase }}</strong> ?</p>
       </div>
     </ng-template>
   </app-modal>

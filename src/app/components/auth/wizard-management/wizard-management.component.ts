@@ -40,6 +40,7 @@ export class WizardManagementComponent implements OnInit {
   pageSize = 10;
 
   DataTableFormat = DataTableFormat;
+  WizardRole = WizardRole;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
@@ -117,7 +118,7 @@ export class WizardManagementComponent implements OnInit {
     request$.subscribe({
       next: (res) => {
         this.alertComponent.showAlert(
-          `Role changed to ${ isCurrentlyAdmin ? WizardRole.User : WizardRole.Admin }`, AlertType.Success);
+          `Role changed to(${ isCurrentlyAdmin ? WizardRole.User : WizardRole.Admin }`, AlertType.Success);
         this.ngOnInit();
         this.wizardForm.reset();
       },
