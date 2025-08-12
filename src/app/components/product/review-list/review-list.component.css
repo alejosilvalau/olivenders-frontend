@@ -1,10 +1,21 @@
 .review-list {
   max-width: 700px;
   margin: 2rem auto;
+  position: relative;
+}
+
+.review-list::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('/review-list-background.jpg') center center / cover no-repeat;
+  z-index: -10;
+  background-size: fill;
 }
 
 .review-card {
   background: white;
+  z-index: 1;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   transition: box-shadow 0.2s;
   position: relative;
