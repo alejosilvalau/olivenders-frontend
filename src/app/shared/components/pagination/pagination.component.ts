@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Component, Input, Output, EventEmitter, AfterViewChecked } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -9,7 +9,7 @@ import { Component, Input, Output, EventEmitter, AfterViewChecked } from '@angul
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.css',
 })
-export class PaginationComponent implements AfterViewChecked {
+export class PaginationComponent {
 
   @Input() totalRecords: number = 0;
   @Input() currentPage: number = 1;
@@ -18,8 +18,6 @@ export class PaginationComponent implements AfterViewChecked {
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
-
-  private shouldScrollToTop = false;
 
   get totalPages(): number {
     return Math.ceil(this.totalRecords / this.pageSize) || 1;
@@ -36,19 +34,11 @@ export class PaginationComponent implements AfterViewChecked {
   selectPage(page: number) {
     if (page < 1 || page > this.totalPages || page === this.currentPage) return;
     this.pageChange.emit(page);
-    this.shouldScrollToTop = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   onPageSizeChange(event: any) {
     this.pageSizeChange.emit(Number(this.pageSize));
-    this.shouldScrollToTop = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
-  ngAfterViewChecked() {
-    if (this.shouldScrollToTop) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      this.shouldScrollToTop = false;
-    }
-  }
-
 }
