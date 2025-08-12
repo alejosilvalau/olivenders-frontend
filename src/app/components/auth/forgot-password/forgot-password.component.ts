@@ -31,8 +31,8 @@ export class ForgotPasswordComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]]
     });
     this.newPasswordForm = this.fb.group({
-      newPassword: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]],
-      confirmNewPassword: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]]
+      new_password: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]],
+      confirm_new_password: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -44,8 +44,8 @@ export class ForgotPasswordComponent implements OnInit {
           if (res.data) {
             this.wizardId = res.data.id;
             this.disablePasswordForm = false;
-            this.newPasswordForm.get('newPassword')?.enable();
-            this.newPasswordForm.get('confirmNewPassword')?.enable();
+            this.newPasswordForm.get('new_password')?.enable();
+            this.newPasswordForm.get('confirm_new_password')?.enable();
           } else {
             alertMethod(res.message, 'Account not found', AlertType.Error);
             this.verificationForm.reset();
@@ -60,7 +60,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   private passwordMatchValidator(form: FormGroup) {
-    return form.get('newPassword')?.value === form.get('confirmNewPassword')?.value
+    return form.get('new_password')?.value === form.get('confirm_new_password')?.value
       ? true
       : false;
   }
@@ -77,7 +77,7 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     }
 
-    const newPasswordObject = { password: this.newPasswordForm.value.newPassword.trim() };
+    const newPasswordObject = { password: this.newPasswordForm.value.new_password.trim() };
     this.wizardService.changePasswordWithoutToken(this.wizardId, newPasswordObject).subscribe({
       next: (res) => {
         alertMethod(res.message, 'Password changed successfully', AlertType.Success);
