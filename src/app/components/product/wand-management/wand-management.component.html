@@ -125,11 +125,11 @@
             required
           />
           <app-entity-selector [entityControl]="woodFormControlField" [service]="woodService"
-          [findOneByString]="woodService.findOneByName" label="Wood">
+          [findOneByString]="woodService.findOneByName.bind(woodService)" label="Wood">
           <input type="hidden" formControlName="wood" />
           </app-entity-selector>
           <app-entity-selector [entityControl]="coreFormControlField" [service]="coreService"
-            [findOneByString]="coreService.findOneByName" label="Core">
+            [findOneByString]="coreService.findOneByName.bind(coreService)" label="Core">
             <input type="hidden" formControlName="core" />
           </app-entity-selector>
         </div>
@@ -212,11 +212,11 @@
             required
           />
           <app-entity-selector [entityControl]="woodFormControlField" [service]="woodService"
-          [findOneByString]="woodService.findOneByName" label="Wood">
+          [findOneByString]="woodService.findOneByName.bind(woodService)" label="Wood">
           <input type="hidden" formControlName="wood" />
           </app-entity-selector>
           <app-entity-selector [entityControl]="coreFormControlField" [service]="coreService"
-            [findOneByString]="coreService.findOneByName" label="Core">
+            [findOneByString]="coreService.findOneByName.bind(coreService)" label="Core">
             <input type="hidden" formControlName="core" />
           </app-entity-selector>
         </div>

@@ -50,25 +50,41 @@ export class EntitySelectorComponent implements OnInit {
         this.filteredEntities = res.data || [];
         this.showDropdown = true;
       });
-    } else {
-      const isObjectId = /^[a-f\d]{24}$/i.test(term);
-      let search$;
-      if (!isObjectId && this.findOneByString) {
-        search$ = this.findOneByString(term);
-      }
-      search$ = this.service.findOne(term);
-
-      search$.subscribe({
+    } else if (this.findOneByString) {
+      this.findOneByString(term).subscribe({
         next: (res: any) => {
           this.filteredEntities = res.data ? [res.data] : [];
           this.showDropdown = true;
+
+          if (this.filteredEntities.length > 0 && this.filteredEntities[0][this.displayField]?.toLowerCase() === term.toLowerCase()) {
+            this.entityControl.setValue(this.filteredEntities[0]["id"]);
+          }
         },
         error: () => {
-          this.filteredEntities = this.filteredEntities.filter(entity =>
-            entity[this.displayField].toLowerCase().includes(term.toLowerCase())
-          );
+          this.applyFilterFallback(term);
+          this.setControlIfNameMatches(term);
         }
       });
+    } else {
+      this.applyFilterFallback(term);
+      this.setControlIfNameMatches(term);
+    }
+  }
+
+  private applyFilterFallback(term: string): void {
+    this.filteredEntities = this.filteredEntities.filter(entity =>
+      entity[this.displayField]?.toLowerCase().includes(term.toLowerCase())
+    );
+    this.showDropdown = true;
+  }
+
+  private setControlIfNameMatches(term: string): void {
+    const match = this.filteredEntities.find(entity =>
+      entity[this.displayField]?.toLowerCase() === term.toLowerCase()
+    );
+    if (match) {
+      this.entityControl.setValue(match["id"]);
+      this.selectedEntityName = match[this.displayField];
     }
   }
 

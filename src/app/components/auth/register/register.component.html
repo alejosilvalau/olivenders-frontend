@@ -32,7 +32,7 @@
           </div>
         </div>
         <app-entity-selector [entityControl]="schoolFormControl" [service]="schoolService"
-          [findOneByString]="schoolService.findOneByName" label="School">
+          [findOneByString]="schoolService.findOneByName.bind(schoolService)" label="School">
           <input type="hidden" formControlName="school" />
         </app-entity-selector>
         </div>
@@ -77,7 +77,7 @@
           <input type="password" id="confirm_password" formControlName="confirm_password" placeholder="Confirm your password">
           <div
             *ngIf="registerForm.get('confirm_password')?.invalid && (registerForm.get('confirm_password')?.touched || registerForm.get('confirm_password')?.dirty)">
-            <small *ngIf="registerForm.get('confirm_password')?.errors?.['required']">Password is required</small>
+            <small *ngIf="registerForm.get('confirm_password')?.errors?.['required']">Confirm Password is required</small>
             <small *ngIf="registerForm.get('confirm_password')?.errors?.['minlength']">Minimum 6 characters</small>
           </div>
         </div>

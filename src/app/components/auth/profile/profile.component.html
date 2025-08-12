@@ -131,7 +131,7 @@
         <app-entity-selector
           [entityControl]="profileFormControl"
           [service]="schoolService"
-          [findOneByString]="schoolService.findOneByName"
+          [findOneByString]="schoolService.findOneByName.bind(schoolService)"
           label="School"
         >
           <input type="hidden" formControlName="school" />
