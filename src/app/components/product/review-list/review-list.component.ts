@@ -6,6 +6,7 @@ import { Wand } from '../../../core/models/wand.interface';
 import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button.component';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component.js';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
 
 interface OrderReview extends Order {
   rating: number;
@@ -19,6 +20,7 @@ interface OrderReview extends Order {
 })
 export class ReviewListComponent implements OnInit {
   ordersWithReviews: OrderReview[] = [];
+  onImgError = fallbackOnImgError;
 
   // Pagination state
   page = 1;

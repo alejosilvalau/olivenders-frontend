@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { Wand } from '../../../core/models/wand.interface.js';
 import { Core } from '../../../core/models/core.interface.js';
 import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component.js';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
 
 @Component({
   selector: 'app-order-dashboard',
@@ -19,16 +20,19 @@ import { InfiniteScrollComponent } from '../../../shared/components/infinite-scr
   styleUrls: ['./order-dashboard.component.css', './../../../shared/styles/forms.style.css']
 })
 export class OrderDashboardComponent implements OnInit {
+  // Order properties
   orders: Order[] = [];
   wizardId: string = '';
   selectedOrder: Order | null = null;
   reviewText: string = '';
 
-  // Pagination state
+  // Pagination properties
   page = 1;
   pageSize = 5;
   loading = false;
   allLoaded = false;
+
+  onImgError = fallbackOnImgError;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 
