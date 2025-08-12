@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TitleCasePipe, CurrencyPipe, DatePipe } from '@angular/common';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
 
 export enum DataTableFormat {
   TitleCase = 'titlecase',
@@ -25,7 +26,7 @@ export class DataTableComponent<T extends Record<string, any>> {
   @Input() removeModalTarget: string = '';
   @Output() selectedEntity = new EventEmitter<T>();
 
-
+  onImgError = fallbackOnImgError;
 
   constructor(
     private titlecasePipe: TitleCasePipe,

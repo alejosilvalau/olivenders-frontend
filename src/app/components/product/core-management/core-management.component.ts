@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CoreService } from '../../../core/services/core.service';
 import { Core, CoreResponse } from '../../../core/models/core.interface';
-import { Observable } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
 import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';

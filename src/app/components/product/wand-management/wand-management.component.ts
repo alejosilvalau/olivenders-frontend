@@ -18,6 +18,7 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { switchMap } from 'rxjs';
 import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
 
 @Component({
   selector: 'app-wand-management',
@@ -46,6 +47,7 @@ export class WandManagementComponent implements OnInit {
   pageSize = 10;
 
   DataTableFormat = DataTableFormat;
+  onImgError = fallbackOnImgError;
 
   @ViewChild(AlertComponent) alertComponent!: AlertComponent
 

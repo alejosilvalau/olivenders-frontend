@@ -12,7 +12,7 @@
           <ng-container *ngIf="col.isArray; else notArray">
             <span *ngFor="let itemValue of item[col.key]; let i = index">
               <ng-container *ngIf="isImageUrl(col.subKey ? itemValue[col.subKey] : itemValue); else normalValue">
-                <img [src]="col.subKey ? itemValue[col.subKey] : itemValue" alt="Image" style="max-width: 50px; max-height: 50px;" />
+                <img [src]="col.subKey ? itemValue[col.subKey] : itemValue" alt="Image" style="max-width: 50px; max-height: 50px;" (error)="onImgError($event)" class="rounded" />
               </ng-container>
               <ng-template #normalValue>
                 {{ formatValue(col.subKey ? itemValue[col.subKey] : itemValue, col.format) }}
@@ -22,7 +22,7 @@
           </ng-container>
           <ng-template #notArray>
             <ng-container *ngIf="isImageUrl(col.subKey ? item[col.key]?.[col.subKey] : item[col.key]); else normalValueSingle">
-              <img [src]="col.subKey ? item[col.key]?.[col.subKey] : item[col.key]" alt="Image" style="max-width: 50px; max-height: 50px;" />
+              <img [src]="col.subKey ? item[col.key]?.[col.subKey] : item[col.key]" alt="Image" style="max-width: 50px; max-height: 50px;" (error)="onImgError($event)" class="rounded" />
             </ng-container>
             <ng-template #normalValueSingle>
               {{ formatValue(col.subKey ? item[col.key]?.[col.subKey] : item[col.key], col.format) }}

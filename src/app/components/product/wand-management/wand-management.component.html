@@ -111,7 +111,7 @@
               <i class="bi bi-x"></i>
             </button>
             <div class="image-preview-wrapper" *ngIf="previewUrl">
-              <img [src]="previewUrl" alt="Preview" class="img-thumbnail image-preview" />
+              <img [src]="previewUrl" alt="Preview" (error)="onImgError($event)" class="img-thumbnail image-preview" />
             </div>
           </div>
           <label for="profit">Profit</label>
@@ -198,7 +198,7 @@
               <i class="bi bi-x"></i>
             </button>
             <div class="image-preview-wrapper" *ngIf="previewUrl">
-              <img [src]="previewUrl" alt="Preview" class="img-thumbnail image-preview" />
+              <img [src]="previewUrl" alt="Preview" (error)="onImgError($event)" class="img-thumbnail image-preview" />
             </div>
           </div>
           <label for="profit">Profit</label>
