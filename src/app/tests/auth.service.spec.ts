@@ -3,16 +3,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
-// Create a mock function
-const mockJwtDecode = jasmine.createSpy('jwtDecode').and.returnValue({
-  exp: Math.floor(Date.now() / 1000) + 60
-});
-
-// Mock the module before importing
-beforeAll(() => {
-  (window as any).jwtDecode = mockJwtDecode;
-});
-
 class RouterStub {
   navigate = jasmine.createSpy('navigate');
 }
@@ -36,7 +26,6 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     localStorage.clear();
-    // Don't set wizard in localStorage initially for the constructor test
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
