@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Wizard, WizardRequest } from '../models/wizard.interface';
+import { Wizard, WizardRequest, WizardResponse } from '../models/wizard.interface';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { WizardService } from './wizard.service';
 import { jwtDecode } from 'jwt-decode';
 import { alertMethod } from '../../functions/alert.function';
 import { AlertType } from '../../shared/components/alert/alert.component';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -23,7 +23,7 @@ export class AuthService {
   private currentWizardSubject = new BehaviorSubject<any>(this.getCurrentWizard());
   public currentWizard$ = this.currentWizardSubject.asObservable();
 
-  constructor(private router: Router, private wizardService: WizardService) {
+  constructor(private router: Router, private http: HttpClient) {
     const token = localStorage.getItem('token');
     if (token) {
       const decoded: any = jwtDecode(token);
@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   login(wizardData: WizardRequest): Observable<Wizard | undefined> {
-    return this.wizardService.login(wizardData).pipe(
+    return this.http.post<WizardResponse>(`${ this.apiUrl }/wizards/login`, { username: wizardData.username, password: wizardData.password }).pipe(
       map((response) => {
         const wizard = response.data;
         const token = response.token;
