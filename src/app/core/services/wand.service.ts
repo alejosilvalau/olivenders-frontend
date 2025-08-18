@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthToken } from '../../functions/auth-token.function';
 import { environment } from '../../../environments/environment';
-import { Wand, WandRequest, WandResponse } from '../models/wand.interface.js';
+import { Wand, WandRequest, WandResponse } from '../models/wand.interface';
 
 @Injectable({
   providedIn: 'root',

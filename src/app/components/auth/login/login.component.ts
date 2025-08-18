@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
 import { RouterModule, Router } from '@angular/router';
 import { alertMethod } from '../../../functions/alert.function';
-import { AlertType } from '../../../shared/components/alert/alert.component.js';
+import { AlertType } from '../../../shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-login',

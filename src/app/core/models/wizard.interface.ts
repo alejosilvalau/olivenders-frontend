@@ -1,5 +1,5 @@
-import { ApiResponse } from "./api-response.interface.js";
-import { School } from "./school.interface.js";
+import { ApiResponse } from "./api-response.interface";
+import { School } from "./school.interface";
 
 export enum WizardRole {
   Admin = 'admin',

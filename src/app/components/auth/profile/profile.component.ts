@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { WizardService } from '../../../core/services/wizard.service.js';
+import { WizardService } from '../../../core/services/wizard.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { Wizard, WizardRequest } from '../../../core/models/wizard.interface.js';
+import { Wizard, WizardRequest } from '../../../core/models/wizard.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { alertMethod } from '../../../functions/alert.function';
-import { AlertType } from '../../../shared/components/alert/alert.component.js';
-import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
-import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
-import { SchoolService } from '../../../core/services/school.service.js';
+import { AlertType } from '../../../shared/components/alert/alert.component';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component';
+import { SchoolService } from '../../../core/services/school.service';
 
 @Component({
   selector: 'app-profile',

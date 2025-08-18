@@ -1,16 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { OrderService } from '../../../core/services/order.service.js';
-import { Order, OrderStatus } from '../../../core/models/order.interface.js';
-import { AuthService } from '../../../core/services/auth.service.js';
-import { alertMethod } from '../../../functions/alert.function.js';
-import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component.js';
-import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
+import { OrderService } from '../../../core/services/order.service';
+import { Order, OrderStatus } from '../../../core/models/order.interface';
+import { AuthService } from '../../../core/services/auth.service';
+import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Wand } from '../../../core/models/wand.interface.js';
-import { Core } from '../../../core/models/core.interface.js';
-import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component.js';
-import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
+import { Wand } from '../../../core/models/wand.interface';
+import { Core } from '../../../core/models/core.interface';
+import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function';
 
 @Component({
   selector: 'app-order-dashboard',

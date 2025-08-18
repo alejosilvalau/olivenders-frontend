@@ -1,4 +1,4 @@
-import { ApiResponse } from "./api-response.interface.js";
+import { ApiResponse } from "./api-response.interface";
 
 export interface Wood {
   id: string;

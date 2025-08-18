@@ -1,6 +1,6 @@
-import { ApiResponse } from "./api-response.interface.js";
-import { Wand } from "./wand.interface.js";
-import { Wizard } from "./wizard.interface.js";
+import { ApiResponse } from "./api-response.interface";
+import { Wand } from "./wand.interface";
+import { Wizard } from "./wizard.interface";
 
 export enum OrderStatus {
   Pending = 'pending',

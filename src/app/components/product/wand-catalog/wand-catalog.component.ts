@@ -7,9 +7,9 @@ import { AuthService } from '../../../core/services/auth.service';
 import { FilterComponent } from '../../../shared/components/filter/filter.component';
 import { HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button.component.js';
+import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button.component';
 import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component';
-import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function';
 
 @Component({
   selector: 'app-wand-catalog',

@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { AlertType } from '../shared/components/alert/alert.component.js';
+import { AlertType } from '../shared/components/alert/alert.component';
 
 export function chainedEntitySearch(
   term: string,

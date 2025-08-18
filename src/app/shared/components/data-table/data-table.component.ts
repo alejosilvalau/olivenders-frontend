@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TitleCasePipe, CurrencyPipe, DatePipe } from '@angular/common';
-import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function';
 
 export enum DataTableFormat {
   TitleCase = 'titlecase',

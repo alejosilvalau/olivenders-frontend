@@ -1,19 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CoreService } from '../../../core/services/core.service';
-import { Core, CoreResponse } from '../../../core/models/core.interface';
-import { Observable, switchMap, throwError } from 'rxjs';
+import { switchMap, throwError } from 'rxjs';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
-import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
-import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
-import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
-import { Wizard, WizardResponse, WizardRole } from '../../../core/models/wizard.interface.js';
-import { WizardService } from '../../../core/services/wizard.service.js';
-import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
-import { SchoolService } from '../../../core/services/school.service.js';
-import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
+import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { Wizard, WizardResponse, WizardRole } from '../../../core/models/wizard.interface';
+import { WizardService } from '../../../core/services/wizard.service';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import { SchoolService } from '../../../core/services/school.service';
+import { chainedEntitySearch } from '../../../functions/chained-entity-search.function';
 
 @Component({
   selector: 'app-wizard-management',

@@ -1,5 +1,5 @@
-import { ApiResponse } from "./api-response.interface.js";
-import { Question } from "./question.interface.js";
+import { ApiResponse } from "./api-response.interface";
+import { Question } from "./question.interface";
 
 export interface Quiz {
   id: string;

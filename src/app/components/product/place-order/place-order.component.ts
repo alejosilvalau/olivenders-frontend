@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators, } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { WandService } from '../../../core/services/wand.service';
 import { Wand } from '../../../core/models/wand.interface';
 import { AuthService } from '../../../core/services/auth.service';
@@ -10,8 +10,8 @@ import { Order, OrderRequest, OrderResponse, PaymentProvider } from '../../../co
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { alertMethod } from '../../../functions/alert.function';
 import { AlertType } from '../../../shared/components/alert/alert.component';
-import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
-import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function';
 
 @Component({
   selector: 'app-place-order',

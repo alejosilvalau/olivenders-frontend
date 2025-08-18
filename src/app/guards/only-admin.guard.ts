@@ -3,7 +3,7 @@ import { AuthService } from '../core/services/auth.service';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { WizardRole } from '../core/models/wizard.interface.js';
+import { WizardRole } from '../core/models/wizard.interface';
 
 export const onlyAdmin: CanActivateFn = () => {
   const authService = inject(AuthService);

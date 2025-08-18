@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { alertMethod } from '../../../functions/alert.function';
 import { AlertType } from '../../../shared/components/alert/alert.component';
-import { WizardService } from '../../../core/services/wizard.service.js';
+import { WizardService } from '../../../core/services/wizard.service';
 
 
 @Component({

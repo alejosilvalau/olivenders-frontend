@@ -1,8 +1,8 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service.js';
-import { Wizard, WizardRole } from '../../../core/models/wizard.interface.js';
+import { AuthService } from '../../../core/services/auth.service';
+import { Wizard, WizardRole } from '../../../core/models/wizard.interface';
 
 @Component({
   selector: 'app-navbar',

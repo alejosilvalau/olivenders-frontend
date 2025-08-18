@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Wizard, WizardRequest, WizardResponse } from '../models/wizard.interface.js';
+import { Wizard, WizardRequest } from '../models/wizard.interface';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { WizardService } from './wizard.service.js';
+import { WizardService } from './wizard.service';
 import { jwtDecode } from 'jwt-decode';
-import { alertMethod } from '../../functions/alert.function.js';
-import { AlertType } from '../../shared/components/alert/alert.component.js';
+import { alertMethod } from '../../functions/alert.function';
+import { AlertType } from '../../shared/components/alert/alert.component';
 
 
 @Injectable({

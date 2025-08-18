@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { NavBarComponent } from './shared/components/navbar/navbar.component.js';
-import { FooterComponent } from './shared/components/footer/footer.component.js';
+import { NavBarComponent } from './shared/components/navbar/navbar.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Wand } from '../../../core/models/wand.interface';
-import { BottomSheetConfig } from '../../../core/models/bottom-sheet.interface.js';
+import { BottomSheetConfig } from '../../../core/models/bottom-sheet.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 

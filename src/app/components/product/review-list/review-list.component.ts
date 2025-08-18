@@ -5,8 +5,8 @@ import { Order } from '../../../core/models/order.interface';
 import { Wand } from '../../../core/models/wand.interface';
 import { WandDetailsButtonComponent } from '../../../shared/components/wand-details-button/wand-details-button.component';
 import { CommonModule } from '@angular/common';
-import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component.js';
-import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
+import { InfiniteScrollComponent } from '../../../shared/components/infinite-scroll/infinite-scroll.component';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function';
 
 interface OrderReview extends Order {
   rating: number;

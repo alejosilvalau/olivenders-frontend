@@ -7,18 +7,18 @@ import { CoreService } from '../../../core/services/core.service';
 import { Wand, WandResponse } from '../../../core/models/wand.interface';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
-import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
-import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component.js';
-import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
-import { environment } from '../../../../environments/environment.js';
-import { ImageService } from '../../../core/services/image.service.js';
-import { ImageResponse } from '../../../core/models/image.interface.js';
-import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
-import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
+import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component';
+import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { environment } from '../../../../environments/environment';
+import { ImageService } from '../../../core/services/image.service';
+import { ImageResponse } from '../../../core/models/image.interface';
+import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { switchMap } from 'rxjs';
-import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
-import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function.js';
+import { chainedEntitySearch } from '../../../functions/chained-entity-search.function';
+import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function';
 
 @Component({
   selector: 'app-wand-management',

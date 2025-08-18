@@ -5,13 +5,13 @@ import { OrderService } from '../../../core/services/order.service';
 import { Order, OrderResponse, OrderStatus } from '../../../core/models/order.interface';
 import { SearcherComponent } from '../../../shared/components/searcher/searcher.component';
 import { AlertComponent, AlertType } from '../../../shared/components/alert/alert.component';
-import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component.js';
-import { ModalComponent } from '../../../shared/components/modal/modal.component.js';
-import { WandService } from '../../../core/services/wand.service.js';
-import { WizardService } from '../../../core/services/wizard.service.js';
-import { PaginationComponent } from '../../../shared/components/pagination/pagination.component.js';
+import { DataTableComponent, DataTableFormat } from '../../../shared/components/data-table/data-table.component';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { WandService } from '../../../core/services/wand.service';
+import { WizardService } from '../../../core/services/wizard.service';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { switchMap, throwError } from 'rxjs';
-import { chainedEntitySearch } from '../../../functions/chained-entity-search.function.js';
+import { chainedEntitySearch } from '../../../functions/chained-entity-search.function';
 @Component({
   selector: 'app-order-management',
   standalone: true,

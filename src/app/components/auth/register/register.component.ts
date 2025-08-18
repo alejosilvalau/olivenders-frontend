@@ -12,7 +12,7 @@ import { WizardService } from '../../../core/services/wizard.service';
 import { Router } from '@angular/router';
 import { alertMethod } from '../../../functions/alert.function';
 import { AlertType } from '../../../shared/components/alert/alert.component';
-import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component.js';
+import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component';
 import { SchoolService } from '../../../core/services/school.service';
 
 @Component({

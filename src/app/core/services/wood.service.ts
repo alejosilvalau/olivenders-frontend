@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthToken } from '../../functions/auth-token.function';
 import { environment } from '../../../environments/environment';
-import { Wood, WoodRequest, WoodResponse } from '../models/wood.interface.js';
+import { Wood, WoodRequest, WoodResponse } from '../models/wood.interface';
 
 @Injectable({
   providedIn: 'root',

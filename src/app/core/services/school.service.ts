@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthToken } from '../../functions/auth-token.function';
 import { environment } from '../../../environments/environment';
-import { School, SchoolRequest, SchoolResponse } from '../models/school.interface.js';
+import { School, SchoolRequest, SchoolResponse } from '../models/school.interface';
 
 @Injectable({
   providedIn: 'root',

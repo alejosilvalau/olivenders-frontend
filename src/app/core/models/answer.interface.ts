@@ -1,7 +1,7 @@
-import { ApiResponse } from "./api-response.interface.js";
-import { Quiz } from "./quiz.interface.js";
-import { Wand } from "./wand.interface.js";
-import { Wizard } from "./wizard.interface.js";
+import { ApiResponse } from "./api-response.interface";
+import { Quiz } from "./quiz.interface";
+import { Wand } from "./wand.interface";
+import { Wizard } from "./wizard.interface";
 
 export interface Answer {
   id: string;

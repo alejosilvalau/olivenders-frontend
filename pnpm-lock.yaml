@@ -75,18 +75,12 @@ importers:
       '@types/bootstrap':
         specifier: ^5.2.10
         version: 5.2.10
-      '@types/cypress':
-        specifier: ^1.1.6
-        version: 1.1.6
       '@types/jasmine':
         specifier: ~5.1.0
         version: 5.1.8
       cypress:
         specifier: ^14.3.2
         version: 14.5.4
-      cypress-iframe:
-        specifier: ^1.0.1
-        version: 1.0.1(@types/cypress@1.1.6)
       jasmine-core:
         specifier: ~5.6.0
         version: 5.6.0
@@ -1667,10 +1661,6 @@ packages:
   '@types/cors@2.8.19':
     resolution: {integrity: sha512-mFNylyeyqN93lfe/9CSxOGREz8cpzAhH+E93xJ4xWQf62V8sQ/24reV2nyzUWM6H6Xji+GGHpkbLe7pVoUEskg==}
 
-  '@types/cypress@1.1.6':
-    resolution: {integrity: sha512-CfeLLD3+6vIWe2AO5hR63f1c8EbRzrp/j1ExubAwOTpwZFZvF3Nm9cOPQiUwzNmAUmZuhO0QVH98Qlujni6nPw==}
-    deprecated: This is a stub types definition. cypress provides its own type definitions, so you do not need this installed.
-
   '@types/eslint-scope@3.7.7':
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
 
@@ -2285,11 +2275,6 @@ packages:
 
   custom-event@1.0.1:
     resolution: {integrity: sha512-GAj5FOq0Hd+RsCGVJxZuKaIDXDf3h6GQoNEjFgbLLI/trgtavwUbSnZ5pVfg27DVCaWjIohryS0JFwIJyT2cMg==}
-
-  cypress-iframe@1.0.1:
-    resolution: {integrity: sha512-Ne+xkZmWMhfq3x6wbfzK/SzsVTCrJru3R3cLXsoSAZyfUtJDamXyaIieHXeea3pQDXF4wE2w4iUuvCYHhoD31g==}
-    peerDependencies:
-      '@types/cypress': ^1.1.0
 
   cypress@14.5.4:
     resolution: {integrity: sha512-0Dhm4qc9VatOcI1GiFGVt8osgpPdqJLHzRwcAB5MSD/CAAts3oybvPUPawHyvJZUd8osADqZe/xzMsZ8sDTjXw==}
@@ -6413,10 +6398,6 @@ snapshots:
     dependencies:
       '@types/node': 24.2.0
 
-  '@types/cypress@1.1.6':
-    dependencies:
-      cypress: 14.5.4
-
   '@types/eslint-scope@3.7.7':
     dependencies:
       '@types/eslint': 9.6.1
@@ -7076,10 +7057,6 @@ snapshots:
   cssesc@3.0.0: {}
 
   custom-event@1.0.1: {}
-
-  cypress-iframe@1.0.1(@types/cypress@1.1.6):
-    dependencies:
-      '@types/cypress': 1.1.6
 
   cypress@14.5.4:
     dependencies:

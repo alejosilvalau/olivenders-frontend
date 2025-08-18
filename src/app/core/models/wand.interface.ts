@@ -1,6 +1,6 @@
-import { ApiResponse } from "./api-response.interface.js";
-import { Core } from "./core.interface.js";
-import { Wood } from "./wood.interface.js";
+import { ApiResponse } from "./api-response.interface";
+import { Core } from "./core.interface";
+import { Wood } from "./wood.interface";
 
 export enum WandStatus {
   Available = 'available',
