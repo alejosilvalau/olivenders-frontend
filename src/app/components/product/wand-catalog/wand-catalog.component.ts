@@ -54,14 +54,25 @@ export class WandCatalogComponent implements AfterViewChecked {
     this.loading = true;
     this.wandService.findAll(this.page, this.pageSize).subscribe({
       next: (res) => {
-        let newWands = (res.data || []).filter(wand => wand?.status == WandStatus.Available);
+        const allWands = res.data || [];
+        let newWands = allWands.filter(wand => wand?.status == WandStatus.Available);
 
         this.wands = [...this.wands, ...newWands];
         const filteredNewWands = this.applyFilters(newWands, this.activeFilters);
 
         this.filteredWands = [...this.filteredWands, ...filteredNewWands];
 
-        if (newWands.length < this.pageSize) this.allLoaded = true;
+        if (allWands.length < this.pageSize) {
+          this.allLoaded = true;
+        }
+
+        // If we still have less than pageSize available wands, fetch next page
+        if (this.wands.length < this.pageSize && allWands.length === this.pageSize) {
+          this.page++;
+          this.loading = false;
+          this.loadWands(); // recursively fetch next page
+          return;
+        }
 
         this.page++;
         this.loading = false;

@@ -75,8 +75,20 @@ export class ReviewListComponent implements OnInit {
             ...order,
             rating: this.getRandomRating()
           }));
-        if (allOrders.length < this.pageSize) this.allLoaded = true;
         this.ordersWithReviews = [...this.ordersWithReviews, ...newOrders];
+
+        if (allOrders.length < this.pageSize) {
+          this.allLoaded = true;
+        }
+
+        // If we still have less than pageSize available wands, fetch next page
+        if (this.ordersWithReviews.length < this.pageSize && allOrders.length === this.pageSize) {
+          this.page++;
+          this.loading = false;
+          this.loadReviews(); // recursively fetch next page
+          return;
+        }
+
         this.page++;
         this.loading = false;
       },

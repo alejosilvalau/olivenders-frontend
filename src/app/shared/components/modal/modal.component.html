@@ -9,10 +9,8 @@
         <ng-container *ngTemplateOutlet="modalContentTemplate"></ng-container>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn custom-cancel-button" data-bs-dismiss="modal" (click)="cancel()"> {{ config.cancelButtonText}}
-        </button>
-        <button type="button" class="btn custom-submit-button" data-bs-dismiss="modal" (click)="submit()"> {{ config.submitButtonText }}
-        </button>
+        <button type="button" class="btn custom-cancel-button" data-bs-dismiss="modal" (click)="cancel()">{{ config.cancelButtonText}}</button>
+        <button type="button" class="btn custom-submit-button" data-bs-dismiss="modal" (click)="submit()">{{ config.submitButtonText }}</button>
       </div>
     </div>
   </div>

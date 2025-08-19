@@ -21,7 +21,7 @@
             *ngFor="let wand of filteredWands"
             class="col-12 col-sm-6 col-md-4 col-xl-3"
           >
-            <div class="card h-100">
+            <div class="card h-100 wand-card">
               <div class="position-relative h-100 d-flex flex-column align-items-center justify-content-center">
                 <app-wand-details-button
                   [wand]="wand"
@@ -29,7 +29,7 @@
                 ></app-wand-details-button>
                 <img
                   id="wand-image"
-                  class="card-img-top img-fluid rounded"
+                  class="card-img-top img-fluid"
                   [src]="wand.image"
                   alt="wand-image"
                   (error)="onImgError($event)"

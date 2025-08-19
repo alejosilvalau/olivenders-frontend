@@ -25,6 +25,7 @@ export class PlaceOrderComponent implements OnInit {
   // Form to place an order
   placeOrderForm: FormGroup = new FormGroup({});
   selectedOrder: Order | null = null;
+  orderPlaced: boolean = false;
 
   // Properties to hold the order, wizard, and wand details
   order: Order | null = null;
@@ -115,8 +116,11 @@ export class PlaceOrderComponent implements OnInit {
       const orderData: OrderRequest = { ...this.placeOrderForm.value }
       this.orderService.add(orderData).subscribe({
         next: (orderRes) => {
-          alertMethod(orderRes.message, 'Order placed successfully!', AlertType.Success);
-          this.simulatePayment(orderRes);
+          this.orderPlaced = true;
+          this.placeOrderForm.disable();
+          alertMethod(orderRes.message, 'Order placed successfully!', AlertType.Success).then(() => {
+            this.simulatePayment(orderRes);
+          });
         },
         error: (err) => {
           alertMethod(err.error.message, 'Error placing the order, please try again', AlertType.Error);
@@ -131,8 +135,8 @@ export class PlaceOrderComponent implements OnInit {
     setTimeout(() => {
       this.orderService.pay(orderRes.data!.id).subscribe({
         next: (paymentRes) => {
-          alertMethod(paymentRes.message, 'Payment processed successfully!', AlertType.Success);
-          this.router.navigate(['/']);
+          alertMethod(paymentRes.message, 'Payment processed successfully!', AlertType.Success).then(() => {
+          });
         },
         error: (err) => {
           alertMethod(err.error.message, 'Error processing payment, please try again', AlertType.Error);
