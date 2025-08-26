@@ -1,4 +1,4 @@
-# Instrucciones para Ejecutar Frontend Localmente
+# Instrucciones para Ejecutar el Frontend Localmente
 ## Requisitos Previos
 
 - Backend del proyecto en ejecución

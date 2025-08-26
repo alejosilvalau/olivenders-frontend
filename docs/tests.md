@@ -1,14 +1,14 @@
 # Reporte de Pruebas Realizadas
 
-## Prueba End To End del Frontend con Cypress
+## Prueba End To End de Frontend con Cypress
 
 ### Link del video: [Prueba E2E](https://www.youtube.com/watch?v=4MzoutkW2-I)
 
-## Prueba de Unidad (para el auth.service)
+## Prueba de Unidad de Frontend (auth.service)
 
 ![Test Auth](Screenshot%202025-08-18%20160938.png)
 
-## Prueba de integración Backend (login)
+## Prueba de integración de Backend (login)
 
 ```javascript
   console.log
