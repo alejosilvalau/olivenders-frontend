@@ -1,7 +1,7 @@
 # Bienvenido a la Documentación de Olivenders
 ## Index
 1. [Propuesta de Proyecto](https://github.com/alejosilvalau/tp-dsw/blob/main/proposal.md)
-2. [Documentación de API y Backend](https://github.com/alejosilvalau/olivenders-backend/blob/main/README.md)
+2. [Documentación de API y Backend](https://github.com/alejosilvalau/olivenders-backend/blob/main/docs/README.md)
 3. [Instrucciones para Ejecutar el Frontend Localmente](./setup.md)
 4. [Reporte de Pruebas Realizadas](./tests.md)
 5. [Asignación De Tareas en Google Sheets](https://docs.google.com/spreadsheets/d/e/2PACX-1vRYG6wk1YdOS_V5gujWCNep1AQhlxPoENYRJxJguLItMrjZ1ZDrVIO5zwyHQJ-dzUpCSzZeI5BgxNNj/pubhtml)
