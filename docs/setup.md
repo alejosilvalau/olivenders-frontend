@@ -23,7 +23,7 @@ npm install
 
 ## Configuración de variables de entorno
 
-1. Ir a "./src/environments/" y crear un archivo llamado "environment.ts"
+1. Ir a `./src/environments/` y crear un archivo llamado `environment.ts`
 
 2. Copiar el siguiente objeto:
 
@@ -32,15 +32,15 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api',
   cloudinary: {
-    cloudName: 'dfdasfdasf',
-    apiKey: 'fdsafdfsadf',
+    cloudName: 'tu_cloud_name',
+    apiKey: 'tu_api_key',
     uploadPreset: 'ml_default'
   }
 };
 ```
 Los valores dentro de la clave **cloudinary** no son válidos. Su propósito es solamente demostrativo
 
-3. Cambiar el valor de **apiUrl** a la url del backend
+3. Cambiar el valor de **apiUrl** a la url del backend. Manteniendo al final `/api`
 
 ## Configuración de Cloudinary
 1. Crear cuenta de [Cloudinary](https://cloudinary.com/)

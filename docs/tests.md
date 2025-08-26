@@ -2,7 +2,7 @@
 
 ## Prueba End To End de Frontend con Cypress
 
-### Link del video: [Prueba E2E](https://www.youtube.com/watch?v=4MzoutkW2-I)
+Link del video: [Prueba E2E](https://www.youtube.com/watch?v=4MzoutkW2-I)
 
 ## Prueba de Unidad de Frontend (auth.service)
 
