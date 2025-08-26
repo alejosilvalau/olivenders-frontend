@@ -12,6 +12,7 @@
 
 ```bash
 git clone https://github.com/alejosilvalau/olivenders-frontend.git
+cd olivenders-frontend
 ```
 
 2. Instalar las dependencias:
