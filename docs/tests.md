@@ -95,6 +95,4 @@ Time:        5.428 s, estimated 6 s
 Ran all test suites.
 ```
 
-<div align="center">
-<h3><a href="./README.md">Volver al Index</a><h3>
-</div>
+[Volver al Index](./README.md)
