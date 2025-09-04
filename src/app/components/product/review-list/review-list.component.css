@@ -10,7 +10,7 @@
   inset: 0;
   background: url('/review-list-background.jpg') center center / cover no-repeat;
   z-index: -10;
-  background-size: fill;
+  background-size: fixed;
 }
 
 .review-card {
