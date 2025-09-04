@@ -9,6 +9,9 @@
     "test:angular": "ng test",
     "test:cypress": "npx cypress open"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.2.0",
