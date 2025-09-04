@@ -1,5 +1,5 @@
 .review-list {
-  max-width: 70%;
+  max-width: 80%;
   margin: 2rem auto;
   position: relative;
 }
@@ -11,6 +11,7 @@
   background: url('/review-list-background.jpg') center center / cover no-repeat;
   z-index: -10;
   background-size: fixed;
+  min-height: 110vh;
 }
 
 .review-card {
