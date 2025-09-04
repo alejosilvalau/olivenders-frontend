@@ -44,7 +44,7 @@
                     *ngIf="wand.total_price > 0 && wand.total_price !== null"
                     class="card-text price-product mb-2"
                   >
-                    <strong class="ms-2">Price:</strong> {{ wand.total_price | currency}}
+                    <strong class="ms-2">Price: {{ wand.total_price | currency}}</strong>
                   </p>
                   <a
                     [routerLink]="['/product/order', wand.id]"
