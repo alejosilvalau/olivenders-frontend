@@ -1,4 +1,7 @@
 # Bienvenido a la Documentación de Olivenders
+
+**⚠️ Nota:** El deploy del sitio está hecho en el tier gratis de Azure, puede tardar un momento en encender al entrar. Refresque la página si es necesario
+
 ## Index
 1. [Propuesta de Proyecto](https://github.com/alejosilvalau/tp-dsw/blob/main/proposal.md)
 2. [Documentación de API y Backend](https://github.com/alejosilvalau/olivenders-backend/blob/main/docs/README.md)
