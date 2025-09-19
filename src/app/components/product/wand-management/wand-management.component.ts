@@ -16,7 +16,7 @@ import { ImageResponse } from '../../../core/models/image.interface';
 import { EntitySelectorComponent } from '../../../shared/components/entity-selector/entity-selector.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { throwError } from 'rxjs/internal/observable/throwError';
-import { switchMap } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 import { chainedEntitySearch } from '../../../functions/chained-entity-search.function';
 import { fallbackOnImgError } from '../../../functions/fallback-on-img-error.function';
 
@@ -124,6 +124,7 @@ export class WandManagementComponent implements OnInit {
           : throwError(() => null)
         )
       ),
+      (t: string) => this.wandService.findOneByName(t),
       (t: string) => this.wandService.findOne(t)
     ];
 

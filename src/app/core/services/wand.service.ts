@@ -36,7 +36,8 @@ export class WandService {
   }
 
   findOneByName(name: string): Observable<WandResponse> {
-    return this.http.get<WandResponse>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
+    const encodedName = encodeURIComponent(name);
+    return this.http.get<WandResponse>(`${ this.apiUrl }/name/${ encodedName }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   add(formData: FormData): Observable<WandResponse> {

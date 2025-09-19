@@ -35,7 +35,8 @@ export class WizardService {
   }
 
   findOneByUsername(username: string): Observable<WizardResponse> {
-    return this.http.get<WizardResponse>(`${ this.apiUrl }/username/${ username }`, { headers: this.authToken.getAuthHeaders() });
+    const encodedUsername = encodeURIComponent(username);
+    return this.http.get<WizardResponse>(`${ this.apiUrl }/username/${ encodedUsername }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   isUsernameAvailable(username: string): Observable<WizardResponse<boolean>> {

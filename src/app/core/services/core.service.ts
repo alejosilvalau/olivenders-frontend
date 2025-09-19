@@ -26,7 +26,8 @@ export class CoreService {
   }
 
   findOneByName(name: string): Observable<CoreResponse> {
-    return this.http.get<CoreResponse>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
+    const encodedName = encodeURIComponent(name);
+    return this.http.get<CoreResponse>(`${ this.apiUrl }/name/${ encodedName }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   add(coreData: CoreRequest): Observable<CoreResponse> {

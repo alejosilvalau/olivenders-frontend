@@ -26,7 +26,8 @@ export class SchoolService {
   }
 
   findOneByName(name: string): Observable<SchoolResponse> {
-    return this.http.get<SchoolResponse>(`${ this.apiUrl }/name/${ name }`);
+    const encodedName = encodeURIComponent(name);
+    return this.http.get<SchoolResponse>(`${ this.apiUrl }/name/${ encodedName }`);
   }
 
   add(schoolData: SchoolRequest): Observable<SchoolResponse> {

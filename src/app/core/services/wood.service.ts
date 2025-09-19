@@ -26,7 +26,8 @@ export class WoodService {
   }
 
   findOneByName(name: string): Observable<WoodResponse> {
-    return this.http.get<WoodResponse>(`${ this.apiUrl }/name/${ name }`, { headers: this.authToken.getAuthHeaders() });
+    const encodedName = encodeURIComponent(name);
+    return this.http.get<WoodResponse>(`${ this.apiUrl }/name/${ encodedName }`, { headers: this.authToken.getAuthHeaders() });
   }
 
   add(woodData: WoodRequest): Observable<WoodResponse> {
