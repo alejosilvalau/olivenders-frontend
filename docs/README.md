@@ -8,6 +8,7 @@
 3. [Instrucciones para Ejecutar el Frontend Localmente](./setup.md)
 4. [Reporte de Pruebas Realizadas](./tests.md)
 5. [Asignación De Tareas en Google Sheets](https://docs.google.com/spreadsheets/d/e/2PACX-1vRYG6wk1YdOS_V5gujWCNep1AQhlxPoENYRJxJguLItMrjZ1ZDrVIO5zwyHQJ-dzUpCSzZeI5BgxNNj/pubhtml)
+6. [Video Presentación del Proyecto](https://youtu.be/djLs0X_OXfo)
 
 ## Capturas del Proyecto
 ![Captura 1](./screenshots/screenshot-1.png)
